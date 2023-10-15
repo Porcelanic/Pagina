@@ -2,15 +2,14 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import ThemeSwitcher from '../Components/ThemeSwitcher';
 
-function BasicExample() {
+function Login() {
   return (
     <>
     <ThemeSwitcher/>
     <Form>
       <Form.Group className="mb-3" controlId="formBasicEmail">
-        <Form.Control type="email" placeholder="Enter email" />
+        <Form.Control type="username" placeholder="Username" />
         <Form.Text className="text-muted">
-            We&apos;ll never share your email with anyone else.
         </Form.Text>
       </Form.Group>
 
@@ -28,4 +27,4 @@ function BasicExample() {
   );
 }
 
-export default BasicExample;
+export default Login;

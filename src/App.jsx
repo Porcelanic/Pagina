@@ -1,11 +1,11 @@
 import './App.css'
-import BasicExample from './Pages/Login'
+import Registro from './Pages/Registro'
 
 function App() {
 
   return (
     <>
-      <BasicExample/>
+      <Registro/>
     </>
   )
 }
