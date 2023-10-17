@@ -5,13 +5,14 @@ import Image from 'react-bootstrap/Image';
 
 function Registro() {
     return (
-        <>
+        <div className='text-center'>
             <ThemeSwitcher />
 
+            <Form.Group className="mb-5 mt-5" controlId="formBasicTipo">
+                <Image src="/logo.png" fluid width="50%" />
+            </Form.Group>
+
             <Form>
-                <Form.Group className="mb-3" controlId="formBasicTipo">
-                    <Image src="/logo.png" rounded />
-                </Form.Group>
                 <Form.Group className="mb-3" controlId="formBasicTipo">
                     <Form.Select aria-label="Default select example">
                         <option>Tipo de registro</option>
@@ -33,14 +34,11 @@ function Registro() {
                     <Form.Control type="password" placeholder="Contraseña" />
                     <Form.Text className="text-muted">Debe contener por lo menos un numero</Form.Text>
                 </Form.Group>
-                <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                    <Form.Check type="checkbox" label="Remember me" />
-                </Form.Group>
                 <Button variant="primary" type="submit">
                     Submit
                 </Button>
             </Form>
-        </>
+        </div>
     );
 }
 
