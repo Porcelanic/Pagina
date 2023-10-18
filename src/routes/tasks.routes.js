@@ -1,5 +1,6 @@
 import { Router } from "express";
 import {
+  createCliente, 
   createTask,
   deleteTask,
   getAllTasks,
@@ -19,5 +20,9 @@ router.get("/tasks/:id", getTask);
 router.put("/tasks/:id", updateTask);
 
 router.delete("/tasks/:id", deleteTask);
+
+// create a client
+
+router.post("/clients", createCliente);
 
 export default router;

@@ -1,5 +1,20 @@
 import { pool } from "../db.js";
 
+export const createCliente = async (req, res, next) => {
+  try {
+    const { idcliente, nombre, telefono, email, password, direccion_iddireccion, trial372 } = req.body;
+
+    const newTask = await pool.query(
+      "INSERT INTO cliente (idcliente, nombre, telefono, email, password, direccion_iddireccion, trial372) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *",
+      [idcliente, nombre, telefono, email, password, direccion_iddireccion, trial372]
+    );
+
+    res.json(newTask.rows[0]);
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const createTask = async (req, res, next) => {
   try {
     const { title, description } = req.body;
