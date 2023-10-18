@@ -6,10 +6,50 @@ import { useNavigate, useParams } from "react-router-dom";
 import React, { useState } from "react";
 
 function Registro() {
+  const [cliente, setCliente] = useState({
+    idcliente: 2,
+    nombre: "a",
+    telefono: 55555,
+    email: "a@m.com",
+    password: "Hola11111",
+    direccion_iddireccion: 1,
+    trial372: "a",
+  });
+
   const [task, setTask] = useState({
     title: "",
     description: "",
   });
+
+  const clientSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      if (params.id) {
+        const response = await fetch(
+          "http://localhost:4000/clients/" + params.id,
+          {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(task),
+          }
+        );
+        await response.json();
+      } else {
+        const response = await fetch("http://localhost:4000/clients", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(cliente),
+        });
+        await response.json();
+      }
+
+      setLoading(false);
+      navigate("/");
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -45,11 +85,14 @@ function Registro() {
   };
   const handleChange = (e) =>
     setTask({ ...task, [e.target.name]: e.target.value });
+
+  const clientChange = (e) =>
+    setCliente({ ...cliente, [e.target.name]: e.target.value });
   return (
     <>
       <ThemeSwitcher />
 
-      <Form onSubmit={handleSubmit}>
+      <Form onSubmit={clientSubmit}>
         <Form.Group className="mb-3" controlId="formBasicTipo">
           <Image src="/logo.png" rounded />
         </Form.Group>
@@ -66,10 +109,10 @@ function Registro() {
         <Form.Group className="mb-3" controlId="formBasicUsername">
           <Form.Control
             type="username"
-            name="title"
+            name="nombre"
             placeholder="Write your title"
-            onChange={handleChange}
-            value={task.title}
+            onChange={clientChange}
+            value={cliente.nombre}
           />
           <Form.Text>
             Se creativo, tu nombre de usuario te representara a ti
@@ -79,10 +122,10 @@ function Registro() {
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Control
             type="email"
-            name="description"
+            name="email"
             placeholder="Correo Electronico"
-            onChange={handleChange}
-            value={task.description}
+            onChange={clientChange}
+            value={cliente.email}
           />
           <Form.Text className="text-muted">
             Nunca compartiremos su direccion de correo electronico.
@@ -101,7 +144,7 @@ function Registro() {
         <Button
           variant="primary"
           type="submit"
-          disabled={!task.title || !task.description}
+          disabled={!cliente.nombre || !cliente.email}
         >
           {loading
             ? // <CircularProgress color="inherit" size={25} />
