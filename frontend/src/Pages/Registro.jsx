@@ -7,12 +7,12 @@ import React, { useState } from "react";
 
 function Registro() {
   const [cliente, setCliente] = useState({
-    idcliente: 2,
-    nombre: "a",
-    telefono: 55555,
-    email: "a@m.com",
-    password: "Hola11111",
-    direccion_iddireccion: 1,
+    idcliente: 4,
+    nombre: "",
+    telefono: null,
+    email: "",
+    password: "",
+    direccion_iddireccion: null,
     trial372: "a",
   });
 
@@ -103,19 +103,19 @@ function Registro() {
             <option value="Client">Cliente</option>
             <option value="Artist">Artista</option>
           </Form.Select>
-          <Form.Text>¿Bajo que rol deseas registrate?</Form.Text>
+          <Form.Text>¿Bajo qué rol deseas registrate?.</Form.Text>
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicUsername">
           <Form.Control
             type="username"
             name="nombre"
-            placeholder="Write your title"
+            placeholder="Nombre"
             onChange={clientChange}
             value={cliente.nombre}
           />
           <Form.Text>
-            Se creativo, tu nombre de usuario te representara a ti
+            Escribe tu nombre para que tus amigos te reconozcan.
           </Form.Text>
         </Form.Group>
 
@@ -123,33 +123,36 @@ function Registro() {
           <Form.Control
             type="email"
             name="email"
-            placeholder="Correo Electronico"
+            placeholder="Correo electrónico"
             onChange={clientChange}
             value={cliente.email}
           />
           <Form.Text className="text-muted">
-            Nunca compartiremos su direccion de correo electronico.
+            Nunca compartiremos su dirección de correo electrónico.
           </Form.Text>
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicPassword">
-          <Form.Control type="password" placeholder="Contraseña" />
+          <Form.Control
+            type="password"
+            placeholder="Contraseña"
+            name="password"
+            onChange={clientChange}
+            value={cliente.password}
+          />
           <Form.Text className="text-muted">
-            Debe contener por lo menos un numero
+            Debe contener por lo menos un número.
           </Form.Text>
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="formBasicCheckbox">
-          <Form.Check type="checkbox" label="Remember me" />
         </Form.Group>
         <Button
           variant="primary"
           type="submit"
-          disabled={!cliente.nombre || !cliente.email}
+          disabled={!cliente.nombre || !cliente.email || !cliente.password}
         >
           {loading
             ? // <CircularProgress color="inherit" size={25} />
               loading
-            : "Publicar"}
+            : "Registrarme"}
         </Button>
       </Form>
     </>

@@ -12,6 +12,7 @@ export const createCliente = async (req, res, next) => {
     res.json(newTask.rows[0]);
   } catch (error) {
     next(error);
+    console.log(error);
   }
 };
 
