@@ -89,6 +89,7 @@ function Login() {
             placeholder="Correo electrónico"
             onChange={clientChange}
             value={cliente.email}
+            maxLength={45}
           />
           <Form.Text className="text-muted"></Form.Text>
         </Form.Group>
@@ -100,6 +101,7 @@ function Login() {
             name="password"
             onChange={clientChange}
             value={cliente.password}
+            maxLength={45}
           />
         </Form.Group>
         {/* <Form.Group className="mb-3" controlId="formBasicCheckbox">
