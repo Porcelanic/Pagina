@@ -2,10 +2,13 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import ThemeSwitcher from "../Components/ThemeSwitcher";
 import Image from "react-bootstrap/Image";
-import { useNavigate, useParams, Link } from "react-router-dom";
-import React, { useState } from "react";
+import Alert from "react-bootstrap/Alert";
+import { useNavigate, Link } from "react-router-dom";
+import { useState } from "react";
 
 function Registro() {
+  const [showAlert, setShowAlert] = useState(false); // Nuevo estado para manejar la visibilidad de la alerta
+
   const [cliente, setCliente] = useState({
     nombre: "",
     email: "",
@@ -14,7 +17,6 @@ function Registro() {
   });
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const params = useParams();
 
   const clientSubmit = async (e) => {
     e.preventDefault();
@@ -26,23 +28,31 @@ function Registro() {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(cliente),
         });
-        await response.json();
-
-        setLoading(false);
-        navigate("/");
+        const text = await response.text();
+        if ("error" == text) {
+          setShowAlert(true);
+          setLoading(false);
+        } else {
+          setLoading(false);
+          navigate("/");
+        }
       } else if (cliente.tipoCliente == "Cliente") {
         const response = await fetch("http://localhost:4000/clients", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(cliente),
         });
-        await response.json();
-
-        setLoading(false);
-        navigate("/");
+        const text = await response.text();
+        if ("error" == text) {
+          setShowAlert(true);
+          setLoading(false);
+        } else {
+          setLoading(false);
+          navigate("/");
+        }
       }
     } catch (error) {
-      //      if (error.code === '23505' && (error.constraint === 'pk_cliente' || error.constraint === 'pk_artista')) {
+      console.log("hola");
     }
   };
 
@@ -53,12 +63,19 @@ function Registro() {
     setCliente({ ...cliente, tipoCliente: e.target.value });
   };
   return (
-    <>
+    <div className="text-center">
       <ThemeSwitcher />
-
+      <Alert
+        variant="danger"
+        show={showAlert}
+        onClose={() => setShowAlert(false)}
+        dismissible
+      >
+        El correo electronico digitado ya esta en uso
+      </Alert>
       <Form onSubmit={clientSubmit}>
-        <Form.Group className="mb-3" controlId="formBasicTipo">
-          <Image src="/logo.png" rounded />
+        <Form.Group className="mb-5 mt-5" controlId="formBasicTipo">
+          <Image src="/logo.png" fluid width="50%" />
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicTipo">
@@ -135,7 +152,7 @@ function Registro() {
           </Button>
         </Link>
       </Form.Group>
-    </>
+    </div>
   );
 }
 

@@ -9,11 +9,10 @@ export const createArtista = async (req, res, next) => {
       [nombre, email, password]
     );
 
-    res.json(newTask.rows[0]);
+    res.send("bien");
   } catch (error) {
-    console.log(error);
     if (error.code === "23505") {
-      console.log("Error 12212");
+      res.send("error");
     }
   }
 };

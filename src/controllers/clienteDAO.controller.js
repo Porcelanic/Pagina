@@ -9,10 +9,10 @@ export const createCliente = async (req, res, next) => {
       [nombre, email, password]
     );
 
-    res.json(newTask.rows[0]);
+    res.send("bien");
   } catch (error) {
     if (error.code === "23505") {
-      return res.status(404).json({ message: "Cliente no encontrado" });
+      res.send("error");
     }
   }
 };
