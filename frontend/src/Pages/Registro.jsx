@@ -7,18 +7,12 @@ import React, { useState } from "react";
 
 function Registro() {
   const [cliente, setCliente] = useState({
-    idcliente: 4,
     nombre: "",
     telefono: null,
     email: "",
     password: "",
     direccion_iddireccion: null,
-    trial372: "a",
-  });
-
-  const [task, setTask] = useState({
-    title: "",
-    description: "",
+    trial372: null,
   });
 
   const clientSubmit = async (e) => {

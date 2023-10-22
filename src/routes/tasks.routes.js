@@ -1,6 +1,7 @@
 import { Router } from "express";
 import {
-  createCliente, 
+  createCliente,
+  getCliente,
   createTask,
   deleteTask,
   getAllTasks,
@@ -10,6 +11,12 @@ import {
 
 const router = Router();
 
+// create a client
+router.post("/clients", createCliente);
+
+router.get("/clients/:email", getCliente);
+
+//------------------------CODIGO DEL TUTORIAL------------------------------
 // create a task
 router.post("/tasks", createTask);
 
@@ -20,9 +27,5 @@ router.get("/tasks/:id", getTask);
 router.put("/tasks/:id", updateTask);
 
 router.delete("/tasks/:id", deleteTask);
-
-// create a client
-
-router.post("/clients", createCliente);
 
 export default router;

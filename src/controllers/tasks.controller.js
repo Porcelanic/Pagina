@@ -2,11 +2,11 @@ import { pool } from "../db.js";
 
 export const createCliente = async (req, res, next) => {
   try {
-    const { idcliente, nombre, telefono, email, password, direccion_iddireccion, trial372 } = req.body;
+    const { nombre, email, password } = req.body;
 
     const newTask = await pool.query(
-      "INSERT INTO cliente (idcliente, nombre, telefono, email, password, direccion_iddireccion, trial372) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *",
-      [idcliente, nombre, telefono, email, password, direccion_iddireccion, trial372]
+      "INSERT INTO cliente (nombre, email, password) VALUES($1, $2, $3) RETURNING *",
+      [nombre, email, password]
     );
 
     res.json(newTask.rows[0]);
@@ -16,6 +16,24 @@ export const createCliente = async (req, res, next) => {
   }
 };
 
+export const getCliente = async (req, res) => {
+  try {
+    const { email } = req.params;
+    const result = await pool.query("SELECT * FROM cliente WHERE email = $1", [
+      email,
+    ]);
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ message: "Cliente no encontrado" });
+    }
+    res.json(result.rows[0]);
+  } catch (error) {
+    console.log("Sucedio un error");
+    next(error);
+  }
+};
+
+//-------------------- CODIGO DEL VIDEO -----------------------------------------------
 export const createTask = async (req, res, next) => {
   try {
     const { title, description } = req.body;
