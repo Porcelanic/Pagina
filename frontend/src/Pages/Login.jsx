@@ -39,8 +39,10 @@ function Login() {
 
         if (cliente.password !== cliente.storedPassword) {
           console.log("Contraseña incorrecta");
+          setShowAlert(true);
         } else {
-          location.href = "/Registro#/registro";
+          // Poner  La pagina del catalogo
+          location.href = "/#/registro";
           console.log("correcto");
         }
       } else {

@@ -8,12 +8,12 @@ import React, { useState } from "react";
 function Registro() {
   const [cliente, setCliente] = useState({
     nombre: "",
-    telefono: null,
     email: "",
     password: "",
-    direccion_iddireccion: null,
-    trial372: null,
   });
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  const params = useParams();
 
   const clientSubmit = async (e) => {
     e.preventDefault();
@@ -45,43 +45,9 @@ function Registro() {
     }
   };
 
-  const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
-  const params = useParams();
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    try {
-      if (params.id) {
-        const response = await fetch(
-          "http://localhost:4000/tasks/" + params.id,
-          {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(task),
-          }
-        );
-        await response.json();
-      } else {
-        const response = await fetch("http://localhost:4000/tasks", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(task),
-        });
-        await response.json();
-      }
-
-      setLoading(false);
-      navigate("/");
-    } catch (error) {
-      console.error(error);
-    }
-  };
-  const handleChange = (e) =>
-    setTask({ ...task, [e.target.name]: e.target.value });
-
   const clientChange = (e) =>
     setCliente({ ...cliente, [e.target.name]: e.target.value });
+
   return (
     <>
       <ThemeSwitcher />

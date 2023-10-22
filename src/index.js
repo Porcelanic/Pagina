@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import morgan from "morgan";
-import router from "./routes/tasks.routes.js";
+import router from "./routes/clientes.routes.js";
 import { port } from "./config.js";
 
 const app = express();
@@ -14,7 +14,7 @@ app.use(express.urlencoded({ extended: false }));
 
 // Routes
 app.get("/", (req, res) => {
-  res.json({ message: "Welcome to my API" });
+  res.json({ message: "Bienvenido a mi catalogo de camisas" });
 });
 
 app.use(router);
