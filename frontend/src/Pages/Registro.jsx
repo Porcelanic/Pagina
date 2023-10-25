@@ -7,8 +7,14 @@ import { useNavigate, Link } from "react-router-dom";
 import { useState } from "react";
 
 function Registro() {
-  const [showAlert, setShowAlert] = useState(false); // Nuevo estado para manejar la visibilidad de la alerta
+  const [showAlert, setShowAlert] = useState(true); // Nuevo estado para manejar la visibilidad de la alerta
+  const [alertText, setAlertText] = useState(
+    "El correo electronico digitado ya esta en uso"
+  ); // Nuevo estado para manejar el texto de la alerta
 
+  const cambiarTextoAlerta = () => {
+    setAlertText("Waysoft");
+  };
   const [cliente, setCliente] = useState({
     nombre: "",
     email: "",
@@ -71,8 +77,10 @@ function Registro() {
         onClose={() => setShowAlert(false)}
         dismissible
       >
-        El correo electronico digitado ya esta en uso
+        {alertText}
       </Alert>
+      <Button onClick={cambiarTextoAlerta}>Cambiar texto de alerta</Button>
+
       <Form onSubmit={clientSubmit}>
         <Form.Group className="mb-5 mt-5" controlId="formBasicTipo">
           <Image src="/logo.png" fluid width="50%" />
@@ -98,6 +106,7 @@ function Registro() {
             onChange={clientChange}
             value={cliente.nombre}
             maxLength={45}
+            data-testid="Nombre"
           />
           <Form.Text>
             Escribe tu nombre para que tus amigos te reconozcan.
