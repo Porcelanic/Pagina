@@ -68,7 +68,6 @@ function Login() {
 
   return (
     <div className="text-center">
-      <ThemeSwitcher />
       <h1>WaySoft</h1>
       <Alert
         variant="danger"
