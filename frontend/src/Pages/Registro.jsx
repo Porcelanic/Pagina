@@ -7,14 +7,10 @@ import { useNavigate, Link } from "react-router-dom";
 import { useState } from "react";
 
 function Registro() {
-  const [showAlert, setShowAlert] = useState(true); // Nuevo estado para manejar la visibilidad de la alerta
-  const [alertText, setAlertText] = useState(
-    "El correo electronico digitado ya esta en uso"
-  ); // Nuevo estado para manejar el texto de la alerta
+  const [showAlert, setShowAlert] = useState(false); // Nuevo estado para manejar la visibilidad de la alerta
+  const [alertText, setAlertText] = useState(""); // Nuevo estado para manejar la visibilidad de la alerta
+  const [alertState, setAlertState] = useState(""); // Nuevo estado para manejar la visibilidad de la alerta
 
-  const cambiarTextoAlerta = () => {
-    setAlertText("Waysoft");
-  };
   const [cliente, setCliente] = useState({
     nombre: "",
     email: "",
@@ -36,11 +32,18 @@ function Registro() {
         });
         const text = await response.text();
         if ("error" == text) {
+          setLoading(false);
           setShowAlert(true);
+          setAlertText("El usuario está duplicado");
+          setAlertState("danger");
           setLoading(false);
         } else {
           setLoading(false);
-          navigate("/");
+          setLoading(false);
+          setAlertText("El registro se realizó correctamente");
+          setAlertState("success");
+          setShowAlert(true);
+          setTimeout(() => navigate("/"), 3000);
         }
       } else if (cliente.tipoCliente == "Cliente") {
         const response = await fetch("http://localhost:4000/clients", {
@@ -51,10 +54,15 @@ function Registro() {
         const text = await response.text();
         if ("error" == text) {
           setShowAlert(true);
+          setAlertText("El usuario está duplicado");
+          setAlertState("danger");
           setLoading(false);
         } else {
           setLoading(false);
-          navigate("/");
+          setAlertText("El registro se realizó correctamente");
+          setAlertState("success");
+          setShowAlert(true);
+          setTimeout(() => navigate("/"), 3000);
         }
       }
     } catch (error) {
@@ -72,14 +80,13 @@ function Registro() {
     <div className="text-center">
       <ThemeSwitcher />
       <Alert
-        variant="danger"
+        variant={alertState}
         show={showAlert}
         onClose={() => setShowAlert(false)}
         dismissible
       >
         {alertText}
       </Alert>
-      <Button onClick={cambiarTextoAlerta}>Cambiar texto de alerta</Button>
 
       <Form onSubmit={clientSubmit}>
         <Form.Group className="mb-5 mt-5" controlId="formBasicTipo">
@@ -90,6 +97,7 @@ function Registro() {
           <Form.Select
             aria-label="Default select example"
             onChange={handleSelect}
+            data-testid="Tipo de registro"
           >
             <option value="">Tipo de registro</option>
             <option value="Cliente">Cliente</option>
@@ -121,6 +129,7 @@ function Registro() {
             onChange={clientChange}
             value={cliente.email}
             maxLength={45}
+            data-testid="Correo"
           />
           <Form.Text className="text-muted">
             Nunca compartiremos su dirección de correo electrónico.
@@ -135,6 +144,7 @@ function Registro() {
             onChange={clientChange}
             value={cliente.password}
             maxLength={45}
+            data-testid="Contraseña"
           />
           <Form.Text className="text-muted">
             Debe contener por lo menos un número.
