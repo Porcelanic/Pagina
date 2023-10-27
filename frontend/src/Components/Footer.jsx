@@ -1,31 +1,55 @@
-import Nav from "react-bootstrap/Nav";
-import Navbar from "react-bootstrap/Navbar";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faInstagram, faTwitter, faFacebook } from '@fortawesome/free-brands-svg-icons';
+import Row from "react-bootstrap/Row";
+import Container from "react-bootstrap/Container";
+import Col from "react-bootstrap/Col";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faInstagram,
+  faTwitter,
+  faFacebook,
+} from "@fortawesome/free-brands-svg-icons";
+
 const Footer = () => {
   return (
-    <Navbar
-      className=" justify-content-center"
-      style={{ zIndex: 1 }}
-      fixed="bottom"
-    >
-      <Nav>
-        <Nav.Link href="#">About us</Nav.Link>
-        <Nav.Link href="#">Contact us</Nav.Link>
-        <Nav.Link href="#">Join us</Nav.Link>
-      </Nav>
-      <Nav className="justify-content-end">
-        <Nav.Link href="">
+    <>
+    <br /><br /><br />
+
+    <Container fluid className="border-toper align-items-center  bg-body-tertiary  ">
+      <Row>
+        <Col xs lg={4}></Col>
+        <Col className="text-center">
+          <a href="#" className="btn">About us</a>
+        </Col>
+        <Col className="text-center">
+          <a href="#" className="btn">Contact us</a>
+        </Col>
+        <Col className="text-center">
+          <a href="#" className="btn">Join us</a>
+        </Col>
+        <Col xs lg={4}></Col>
+      </Row>
+
+      <Row>
+      <Col xs lg={4}></Col>
+      <Col className="text-center">
+        <a href="" className="btn">
           <FontAwesomeIcon icon={faInstagram} />
-        </Nav.Link>
-        <Nav.Link href="">
+        </a>
+      </Col>
+      <Col className="text-center">
+        <a href="" className="btn">
           <FontAwesomeIcon icon={faFacebook} />
-        </Nav.Link>
-        <Nav.Link href="">
+        </a>
+      </Col>
+      <Col className="text-center">
+        <a href="" className="btn">
           <FontAwesomeIcon icon={faTwitter} />
-        </Nav.Link>
-      </Nav>
-    </Navbar>
+        </a>
+      </Col >
+      <Col xs lg={4}></Col>
+      </Row>
+    </Container>
+    </>
   );
 };
 

@@ -1,11 +1,11 @@
 import Footer from "../Components/Footer";
-import NavBar from "../Components/NavBar";
+import Header from "../Components/Header";
 import ThemeSwitcher from "../Components/ThemeSwitcher";
 
 function Catalogo(){
     return(
         <>
-            <NavBar/>
+            <Header/>
             <Footer/>
             <ThemeSwitcher/>
         </>

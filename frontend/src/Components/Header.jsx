@@ -6,14 +6,14 @@ import Offcanvas from "react-bootstrap/Offcanvas";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShop, faStar, faUser } from '@fortawesome/free-solid-svg-icons';
 
-function NavBar() {
+function Header() {
   return (
     <>
       <Navbar
         sticky="top"
         key="md"
         expand="md"
-        className="bg-body-tertiary mb-3"
+        className="bg-body-tertiary mb-3 border-bottomer"
       >
         <Container fluid>
           <Navbar.Brand href="/#/">
@@ -66,4 +66,4 @@ function NavBar() {
     </>
   );
 }
-export default NavBar;
+export default Header;

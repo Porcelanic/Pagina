@@ -8,10 +8,13 @@
   align-items: center;
   justify-content: center;
   min-width: 320px;
-  min-height: 60vh;
+  min-height: 70vh;
 }
 
-.on-top {
-  z-index: 800;
+.border-bottomer{
+  border-bottom: white 1px solid;
 }
 
+.border-toper{
+  border-top: white 1px solid ;
+}

@@ -6,7 +6,7 @@ import Alert from "react-bootstrap/Alert";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import NavBar from "../Components/NavBar";
+import Header from "../Components/Header";
 import Footer from "../Components/Footer";
 
 function Login() {
@@ -70,7 +70,7 @@ function Login() {
 
   return (
     <>
-      <NavBar/>
+      <Header/>
       <div className="text-center content">
         <Alert
           variant="danger"

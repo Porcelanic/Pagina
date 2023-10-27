@@ -5,7 +5,7 @@ import Image from "react-bootstrap/Image";
 import Alert from "react-bootstrap/Alert";
 import { useNavigate, Link } from "react-router-dom";
 import { useState } from "react";
-import NavBar from "../Components/NavBar";
+import Header from "../Components/Header";
 import Footer from "../Components/Footer";
 
 function Registro() {
@@ -80,7 +80,7 @@ function Registro() {
   };
   return (
     <>
-      <NavBar />
+      <Header />
       <div className="text-center content">
         <ThemeSwitcher />
         <Alert
