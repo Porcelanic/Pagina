@@ -1,6 +1,5 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './App.jsx'
 import './index.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
@@ -8,6 +7,7 @@ import { RouterProvider, createHashRouter } from 'react-router-dom'
 
 import Login from './Pages/Login.jsx'
 import Registro from './Pages/Registro.jsx'
+import Catalogo from './Pages/Catalogo';
 
 const router = createHashRouter([
   {
@@ -17,6 +17,11 @@ const router = createHashRouter([
   {
     path: "/registro",
     element: <Registro />,
+  }
+  ,
+  {
+    path: "/catalogo",
+    element: <Catalogo/>,
   }
 ])
 
