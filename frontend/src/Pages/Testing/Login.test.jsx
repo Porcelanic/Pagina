@@ -30,16 +30,77 @@ describe("Login", () => {
     </BrowserRouter>
   );
 
-  test("Deberia mostrar el contenido de la applicacion", () => {
-    const button = screen.getByText("Iniciar sesión");
-
-    // Accionar el botón
-    fireEvent.click(button);
-
-    expect(screen.getByText(/Waysoft/i)).toBeDefined();
+  // -------------------------- PRUEBA 1 ---------------------------- 
+  test("Deben cargar los inputs ", () => {
+    expect(screen.getByPlaceholderText('Correo electrónico')).toBeDefined()
+    expect(screen.getByPlaceholderText('Contraseña')).toBeDefined()
+    expect(screen.getByText('Iniciar sesión')).toBeDefined()
+    expect(screen.getByText('Crear cuenta')).toBeDefined()
   });
 
-  test("Deberia ostrar el contenido de la applicacion", () => {
-    expect(screen.getByText("Iniciar sesión")).toBeDefined();
+  // -------------------------- PRUEBA 2 ----------------------------
+  test("El correo es incorrecto", async () => {
+    // Completa el formulario de login
+    fireEvent.change(screen.getByTestId("Correo"), {
+      target: { value: "noexiste@example.com" },
+    });
+    fireEvent.change(screen.getByTestId("Contraseña"), {
+      target: { value: "123456" },
+    });
+
+    // Envía el formulario
+    fireEvent.click(screen.getByText("Iniciar sesión"));
+
+    // Espera a que se complete el registro
+    await screen.findByText("Correo no registrado");
+
+    // Verifica que el usuario se haya registrado correctamente
+    expect(
+      screen.getByText("Correo no registrado")
+    ).toBeDefined();
   });
+
+  // -------------------------- PRUEBA 3 ----------------------------
+  test("La contraseña es incorrecta", async () => {
+    // Completa el formulario de login
+    fireEvent.change(screen.getByTestId("Correo"), {
+      target: { value: "juanperez@example.com" },
+    });
+    fireEvent.change(screen.getByTestId("Contraseña"), {
+      target: { value: "contraseniaIncorrecta" },
+    });
+
+    // Envía el formulario
+    fireEvent.click(screen.getByText("Iniciar sesión"));
+
+    // Espera a que se complete el registro
+    await screen.findByText("Cotraseña incorrecta");
+
+    // Verifica que el usuario se haya registrado correctamente
+    expect(
+      screen.getByText("Cotraseña incorrecta")
+    ).toBeDefined();
+  });
+
+    // -------------------------- PRUEBA 3 ----------------------------
+    test("El login es exitoso", async () => {
+      // Completa el formulario de login
+      fireEvent.change(screen.getByTestId("Correo"), {
+        target: { value: "juanperez@example.com" },
+      });
+      fireEvent.change(screen.getByTestId("Contraseña"), {
+        target: { value: "123456" },
+      });
+  
+      // Envía el formulario
+      fireEvent.click(screen.getByText("Iniciar sesión"));
+  
+      // Espera a que se complete el registro
+      await screen.findByText("Correo y contraseña válidos :D");
+  
+      // Verifica que el usuario se haya registrado correctamente
+      expect(
+        screen.getByText("Correo y contraseña válidos :D")
+      ).toBeDefined();
+    });
 });

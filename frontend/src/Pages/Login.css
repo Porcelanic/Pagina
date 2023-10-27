@@ -1,0 +1,6 @@
+.alert {
+    position: absolute!important;
+    top: 5%;
+    left: 50%;
+    translate: -50%;
+}
