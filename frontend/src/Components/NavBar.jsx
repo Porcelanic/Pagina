@@ -3,6 +3,8 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import Offcanvas from "react-bootstrap/Offcanvas";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faShop, faStar, faUser } from '@fortawesome/free-solid-svg-icons';
 
 function NavBar() {
   return (
@@ -14,9 +16,8 @@ function NavBar() {
         className="bg-body-tertiary mb-3"
       >
         <Container fluid>
-          <Navbar.Brand href="/#/catalogo">
+          <Navbar.Brand href="/#/">
             <img
-              alt=""
               src="logo.png"
               width="30"
               height="30"
@@ -33,16 +34,19 @@ function NavBar() {
               <Nav
                 variant="pills"
                 className="justify-content-end flex-grow-1 pe-3"
-                defaultActiveKey="/home"
+                defaultActiveKey="/#/catalogo"
               >
                 <Nav.Item>
-                  <Nav.Link href="/home">Active</Nav.Link>
+                  <Nav.Link href="/#/catalogo"> <FontAwesomeIcon icon={faShop} /> Catalogo</Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
-                  <Nav.Link eventKey="link-1">Option 2</Nav.Link>
+                  <Nav.Link eventKey="link-1"> <FontAwesomeIcon icon={faStar} /> Estampas</Nav.Link>
                 </Nav.Item>
                 <NavDropdown
-                  title="Dropdown"
+                title={
+                <span>
+                  <FontAwesomeIcon icon={faUser} /> Usuario
+                </span>}
                   id={`offcanvasNavbarDropdown-expand-md`}
                 >
                   <NavDropdown.Item href="#action3">Action</NavDropdown.Item>
