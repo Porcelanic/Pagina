@@ -1,0 +1,35 @@
+.custom-card {
+    width: 200px;
+    height: 300px;
+    /* Otros estilos según tus necesidades */
+  }
+  
+  .custom-img {
+    width: 200px;
+    height: 300px;
+    object-fit: cover; /* Ajusta la imagen al tamaño sin deformarla */
+    /* Otros estilos según tus necesidades */
+  }
+
+  .custom-body {
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Por ejemplo, ajusta la altura del cuerpo del texto */
+        /* Otros estilos según tus necesidades */
+    }
+  
+  .custom-body a {
+    display: block;
+    height: 100%;
+    width: 100%;
+    /* Estilos adicionales, si es necesario */
+  }
+ 
+  
+  
+  
+  
+  
+  
+  
