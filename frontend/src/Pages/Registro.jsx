@@ -5,6 +5,8 @@ import Image from "react-bootstrap/Image";
 import Alert from "react-bootstrap/Alert";
 import { useNavigate, Link } from "react-router-dom";
 import { useState } from "react";
+import Header from "../Components/Header";
+import Footer from "../Components/Footer";
 
 function Registro() {
   const [showAlert, setShowAlert] = useState(false); // Nuevo estado para manejar la visibilidad de la alerta
@@ -77,101 +79,105 @@ function Registro() {
     setCliente({ ...cliente, tipoCliente: e.target.value });
   };
   return (
-    <div className="text-center">
-      <ThemeSwitcher />
-      <Alert
-        variant={alertState}
-        show={showAlert}
-        onClose={() => setShowAlert(false)}
-        dismissible
-      >
-        {alertText}
-      </Alert>
-
-      <Form onSubmit={clientSubmit}>
-        <Form.Group className="mb-5 mt-5" controlId="formBasicTipo">
-          <Image src="/logo.png" fluid width="50%" />
-        </Form.Group>
-
-        <Form.Group className="mb-3" controlId="formBasicTipo">
-          <Form.Select
-            aria-label="Default select example"
-            onChange={handleSelect}
-            data-testid="Tipo de registro"
-          >
-            <option value="">Tipo de registro</option>
-            <option value="Cliente">Cliente</option>
-            <option value="Artista">Artista</option>
-          </Form.Select>
-          <Form.Text>¿Bajo qué rol deseas registrate?.</Form.Text>
-        </Form.Group>
-
-        <Form.Group className="mb-3" controlId="formBasicUsername">
-          <Form.Control
-            type="username"
-            name="nombre"
-            placeholder="Nombre"
-            onChange={clientChange}
-            value={cliente.nombre}
-            maxLength={45}
-            data-testid="Nombre"
-          />
-          <Form.Text>
-            Escribe tu nombre para que tus amigos te reconozcan.
-          </Form.Text>
-        </Form.Group>
-
-        <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Control
-            type="email"
-            name="email"
-            placeholder="Correo electrónico"
-            onChange={clientChange}
-            value={cliente.email}
-            maxLength={45}
-            data-testid="Correo"
-          />
-          <Form.Text className="text-muted">
-            Nunca compartiremos su dirección de correo electrónico.
-          </Form.Text>
-        </Form.Group>
-
-        <Form.Group className="mb-3" controlId="formBasicPassword">
-          <Form.Control
-            type="password"
-            placeholder="Contraseña"
-            name="password"
-            onChange={clientChange}
-            value={cliente.password}
-            maxLength={45}
-            data-testid="Contraseña"
-          />
-          <Form.Text className="text-muted">
-            Debe contener por lo menos un número.
-          </Form.Text>
-        </Form.Group>
-        <Button
-          variant="primary"
-          type="submit"
-          disabled={
-            !cliente.nombre ||
-            !cliente.email ||
-            !cliente.password ||
-            !cliente.tipoCliente
-          }
+    <>
+      <Header />
+      <div className="text-center content">
+        <ThemeSwitcher />
+        <Alert
+          variant={alertState}
+          show={showAlert}
+          onClose={() => setShowAlert(false)}
+          dismissible
         >
-          {loading ? loading : "Registrarme"}
-        </Button>
-      </Form>
-      <Form.Group>
-        <hr />
-        <Link to={"/"}>
-          <Button variant="outline-primary" type="submit">
-            Login
+          {alertText}
+        </Alert>
+
+        <Form onSubmit={clientSubmit}>
+          <Form.Group className="mb-5 mt-5" controlId="formBasicTipo">
+            <Image src="/logo.png" fluid width="50%" />
+          </Form.Group>
+
+          <Form.Group className="mb-3" controlId="formBasicTipo">
+            <Form.Select
+              aria-label="Default select example"
+              onChange={handleSelect}
+              data-testid="Tipo de registro"
+            >
+              <option value="">Tipo de registro</option>
+              <option value="Cliente">Cliente</option>
+              <option value="Artista">Artista</option>
+            </Form.Select>
+            <Form.Text>¿Bajo qué rol deseas registrate?.</Form.Text>
+          </Form.Group>
+
+          <Form.Group className="mb-3" controlId="formBasicUsername">
+            <Form.Control
+              type="username"
+              name="nombre"
+              placeholder="Nombre"
+              onChange={clientChange}
+              value={cliente.nombre}
+              maxLength={45}
+              data-testid="Nombre"
+            />
+            <Form.Text>
+              Escribe tu nombre para que tus amigos te reconozcan.
+            </Form.Text>
+          </Form.Group>
+
+          <Form.Group className="mb-3" controlId="formBasicEmail">
+            <Form.Control
+              type="email"
+              name="email"
+              placeholder="Correo electrónico"
+              onChange={clientChange}
+              value={cliente.email}
+              maxLength={45}
+              data-testid="Correo"
+            />
+            <Form.Text className="text-muted">
+              Nunca compartiremos su dirección de correo electrónico.
+            </Form.Text>
+          </Form.Group>
+
+          <Form.Group className="mb-3" controlId="formBasicPassword">
+            <Form.Control
+              type="password"
+              placeholder="Contraseña"
+              name="password"
+              onChange={clientChange}
+              value={cliente.password}
+              maxLength={45}
+              data-testid="Contraseña"
+            />
+            <Form.Text className="text-muted">
+              Debe contener por lo menos un número.
+            </Form.Text>
+          </Form.Group>
+          <Button
+            variant="primary"
+            type="submit"
+            disabled={
+              !cliente.nombre ||
+              !cliente.email ||
+              !cliente.password ||
+              !cliente.tipoCliente
+            }
+          >
+            {loading ? loading : "Registrarme"}
           </Button>
-        </Link>
-      </Form.Group>
-    </div>
+        </Form>
+        <Form.Group>
+          <hr />
+          <Link to={"/"}>
+            <Button variant="outline-primary" type="submit">
+              Login
+            </Button>
+          </Link>
+        </Form.Group>
+      </div>
+      <Footer/>
+    </>
   );
 }
 

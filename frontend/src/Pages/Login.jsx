@@ -6,6 +6,8 @@ import Alert from "react-bootstrap/Alert";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import Header from "../Components/Header";
+import Footer from "../Components/Footer";
 import './Login.css'
 
 function Login() {
@@ -74,6 +76,7 @@ function Login() {
 
   return (
     <>
+    <Header/>
       <Alert
         className="alert"
         variant={alertState}
@@ -134,6 +137,8 @@ function Login() {
           </Link>
         </Form.Group>
       </div>
+      <Footer/>
+      <ThemeSwitcher/>
     </>
   );
 }
