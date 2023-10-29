@@ -26,14 +26,17 @@ function ThemeSwitcher() {
     }
   };
 
-  const showActiveTheme = (theme, focus = false) => {
+  useEffect(() => {
+    // Get a reference to the themeSwitcher button
     const themeSwitcher = document.querySelector("#bd-theme");
 
-    if (!themeSwitcher) {
-      return;
-    }
+    // Function to show the active theme
+    const showActiveTheme = (theme, focus = false) => {
+      if (!themeSwitcher) {
+        return;
+      }
 
-    const themeSwitcherText = document.querySelector("#bd-theme-text");
+      const themeSwitcherText = document.querySelector("#bd-theme-text");
     const activeThemeIcon = document.querySelector(".theme-icon-active use");
     const btnToActive = document.querySelector(
       `[data-bs-theme-value="${theme}"]`
@@ -53,16 +56,16 @@ function ThemeSwitcher() {
     const themeSwitcherLabel = `${themeSwitcherText.textContent} (${btnToActive.dataset.bsThemeValue})`;
     themeSwitcher.setAttribute("aria-label", themeSwitcherLabel);
 
-    if (focus) {
-      themeSwitcher.focus();
-    }
-  };
+      if (focus) {
+        themeSwitcher.focus();
+      }
+    };
 
-  useEffect(() => {
-    // Set the default theme to "auto" when the component is mounted
-    setStoredTheme("auto");
-    setTheme("auto");
-    showActiveTheme("auto");
+    // Get the stored theme
+    const storedTheme = getStoredTheme();
+
+    // Set the theme to the stored or preferred theme
+    setTheme(storedTheme || getPreferredTheme());
 
     // Add event listener for dark mode changes
     window
@@ -83,8 +86,10 @@ function ThemeSwitcher() {
         showActiveTheme(theme, true);
       });
     });
-  });
 
+    // Show the active theme when the component is mounted
+    showActiveTheme(storedTheme || getPreferredTheme());
+  });
   return (
     <div>
       <svg xmlns="http://www.w3.org/2000/svg" className="d-none">

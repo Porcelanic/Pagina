@@ -3,10 +3,13 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import Offcanvas from "react-bootstrap/Offcanvas";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faShop, faStar, faUser } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faShop, faStar, faUser, faCartShopping } from "@fortawesome/free-solid-svg-icons";
+import { Link, useLocation} from "react-router-dom";
 
 function Header() {
+  const location = useLocation();
+  console.log(location.pathname);
   return (
     <>
       <Navbar
@@ -34,19 +37,40 @@ function Header() {
               <Nav
                 variant="pills"
                 className="justify-content-end flex-grow-1 pe-3"
-                defaultActiveKey="/#/catalogo"
               >
                 <Nav.Item>
-                  <Nav.Link href="/#/catalogo"> <FontAwesomeIcon icon={faShop} /> Catalogo</Nav.Link>
+                  <Nav.Link
+                    as={Link}
+                    to="/catalogo"
+                    active={location.pathname === "/catalogo"}
+                  >
+                    <FontAwesomeIcon icon={faShop} /> Catalogo
+                  </Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
-                  <Nav.Link eventKey="link-1"> <FontAwesomeIcon icon={faStar} /> Estampas</Nav.Link>
+                  <Nav.Link
+                    as={Link}
+                    to="/"
+                    active={location.pathname === "/"}
+                  >
+                    <FontAwesomeIcon icon={faStar} /> Estampas
+                  </Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                  <Nav.Link
+                    as={Link}
+                    to="/registro"
+                    active={location.pathname === "/registro"}
+                  >
+                    <FontAwesomeIcon icon={faCartShopping} /> Carrito
+                  </Nav.Link>
                 </Nav.Item>
                 <NavDropdown
-                title={
-                <span>
-                  <FontAwesomeIcon icon={faUser} /> Usuario
-                </span>}
+                  title={
+                    <span>
+                      <FontAwesomeIcon icon={faUser} /> Usuario
+                    </span>
+                  }
                   id={`offcanvasNavbarDropdown-expand-md`}
                 >
                   <NavDropdown.Item href="#action3">Action</NavDropdown.Item>
