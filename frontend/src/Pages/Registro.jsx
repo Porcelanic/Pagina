@@ -6,7 +6,6 @@ import Alert from "react-bootstrap/Alert";
 import { useNavigate, Link } from "react-router-dom";
 import { useState } from "react";
 import Header from "../Components/Header";
-import Footer from "../Components/Footer";
 
 function Registro() {
   const [showAlert, setShowAlert] = useState(false); // Nuevo estado para manejar la visibilidad de la alerta
@@ -176,7 +175,6 @@ function Registro() {
           </Link>
         </Form.Group>
       </div>
-      <Footer/>
     </>
   );
 }

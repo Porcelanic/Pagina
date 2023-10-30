@@ -86,7 +86,7 @@ function Login() {
       >
         {alertText}
       </Alert>
-      <div className="text-center">
+      <div className="text-center content">
         <h1>WaySoft</h1>
         <ThemeSwitcher></ThemeSwitcher>
         <Form.Group className="mb-5 mt-5" controlId="formBasicTipo">
@@ -137,7 +137,6 @@ function Login() {
           </Link>
         </Form.Group>
       </div>
-      <Footer/>
       <ThemeSwitcher/>
     </>
   );
