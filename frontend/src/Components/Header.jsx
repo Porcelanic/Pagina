@@ -18,7 +18,7 @@ function Header() {
         expand="md"
         className="bg-body-tertiary mb-3 border-bottomer"
       >
-        <Container fluid>
+        <Container>
           <Navbar.Brand href="/#/">
             <img
               src="logo.png"
