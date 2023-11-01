@@ -41,8 +41,8 @@ function Header() {
                 <Nav.Item>
                   <Nav.Link
                     as={Link}
-                    to="/catalogo"
-                    active={location.pathname === "/catalogo"}
+                    to="/"
+                    active={location.pathname === "/"}
                   >
                     <FontAwesomeIcon icon={faShop} /> Catalogo
                   </Nav.Link>
@@ -50,8 +50,8 @@ function Header() {
                 <Nav.Item>
                   <Nav.Link
                     as={Link}
-                    to="/"
-                    active={location.pathname === "/"}
+                    to="/login"
+                    active={location.pathname === "/login"}
                   >
                     <FontAwesomeIcon icon={faStar} /> Estampas
                   </Nav.Link>

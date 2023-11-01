@@ -12,7 +12,7 @@ import Catalogo from './Pages/Catalogo';
 const router = createHashRouter([
   {
     path: "/",
-    element: <Login />,
+    element: <Catalogo />,
   },
   {
     path: "/registro",
@@ -20,8 +20,8 @@ const router = createHashRouter([
   }
   ,
   {
-    path: "/catalogo",
-    element: <Catalogo/>,
+    path: "/login",
+    element: <Login/>,
   }
 ])
 

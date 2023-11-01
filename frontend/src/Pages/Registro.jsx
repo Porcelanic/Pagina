@@ -44,7 +44,7 @@ function Registro() {
           setAlertText("El registro se realizó correctamente");
           setAlertState("success");
           setShowAlert(true);
-          setTimeout(() => navigate("/"), 3000);
+          setTimeout(() => navigate("/login"), 3000);
         }
       } else if (cliente.tipoCliente == "Cliente") {
         const response = await fetch("http://localhost:4000/clients", {
@@ -63,7 +63,7 @@ function Registro() {
           setAlertText("El registro se realizó correctamente");
           setAlertState("success");
           setShowAlert(true);
-          setTimeout(() => navigate("/"), 3000);
+          setTimeout(() => navigate("/login"), 3000);
         }
       }
     } catch (error) {
@@ -168,7 +168,7 @@ function Registro() {
         </Form>
         <Form.Group>
           <hr />
-          <Link to={"/"}>
+          <Link to={"/login"}>
             <Button variant="outline-primary" type="submit">
               Login
             </Button>
