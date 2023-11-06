@@ -8,7 +8,7 @@ import Image from "react-bootstrap/Image";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
-import { Button } from 'react-bootstrap';
+import { Button } from "react-bootstrap";
 {
   /* My components */
 }
@@ -56,7 +56,7 @@ function Catalogo() {
   return (
     <>
       <Header />
-
+      <br />
       <Container fluid className=" align-items-center content ">
         <div className="align-self-end">
           <a href="#" className="btn">
@@ -89,7 +89,7 @@ function Catalogo() {
             />
           )}
           <br />
-          <Form > 
+          <Form>
             <Form.Group className="mb-3" controlId="formBasicTipo">
               <Form.Select data-testid="Talla">
                 <option value="">Talla</option>
@@ -108,7 +108,7 @@ function Catalogo() {
               </InputGroup>
               <Form.Text>¿Cuantas de estas camisas quieres?.</Form.Text>
             </Form.Group>
-            <br/>
+            <br />
             <Form.Group>
               <Form.Check
                 disabled
@@ -116,12 +116,12 @@ function Catalogo() {
                 label={`¿Deseas agregar un estampado a la camisa?`}
                 id={`disabled-default-checkbox`}
               />
-              <br/>
+              <br />
               <Button disabled="true">Agregar Estampado</Button>
             </Form.Group>
             <Form.Group>
-            <br/>
-            <Button>Agregar al carrito de compras</Button>
+              <br />
+              <Button>Agregar al carrito de compras</Button>
             </Form.Group>
           </Form>
         </Offcanvas.Body>

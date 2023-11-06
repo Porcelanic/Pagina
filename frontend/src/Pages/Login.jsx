@@ -7,7 +7,6 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Header from "../Components/Header";
-import Footer from "../Components/Footer";
 import './Login.css'
 
 function Login() {
@@ -88,7 +87,6 @@ function Login() {
       </Alert>
       <div className="text-center content">
         <h1>WaySoft</h1>
-        <ThemeSwitcher></ThemeSwitcher>
         <Form.Group className="mb-5 mt-5" controlId="formBasicTipo">
           <Image src="/logo.png" fluid width="50%" />
         </Form.Group>

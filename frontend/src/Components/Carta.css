@@ -1,33 +1,25 @@
 .custom-card {
-    width: 170px;
-    height: 285px;
-    /* Otros estilos según tus necesidades */
-  }
-  
-  .custom-img {
-    width: 170px;
-    height: 280px;
-    object-fit: cover; /* Ajusta la imagen al tamaño sin deformarla */
-    /* Otros estilos según tus necesidades */
-  }
+  width: 170px;
+  height: 285px;
+  /* Otros estilos según tus necesidades */
+}
 
-  .custom-body {
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center; /* Por ejemplo, ajusta la altura del cuerpo del texto */
-        /* Otros estilos según tus necesidades */
-    }
-  
-  .custom-body a {
-    width: 100%;
-    /* Estilos adicionales, si es necesario */
-  }
- 
-  
-  
-  
-  
-  
-  
-  
+.custom-img {
+  width: 170px;
+  height: 290px;
+  object-fit: cover; /* Ajusta la imagen al tamaño sin deformarla */
+  /* Otros estilos según tus necesidades */
+}
+
+.custom-body {
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Por ejemplo, ajusta la altura del cuerpo del texto */
+  /* Otros estilos según tus necesidades */
+}
+
+.custom-body a {
+  width: 100%;
+  /* Estilos adicionales, si es necesario */
+}

@@ -1,0 +1,47 @@
+.carousel-caption {
+  position: absolute;
+  width: 30%;
+  height: 90%;
+  top: 55%;
+  left: 75%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 1);
+  border: white 3px solid;
+  padding: 10px;
+}
+
+.carousel-item img {
+  margin-right: 150px; /* Example: move the image 100px to the right */
+}
+
+.carousel {
+  width: 100%;
+  height: 512px;
+}
+
+.custom-imge {
+  margin-top: 5%;
+  width: 35%;
+  height: 380px;
+  object-fit: cover;
+}
+
+.btn-top {
+  margin-top: 10px;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+  background-color: red !important;  /* Cambia el color de los controles al que desees */
+}
+
+/* Cambiar el color del indicador del Carousel */
+.carousel-indicators .active {
+  background-color: red !important; /* Cambia el color del indicador activo al que desees */
+}
+
+.cart-items {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #ccc;
+}
