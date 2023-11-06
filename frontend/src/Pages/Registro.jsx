@@ -26,11 +26,13 @@ function Registro() {
     setLoading(true);
     try {
       if (cliente.tipoCliente == "Artista") {
+        console.log("hola1");
         const response = await fetch("http://localhost:4000/artists", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(cliente),
         });
+        console.log("hola2");
         const text = await response.text();
         if ("error" == text) {
           setLoading(false);
@@ -47,11 +49,13 @@ function Registro() {
           setTimeout(() => navigate("/login"), 3000);
         }
       } else if (cliente.tipoCliente == "Cliente") {
+        console.log("hola3");
         const response = await fetch("http://localhost:4000/clients", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(cliente),
         });
+        console.log("hola4");
         const text = await response.text();
         if ("error" == text) {
           setShowAlert(true);
