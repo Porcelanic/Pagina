@@ -143,7 +143,7 @@ function Carrito() {
   return (
     <>
       <Header />
-      <br />
+      <br /><br /><br /><br />
       <Container>
         <Row>
           <Col md={9}>
@@ -168,7 +168,7 @@ function Carrito() {
           </Col>
         </Row>
       </Container>
-
+      <br /><br /><br />
       <ThemeSwitcher />
       <Footer />
     </>
