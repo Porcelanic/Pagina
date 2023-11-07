@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Header from "../Components/Header";
-import './Login.css'
+import "../Styles/Login.css";
 
 function Login() {
   const [cliente, setCliente] = useState({
@@ -42,17 +42,17 @@ function Login() {
         cliente.storedPassword = data.password;
 
         if (cliente.password !== cliente.storedPassword) {
-          setAlertText('Cotraseña incorrecta');
-          setAlertState('danger')
+          setAlertText("Cotraseña incorrecta");
+          setAlertState("danger");
           setShowAlert(true);
         } else {
-          setAlertText('Correo y contraseña válidos :D');
-          setAlertState('success')
+          setAlertText("Correo y contraseña válidos :D");
+          setAlertState("success");
           setShowAlert(true);
         }
       } else {
-        setAlertText('Correo no registrado');
-        setAlertState('danger')
+        setAlertText("Correo no registrado");
+        setAlertState("danger");
         setShowAlert(true); // Mostrar la alerta en caso de error
       }
     } catch (error) {
@@ -75,7 +75,7 @@ function Login() {
 
   return (
     <>
-    <Header/>
+      <Header />
       <Alert
         className="alert"
         variant={alertState}
@@ -135,7 +135,7 @@ function Login() {
           </Link>
         </Form.Group>
       </div>
-      <ThemeSwitcher/>
+      <ThemeSwitcher />
     </>
   );
 }

@@ -1,6 +1,6 @@
 import { describe, test, expect, beforeEach } from "vitest";
 import { fireEvent, render, screen } from "@testing-library/react";
-import Registro from "../Registro";
+import Registro from "../Pages/Registro";
 import { vi } from "vitest";
 import { BrowserRouter } from "react-router-dom";
 // ejemplo

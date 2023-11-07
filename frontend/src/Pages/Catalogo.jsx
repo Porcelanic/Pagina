@@ -19,7 +19,7 @@ import ThemeSwitcher from "../Components/ThemeSwitcher";
 {
   /* My css */
 }
-import "./Offcanvas.css";
+import "../Styles/Offcanvas.css";
 {
   /* Hooks */
 }

@@ -10,8 +10,7 @@ import Footer from "../Components/Footer";
 import Header from "../Components/Header";
 import ThemeSwitcher from "../Components/ThemeSwitcher";
 
-import "./Carrito.css";
-
+import "..//Styles/Carrito.css";
 function Carrito() {
   const itemData = [
     {
@@ -139,11 +138,13 @@ function Carrito() {
     </Card.Text>
   ));
 
-
   return (
     <>
       <Header />
-      <br /><br /><br /><br />
+      <br />
+      <br />
+      <br />
+      <br />
       <Container>
         <Row>
           <Col md={9}>
@@ -153,22 +154,22 @@ function Carrito() {
           </Col>
 
           <Col md={3}>
-            <Card className=" text-center" style={{ width: "18rem" } }>
+            <Card className=" text-center" style={{ width: "18rem" }}>
               <Card.Body>
                 <Card.Title>Resumen del carrito</Card.Title>
                 <Card.Subtitle className="mb-2 text-muted">
                   Contenidos
                 </Card.Subtitle>
                 {Contenido}
-                <Button className="btn-dark btn-outline-light">
-                  Pagar
-                </Button>
+                <Button className="btn-dark btn-outline-light">Pagar</Button>
               </Card.Body>
             </Card>
           </Col>
         </Row>
       </Container>
-      <br /><br /><br />
+      <br />
+      <br />
+      <br />
       <ThemeSwitcher />
       <Footer />
     </>
