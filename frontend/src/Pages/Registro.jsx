@@ -26,13 +26,11 @@ function Registro() {
     setLoading(true);
     try {
       if (cliente.tipoCliente == "Artista") {
-        console.log("hola1");
         const response = await fetch("http://localhost:4000/artists", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(cliente),
         });
-        console.log("hola2");
         const text = await response.text();
         if ("error" == text) {
           setLoading(false);
@@ -70,9 +68,7 @@ function Registro() {
           setTimeout(() => navigate("/login"), 3000);
         }
       }
-    } catch (error) {
-      console.log("hola");
-    }
+    } catch (error) {}
   };
 
   const clientChange = (e) =>
@@ -166,6 +162,7 @@ function Registro() {
               !cliente.password ||
               !cliente.tipoCliente
             }
+            data-testid="Registrarme"
           >
             {loading ? loading : "Registrarme"}
           </Button>
