@@ -4,13 +4,7 @@ import Login from "../Pages/Login";
 import { vi } from "vitest";
 import { BrowserRouter } from "react-router-dom";
 
-// describe("Login", () => {
-//   test("Debe sumar dos numeros", () => {
-//     expect(1 + 1).toBe(2);
-//   });
-// });
-
-describe("Login", () => {
+describe("Pruebas unitarias", () => {
   Object.defineProperty(window, "matchMedia", {
     writable: true,
     value: vi.fn().mockImplementation((query) => ({
@@ -39,6 +33,59 @@ describe("Login", () => {
   });
 
   // -------------------------- PRUEBA 2 ----------------------------
+  test("El correo debe ser menor a 45 caracteres", async () => {
+    // Completa el formulario de login
+    fireEvent.change(screen.getByTestId("Correo"), {
+      target: { value: "1234567890123456789012345678901234@example.com" },
+    });
+    fireEvent.change(screen.getByTestId("Contraseña"), {
+      target: { value: "123456" },
+    });
+
+    // Envía el formulario
+    fireEvent.click(screen.getByText("Iniciar sesión"));
+
+    // Espera a que se complete el envio
+    await screen.findByText("El correo es mayor a 45 caracteres");
+
+    // Verifica que el usuario se haya registrado correctamente
+    expect(
+      screen.getByText("El correo es mayor a 45 caracteres")
+    ).toBeDefined();
+  });
+
+  // -------------------------- PRUEBA 3 ----------------------------
+  test("La contraseña debe ser menor a 45 caracteres", async () => {
+    // Completa el formulario de login
+    fireEvent.change(screen.getByTestId("Correo"), {
+      target: { value: "juanperez@example.com" },
+    });
+    fireEvent.change(screen.getByTestId("Contraseña"), {
+      target: { value: "1234567890123456789012345678901234567890123456" },
+    });
+
+    // Envía el formulario
+    fireEvent.click(screen.getByText("Iniciar sesión"));
+
+    // Espera a que se complete el envio
+    await screen.findByText("La contraseña es mayor a 45 caracteres");
+
+    // Verifica que el usuario se haya registrado correctamente
+    expect(
+      screen.getByText("La contraseña es mayor a 45 caracteres")
+    ).toBeDefined();
+  });
+});
+
+describe("Pruebas de integracion", () => {
+  // -------------------------- PRUEBA 4 ----------------------------
+  test("Deben cargar los estilos ", () => {
+    expect(screen.findByText("content")).toBeDefined();
+    expect(screen.findByText("primary")).toBeDefined();
+    expect(screen.findByText("text-center")).toBeDefined();
+  });
+
+  // -------------------------- PRUEBA 5 ----------------------------
   test("El correo es incorrecto", async () => {
     // Completa el formulario de login
     fireEvent.change(screen.getByTestId("Correo"), {
@@ -58,7 +105,7 @@ describe("Login", () => {
     expect(screen.getByText("Correo no registrado")).toBeDefined();
   });
 
-  // -------------------------- PRUEBA 3 ----------------------------
+  // -------------------------- PRUEBA 6 ----------------------------
   test("La contraseña es incorrecta", async () => {
     // Completa el formulario de login
     fireEvent.change(screen.getByTestId("Correo"), {
@@ -78,7 +125,7 @@ describe("Login", () => {
     expect(screen.getByText("Cotraseña incorrecta")).toBeDefined();
   });
 
-  // -------------------------- PRUEBA 3 ----------------------------
+  // -------------------------- PRUEBA 7 ----------------------------
   test("El login es exitoso", async () => {
     // Completa el formulario de login
     fireEvent.change(screen.getByTestId("Correo"), {

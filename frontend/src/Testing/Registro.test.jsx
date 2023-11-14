@@ -51,11 +51,11 @@ describe("Pruebas unitarias", () => {
     // Envía el formulario
     fireEvent.click(screen.getByTestId("Registrarme"));
 
-    //   await screen.findByText("El registro se realizó correctamente");
+    await screen.findByText("El nombre es mayor a 45 caracteres");
 
-    expect(screen.queryByText("El registro se realizó correctamente")).toBe(
-      null
-    );
+    expect(
+      screen.getByText("El nombre es mayor a 45 caracteres")
+    ).toBeDefined();
   });
 
   // -------------------------- PRUEBA 3 ----------------------------
@@ -76,11 +76,11 @@ describe("Pruebas unitarias", () => {
     // Envía el formulario
     fireEvent.click(screen.getByTestId("Registrarme"));
 
-    //   await screen.findByText("El registro se realizó correctamente");
+    await screen.findByText("El correo es mayor a 45 caracteres");
 
-    expect(screen.queryByText("El registro se realizó correctamente")).toBe(
-      null
-    );
+    expect(
+      screen.getByText("El correo es mayor a 45 caracteres")
+    ).toBeDefined();
   });
 
   // -------------------------- PRUEBA 4 ----------------------------
@@ -101,11 +101,11 @@ describe("Pruebas unitarias", () => {
     // Envía el formulario
     fireEvent.click(screen.getByTestId("Registrarme"));
 
-    //   await screen.findByText("El registro se realizó correctamente");
+    await screen.findByText("La contraseña es mayor a 45 caracteres");
 
-    expect(screen.queryByText("El registro se realizó correctamente")).toBe(
-      null
-    );
+    expect(
+      screen.getByText("La contraseña es mayor a 45 caracteres")
+    ).toBeDefined();
   });
 
   // -------------------------- PRUEBA 5 ----------------------------

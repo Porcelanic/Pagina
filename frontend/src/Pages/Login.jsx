@@ -34,26 +34,36 @@ function Login() {
 
   const loadCliente = async (email) => {
     try {
-      const res = await fetch(`http://localhost:4000/clients/${email}`);
-      if (res.ok) {
-        const data = await res.json();
-        cliente.nombre = data.nombre;
-        cliente.email = data.email;
-        cliente.storedPassword = data.password;
-
-        if (cliente.password !== cliente.storedPassword) {
-          setAlertText("Cotraseña incorrecta");
-          setAlertState("danger");
-          setShowAlert(true);
-        } else {
-          setAlertText("Correo y contraseña válidos :D");
-          setAlertState("success");
-          setShowAlert(true);
-        }
-      } else {
-        setAlertText("Correo no registrado");
+      if (cliente.email.length > 45) {
+        setAlertText("El correo es mayor a 45 caracteres");
         setAlertState("danger");
-        setShowAlert(true); // Mostrar la alerta en caso de error
+        setShowAlert(true);
+      } else if (cliente.password.length > 45) {
+        setAlertText("La contraseña es mayor a 45 caracteres");
+        setAlertState("danger");
+        setShowAlert(true);
+      } else {
+        const res = await fetch(`http://localhost:4000/clients/${email}`);
+        if (res.ok) {
+          const data = await res.json();
+          cliente.nombre = data.nombre;
+          cliente.email = data.email;
+          cliente.storedPassword = data.password;
+
+          if (cliente.password !== cliente.storedPassword) {
+            setAlertText("Cotraseña incorrecta");
+            setAlertState("danger");
+            setShowAlert(true);
+          } else {
+            setAlertText("Correo y contraseña válidos :D");
+            setAlertState("success");
+            setShowAlert(true);
+          }
+        } else {
+          setAlertText("Correo no registrado");
+          setAlertState("danger");
+          setShowAlert(true); // Mostrar la alerta en caso de error
+        }
       }
     } catch (error) {
       setShowAlert(true); // Mostrar la alerta en caso de error
@@ -77,7 +87,7 @@ function Login() {
     <>
       <Header />
       <Alert
-        className="alert"
+        className="alert mt-5"
         variant={alertState}
         show={showAlert}
         onClose={() => setShowAlert(false)}
@@ -98,7 +108,6 @@ function Login() {
               placeholder="Correo electrónico"
               onChange={clientChange}
               value={cliente.email}
-              maxLength={45}
               data-testid="Correo"
             />
             <Form.Text className="text-muted"></Form.Text>
@@ -111,7 +120,6 @@ function Login() {
               name="password"
               onChange={clientChange}
               value={cliente.password}
-              maxLength={45}
               data-testid="Contraseña"
             />
           </Form.Group>
