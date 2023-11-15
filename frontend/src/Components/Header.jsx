@@ -14,7 +14,6 @@ import { Link, useLocation } from "react-router-dom";
 
 function Header() {
   const location = useLocation();
-  console.log(location.pathname);
   return (
     <>
       <Navbar

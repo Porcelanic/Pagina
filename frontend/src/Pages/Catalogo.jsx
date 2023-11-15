@@ -36,7 +36,14 @@ function Catalogo() {
   ];
 
   const Cartas = cardData.map((data) => (
-    <Col key={data.id} className="text-center">
+    <Col
+      key={data.id}
+      xs="12"
+      sm="6"
+      md="4"
+      lg="3"
+      className="text-center mt-3"
+    >
       <div onClick={() => handleShow(data.img)}>
         <Carta img={data.img} text={data.text} />
       </div>

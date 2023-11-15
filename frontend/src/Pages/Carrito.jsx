@@ -70,7 +70,7 @@ function Carrito() {
       precio: 18000,
     },
     {
-      id: 7,
+      id: 8,
       img: "/Tottenham.jpg",
       talla: "L",
       cantidad: 1,
@@ -78,7 +78,7 @@ function Carrito() {
       precio: 18000,
     },
     {
-      id: 7,
+      id: 9,
       img: "/Tottenham.jpg",
       talla: "L",
       cantidad: 1,

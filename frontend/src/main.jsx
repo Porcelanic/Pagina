@@ -9,7 +9,6 @@ import Login from "./Pages/Login.jsx";
 import Registro from "./Pages/Registro.jsx";
 import Catalogo from "./Pages/Catalogo.jsx";
 import Carrito from "./Pages/Carrito.jsx";
-
 const router = createHashRouter([
   {
     path: "/",
@@ -25,7 +24,7 @@ const router = createHashRouter([
   },
   {
     path: "/carrito",
-    element: <Carrito/>
+    element: <Carrito />,
   },
 ]);
 
