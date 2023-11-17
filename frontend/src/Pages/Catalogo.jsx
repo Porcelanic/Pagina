@@ -32,7 +32,9 @@ function Catalogo() {
     { id: 3, img: "/RM.jpg", text: "Real Madrid 2023" },
     { id: 4, img: "/Bayer.png", text: "Bayer Much 2023" },
     { id: 5, img: "/Liverpool.jpeg", text: "Liverpool 2023" },
-    { id: 6, img: "/Tottenham.jpg", text: "Tottenham 2023" },
+    { id: 6, img: "/Bayer.png", text: "Bayer Much 2023" },
+    { id: 7, img: "/Liverpool.jpeg", text: "Liverpool 2023" },
+    { id: 8, img: "/Tottenham.jpg", text: "Tottenham 2023" },
   ];
 
   const Cartas = cardData.map((data) => (

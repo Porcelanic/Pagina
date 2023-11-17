@@ -84,7 +84,7 @@ function Registro() {
           }
         }
       }
-    } catch (error) {}
+    } catch (error) {console.log("Error")}
   };
 
   const clientChange = (e) =>
