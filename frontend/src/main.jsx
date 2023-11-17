@@ -8,6 +8,7 @@ import { RouterProvider, createHashRouter } from 'react-router-dom'
 import Login from './Pages/Login.jsx'
 import Registro from './Pages/Registro.jsx'
 import Catalogo from './Pages/Catalogo';
+import Pago from './Pages/Pago.jsx';
 
 const router = createHashRouter([
   {
@@ -21,7 +22,11 @@ const router = createHashRouter([
   ,
   {
     path: "/login",
-    element: <Login/>,
+    element: <Login />,
+  },
+  {
+    path: "/interfazPago",
+    element: <Pago />
   }
 ])
 

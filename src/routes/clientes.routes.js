@@ -7,6 +7,10 @@ import {
   createArtista,
   getArtista,
 } from "../controllers/artistaDAO.controller.js";
+import {
+  createDireccion
+} from '../controllers/direccionDAO.controller.js';
+
 const router = Router();
 
 // Rutas para las consultas en cliente
@@ -20,5 +24,9 @@ router.get("/clients/:email", getCliente);
 router.post("/artists", createArtista);
 
 router.get("/artists/:email", getArtista);
+
+// Ruta para insertar direccion
+
+router.post("/addresses", createDireccion);
 
 export default router;
