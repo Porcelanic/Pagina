@@ -13,6 +13,30 @@ import {
 import { Link, useLocation } from "react-router-dom";
 
 function Header() {
+  const user = () => {
+    return (
+      <span>
+        <FontAwesomeIcon icon={faUser} /> {localStorage.getItem('username') != null ? localStorage.getItem('username') : "Usuario"}
+      </span>
+    );
+  };
+
+  const reset = () =>{
+    localStorage.removeItem('username');
+    window.location.reload();
+  }
+
+  const cerrarsesion = () =>{
+    return(
+      <>
+        <NavDropdown.Divider />
+        <NavDropdown.Item onClick={reset}>
+          Cerrar Sesion
+        </NavDropdown.Item>
+      </>
+    );
+  }
+
   const location = useLocation();
   return (
     <>
@@ -66,21 +90,15 @@ function Header() {
                   </Nav.Link>
                 </Nav.Item>
                 <NavDropdown
-                  title={
-                    <span>
-                      <FontAwesomeIcon icon={faUser} /> Usuario
-                    </span>
-                  }
+                  title={user()}
+                  
                   id={`offcanvasNavbarDropdown-expand-md`}
                 >
                   <NavDropdown.Item href="#action3">Action</NavDropdown.Item>
                   <NavDropdown.Item href="#action4">
                     Another action
                   </NavDropdown.Item>
-                  <NavDropdown.Divider />
-                  <NavDropdown.Item href="#action5">
-                    Something else here
-                  </NavDropdown.Item>
+                  {localStorage.getItem('username') != null ? cerrarsesion() : <></>}
                 </NavDropdown>
               </Nav>
             </Offcanvas.Body>

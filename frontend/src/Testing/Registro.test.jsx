@@ -1,4 +1,4 @@
-import { describe, test, expect, beforeEach } from "vitest";
+import { describe, test, expect } from "vitest";
 import { fireEvent, render, screen } from "@testing-library/react";
 import Registro from "../Pages/Registro";
 import { vi } from "vitest";
@@ -124,7 +124,7 @@ describe("Pruebas de integracion", () => {
     expect(screen.findByText("text-center")).toBeDefined();
   });
 
-  // -------------------------- PRUEBA 7 ----------------------------
+  // // -------------------------- PRUEBA 7 ----------------------------
   // test("El usuario debe registrarse correctamente", async () => {
   //   // Completa el formulario de registro
   //   fireEvent.change(screen.getByTestId("Nombre"), {
