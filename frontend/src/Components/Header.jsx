@@ -4,26 +4,30 @@ import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faShop, faStar, faUser, faCartShopping } from "@fortawesome/free-solid-svg-icons";
-import { Link, useLocation} from "react-router-dom";
+import {
+  faShop,
+  faStar,
+  faUser,
+  faCartShopping,
+} from "@fortawesome/free-solid-svg-icons";
+import { Link, useLocation } from "react-router-dom";
 
 function Header() {
   const location = useLocation();
-  console.log(location.pathname);
   return (
     <>
       <Navbar
         sticky="top"
         key="md"
         expand="md"
-        className="bg-body-tertiary mb-3 border-bottomer"
+        className="bg-body-tertiary mb-5 border-bottomer"
       >
         <Container>
           <Navbar.Brand href="/#/">
             <img
               src="logo.png"
-              width="30"
-              height="30"
+              width="35"
+              height="35"
               className="d-inline-block align-top"
             />{" "}
             WaySoft
@@ -39,11 +43,7 @@ function Header() {
                 className="justify-content-end flex-grow-1 pe-3"
               >
                 <Nav.Item>
-                  <Nav.Link
-                    as={Link}
-                    to="/"
-                    active={location.pathname === "/"}
-                  >
+                  <Nav.Link as={Link} to="/" active={location.pathname === "/"}>
                     <FontAwesomeIcon icon={faShop} /> Catalogo
                   </Nav.Link>
                 </Nav.Item>
@@ -59,8 +59,8 @@ function Header() {
                 <Nav.Item>
                   <Nav.Link
                     as={Link}
-                    to="/registro"
-                    active={location.pathname === "/registro"}
+                    to="/carrito"
+                    active={location.pathname === "/carrito"}
                   >
                     <FontAwesomeIcon icon={faCartShopping} /> Carrito
                   </Nav.Link>

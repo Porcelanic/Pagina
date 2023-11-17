@@ -1,6 +1,6 @@
 import { Col, Card } from "react-bootstrap";
 
-import "./Carta.css";
+import "../Styles/Carta.css";
 
 function Carta(prop) {
   return (

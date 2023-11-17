@@ -9,7 +9,7 @@ import Login from './Pages/Login.jsx'
 import Registro from './Pages/Registro.jsx'
 import Catalogo from './Pages/Catalogo';
 import Pago from './Pages/Pago.jsx';
-
+import Carrito from "./Pages/Carrito.jsx";
 const router = createHashRouter([
   {
     path: "/",
@@ -18,8 +18,7 @@ const router = createHashRouter([
   {
     path: "/registro",
     element: <Registro />,
-  }
-  ,
+  },
   {
     path: "/login",
     element: <Login />,
@@ -27,11 +26,15 @@ const router = createHashRouter([
   {
     path: "/interfazPago",
     element: <Pago />
-  }
-])
+  },
+  {
+    path: "/carrito",
+    element: <Carrito />,
+  },
+]);
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <RouterProvider router={router} />
-  </React.StrictMode>,
-)
+  </React.StrictMode>
+);

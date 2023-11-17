@@ -25,50 +25,66 @@ function Registro() {
     e.preventDefault();
     setLoading(true);
     try {
-      if (cliente.tipoCliente == "Artista") {
-        const response = await fetch("http://localhost:4000/artists", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(cliente),
-        });
-        const text = await response.text();
-        if ("error" == text) {
-          setLoading(false);
-          setShowAlert(true);
-          setAlertText("El usuario está duplicado");
-          setAlertState("danger");
-          setLoading(false);
-        } else {
-          setLoading(false);
-          setLoading(false);
-          setAlertText("El registro se realizó correctamente");
-          setAlertState("success");
-          setShowAlert(true);
-          setTimeout(() => navigate("/login"), 3000);
-        }
-      } else if (cliente.tipoCliente == "Cliente") {
-        const response = await fetch("http://localhost:4000/clients", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(cliente),
-        });
-        const text = await response.text();
-        if ("error" == text) {
-          setShowAlert(true);
-          setAlertText("El usuario está duplicado");
-          setAlertState("danger");
-          setLoading(false);
-        } else {
-          setLoading(false);
-          setAlertText("El registro se realizó correctamente");
-          setAlertState("success");
-          setShowAlert(true);
-          setTimeout(() => navigate("/login"), 3000);
+      if (cliente.nombre.length > 45) {
+        setShowAlert(true);
+        setAlertText("El nombre es mayor a 45 caracteres");
+        setAlertState("danger");
+        setLoading(false);
+      } else if (cliente.email.length > 45) {
+        setShowAlert(true);
+        setAlertText("El correo es mayor a 45 caracteres");
+        setAlertState("danger");
+        setLoading(false);
+      } else if (cliente.password.length > 45) {
+        setShowAlert(true);
+        setAlertText("La contraseña es mayor a 45 caracteres");
+        setAlertState("danger");
+        setLoading(false);
+      } else {
+        if (cliente.tipoCliente == "Artista") {
+          const response = await fetch("http://localhost:4000/artists", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(cliente),
+          });
+          const text = await response.text();
+          if ("error" == text) {
+            setLoading(false);
+            setShowAlert(true);
+            setAlertText("El usuario está duplicado");
+            setAlertState("danger");
+            setLoading(false);
+          } else {
+            setLoading(false);
+            setLoading(false);
+            setAlertText("El registro se realizó correctamente");
+            setAlertState("success");
+            setShowAlert(true);
+            setTimeout(() => navigate("/login"), 3000);
+          }
+        } else if (cliente.tipoCliente == "Cliente") {
+          const response = await fetch("http://localhost:4000/clients", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(cliente),
+          });
+
+          const text = await response.text();
+          if ("error" == text) {
+            setShowAlert(true);
+            setAlertText("El usuario está duplicado");
+            setAlertState("danger");
+            setLoading(false);
+          } else {
+            setLoading(false);
+            setAlertText("El registro se realizó correctamente");
+            setAlertState("success");
+            setShowAlert(true);
+            setTimeout(() => navigate("/login"), 3000);
+          }
         }
       }
-    } catch (error) {
-      console.log("hola");
-    }
+    } catch (error) {}
   };
 
   const clientChange = (e) =>
@@ -83,6 +99,7 @@ function Registro() {
       <div className="text-center content">
         <ThemeSwitcher />
         <Alert
+          className="mt-5"
           variant={alertState}
           show={showAlert}
           onClose={() => setShowAlert(false)}
@@ -116,7 +133,6 @@ function Registro() {
               placeholder="Nombre"
               onChange={clientChange}
               value={cliente.nombre}
-              maxLength={45}
               data-testid="Nombre"
             />
             <Form.Text>
@@ -131,7 +147,6 @@ function Registro() {
               placeholder="Correo electrónico"
               onChange={clientChange}
               value={cliente.email}
-              maxLength={45}
               data-testid="Correo"
             />
             <Form.Text className="text-muted">
@@ -146,7 +161,6 @@ function Registro() {
               name="password"
               onChange={clientChange}
               value={cliente.password}
-              maxLength={45}
               data-testid="Contraseña"
             />
             <Form.Text className="text-muted">
@@ -162,6 +176,7 @@ function Registro() {
               !cliente.password ||
               !cliente.tipoCliente
             }
+            data-testid="Registrarme"
           >
             {loading ? loading : "Registrarme"}
           </Button>

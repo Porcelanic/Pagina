@@ -7,8 +7,7 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Header from "../Components/Header";
-import Footer from "../Components/Footer";
-import './Login.css'
+import "../Styles/Login.css";
 
 function Login() {
   const [cliente, setCliente] = useState({
@@ -35,26 +34,36 @@ function Login() {
 
   const loadCliente = async (email) => {
     try {
-      const res = await fetch(`http://localhost:4000/clients/${email}`);
-      if (res.ok) {
-        const data = await res.json();
-        cliente.nombre = data.nombre;
-        cliente.email = data.email;
-        cliente.storedPassword = data.password;
-
-        if (cliente.password !== cliente.storedPassword) {
-          setAlertText('Cotraseña incorrecta');
-          setAlertState('danger')
-          setShowAlert(true);
-        } else {
-          setAlertText('Correo y contraseña válidos :D');
-          setAlertState('success')
-          setShowAlert(true);
-        }
+      if (cliente.email.length > 45) {
+        setAlertText("El correo es mayor a 45 caracteres");
+        setAlertState("danger");
+        setShowAlert(true);
+      } else if (cliente.password.length > 45) {
+        setAlertText("La contraseña es mayor a 45 caracteres");
+        setAlertState("danger");
+        setShowAlert(true);
       } else {
-        setAlertText('Correo no registrado');
-        setAlertState('danger')
-        setShowAlert(true); // Mostrar la alerta en caso de error
+        const res = await fetch(`http://localhost:4000/clients/${email}`);
+        if (res.ok) {
+          const data = await res.json();
+          cliente.nombre = data.nombre;
+          cliente.email = data.email;
+          cliente.storedPassword = data.password;
+
+          if (cliente.password !== cliente.storedPassword) {
+            setAlertText("Cotraseña incorrecta");
+            setAlertState("danger");
+            setShowAlert(true);
+          } else {
+            setAlertText("Correo y contraseña válidos :D");
+            setAlertState("success");
+            setShowAlert(true);
+          }
+        } else {
+          setAlertText("Correo no registrado");
+          setAlertState("danger");
+          setShowAlert(true); // Mostrar la alerta en caso de error
+        }
       }
     } catch (error) {
       setShowAlert(true); // Mostrar la alerta en caso de error
@@ -76,9 +85,9 @@ function Login() {
 
   return (
     <>
-    <Header/>
+      <Header />
       <Alert
-        className="alert"
+        className="alert mt-5"
         variant={alertState}
         show={showAlert}
         onClose={() => setShowAlert(false)}
@@ -88,7 +97,6 @@ function Login() {
       </Alert>
       <div className="text-center content">
         <h1>WaySoft</h1>
-        <ThemeSwitcher></ThemeSwitcher>
         <Form.Group className="mb-5 mt-5" controlId="formBasicTipo">
           <Image src="/logo.png" fluid width="50%" />
         </Form.Group>
@@ -100,7 +108,6 @@ function Login() {
               placeholder="Correo electrónico"
               onChange={clientChange}
               value={cliente.email}
-              maxLength={45}
               data-testid="Correo"
             />
             <Form.Text className="text-muted"></Form.Text>
@@ -113,7 +120,6 @@ function Login() {
               name="password"
               onChange={clientChange}
               value={cliente.password}
-              maxLength={45}
               data-testid="Contraseña"
             />
           </Form.Group>
@@ -137,7 +143,7 @@ function Login() {
           </Link>
         </Form.Group>
       </div>
-      <ThemeSwitcher/>
+      <ThemeSwitcher />
     </>
   );
 }
