@@ -10,6 +10,9 @@ import Footer from "../Components/Footer";
 import Header from "../Components/Header";
 import ThemeSwitcher from "../Components/ThemeSwitcher";
 
+import { Link } from "react-router-dom";
+
+
 import "..//Styles/Carrito.css";
 function Carrito() {
   const itemData = [
@@ -115,6 +118,14 @@ function Carrito() {
     );
   };
 
+  function calcularTotal() {
+    let total = 0
+    for (let i = 0; i < itemData.length; i++) {
+      total += itemData[i].cantidad * itemData[i].precio;
+    }
+    localStorage.setItem('valor', total);
+  }
+
   const Items = itemData.map((data) => (
     <Carousel.Item key={data.id}>
       <Image src={data.img} className=" custom-imge" alt="Selected Image" />
@@ -161,7 +172,9 @@ function Carrito() {
                   Contenidos
                 </Card.Subtitle>
                 {Contenido}
-                <Button className="btn-dark btn-outline-light">Pagar</Button>
+                <Link to={"/interfazPago"}>
+                  <Button onClick={calcularTotal} className="btn-dark btn-outline-light">Continuar con el pago</Button>
+                </Link>
               </Card.Body>
             </Card>
           </Col>
