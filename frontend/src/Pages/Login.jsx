@@ -58,7 +58,9 @@ function Login() {
             setAlertText("Correo y contraseña válidos :D");
             setAlertState("success");
             setShowAlert(true);
-            localStorage.setItem('username', cliente.nombre);
+            localStorage.setItem("email", cliente.email);
+            localStorage.setItem("username", cliente.nombre);
+            setTimeout(() => window.location.reload(), 3000);
           }
         } else {
           setAlertText("Correo no registrado");

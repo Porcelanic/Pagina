@@ -4,12 +4,12 @@ import "../Styles/Carta.css";
 
 function Carta(prop) {
   return (
-    <Col className="text-center">
-      <Card className="custom-card">
+    <Col className="text-center centered">
+      <Card className="custom-card ">
         <Card.Img className="custom-img" variant="top" src={prop.img} />
-        <Card.Body className="custom-body d-flex align-items-center justify-content-center">
+        <Card.Body>
           <Card.Text>
-            <a>{prop.text}</a>
+            {prop.text} ${prop.price}
           </Card.Text>
         </Card.Body>
       </Card>

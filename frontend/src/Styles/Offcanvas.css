@@ -11,3 +11,18 @@
   min-width: 320px;
   min-height: 70vh;
 }
+
+.width-100vw{
+  width: 100vw ;
+}
+
+.bordered{
+  border: 1px white solid;
+  border-radius: 5px;
+}
+
+.centered {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

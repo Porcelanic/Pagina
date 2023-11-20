@@ -5,98 +5,30 @@ import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
+import InputGroup from "react-bootstrap/InputGroup";
+import Form from "react-bootstrap/Form";
 
 import Footer from "../Components/Footer";
 import Header from "../Components/Header";
 import ThemeSwitcher from "../Components/ThemeSwitcher";
 
+import { Link } from "react-router-dom";
+
 import "..//Styles/Carrito.css";
 function Carrito() {
-  const itemData = [
-    {
-      id: 1,
-      img: "/RM.jpg",
-      talla: "L",
-      cantidad: 2,
-      descr: "Real Madrid 2023",
-      precio: 18000,
-    },
-    {
-      id: 2,
-      img: "/Bayer.png",
-      talla: "M",
-      cantidad: 3,
-      descr: "Bayer Much 2023",
-      precio: 18000,
-    },
-    {
-      id: 3,
-      img: "/Liverpool.jpeg",
-      talla: "XL",
-      cantidad: 2,
-      descr: "Liverpool 2023",
-      precio: 18000,
-    },
-    {
-      id: 4,
-      img: "/Tottenham.jpg",
-      talla: "S",
-      cantidad: 1,
-      descr: "Tottenham 2023",
-      precio: 18000,
-    },
-    {
-      id: 5,
-      img: "/Bayer.png",
-      talla: "XS",
-      cantidad: 3,
-      descr: "Bayer Much 2023",
-      precio: 18000,
-    },
-    {
-      id: 6,
-      img: "/Liverpool.jpeg",
-      talla: "M",
-      cantidad: 2,
-      descr: "Liverpool 2023",
-      precio: 18000,
-    },
-    {
-      id: 7,
-      img: "/Tottenham.jpg",
-      talla: "L",
-      cantidad: 1,
-      descr: "Tottenham 2023",
-      precio: 18000,
-    },
-    {
-      id: 8,
-      img: "/Tottenham.jpg",
-      talla: "L",
-      cantidad: 1,
-      descr: "Tottenham 2023",
-      precio: 18000,
-    },
-    {
-      id: 9,
-      img: "/Tottenham.jpg",
-      talla: "L",
-      cantidad: 1,
-      descr: "Tottenham 2023",
-      precio: 18000,
-    },
-  ];
+  const itemData = JSON.parse(localStorage.getItem("itemData"));
 
   const plural = (data) => {
     return (
       <div>
-        <h3 style={{ color: "white" }}>Informacion de las camisas</h3>
+        <h3 className="text-light">Informacion de las camisas</h3>
         <br />
-        <p style={{ color: "white" }}>Talla de las camisas: {data.talla}</p>
-        <p style={{ color: "white" }}>{data.descr}</p>
-        <p style={{ color: "white" }}>Cantidad de camisas: {data.cantidad}</p>
-        <p style={{ color: "white" }}>
-          Precio total: {data.cantidad * data.precio}
+        <p className="text-light">Talla de las camisas: {data.talla}</p>
+        <p className="text-light">{data.text}</p>
+        <p className="text-light">Valor unitario: ${data.price}</p>
+        <p className="text-light">Cantidad de camisas: {data.cantidad}</p>
+        <p className="text-light">
+          Precio total: ${data.cantidad * data.price}
         </p>
       </div>
     );
@@ -105,38 +37,122 @@ function Carrito() {
   const singular = (data) => {
     return (
       <div>
-        <h3 style={{ color: "white" }}>Informacion de las camisas</h3>
+        <h3 className="text-light">Informacion de las camisas</h3>
         <br />
-        <p style={{ color: "white" }}>Talla de las camisas: {data.talla}</p>
-        <p style={{ color: "white" }}>{data.descr}</p>
-        <p style={{ color: "white" }}>Precio: {data.precio}</p>
+        <p className="text-light">Talla de las camisas: {data.talla}</p>
+        <p className="text-light">{data.text}</p>
+        <p className="text-light">Precio: {data.price}</p>
         <br />
       </div>
     );
   };
 
-  const Items = itemData.map((data) => (
-    <Carousel.Item key={data.id}>
-      <Image src={data.img} className=" custom-imge" alt="Selected Image" />
-      <Carousel.Caption>
-        {data.cantidad > 1 ? plural(data) : singular(data)};
-        <Button className="btn-dark btn-outline-light">
-          Eliminar del carrito
-        </Button>
-        <Button className="btn-dark btn-outline-light btn-top">
-          Añadir una mayor cantidad
-        </Button>
-      </Carousel.Caption>
-    </Carousel.Item>
-  ));
+  function calcularTotal() {
+    let total = 0;
+    for (let i = 0; i < itemData.length; i++) {
+      total += itemData[i].cantidad * itemData[i].precio;
+    }
+    localStorage.setItem("valor", total);
+  }
 
-  const Contenido = itemData.map((data) => (
-    <Card.Text className=" cart-items" key={data.id}>
-      <span>{data.descr}</span>
-      <span>{data.talla}</span>
-      <span>{data.cantidad}</span>
-    </Card.Text>
-  ));
+  const eliminarDelCarrito = (posicion) => {
+    itemData.splice(posicion, 1);
+    localStorage.setItem("itemData", JSON.stringify(itemData));
+    window.location.reload();
+  };
+
+  const cambiarCantidad = (posicion) => {
+    let cantidad = document.querySelector("#cantidad").value;
+    itemData[posicion].cantidad = cantidad;
+    localStorage.setItem("itemData", JSON.stringify(itemData));
+    window.location.reload();
+  };
+
+  const Items =
+    itemData &&
+    itemData.map((data) => (
+      <Carousel.Item key={data.id}>
+        <Image src={data.img} className=" custom-imge" alt="Selected Image" />
+        <Carousel.Caption>
+          {data.cantidad > 1 ? plural(data) : singular(data)};
+          <Button
+            className="btn-dark btn-outline-light"
+            onClick={() => eliminarDelCarrito(itemData.indexOf(data))}
+          >
+            Eliminar del carrito
+          </Button>
+          <InputGroup className="my-3">
+            <Form.Control
+              aria-label="Recipient's username"
+              aria-describedby="basic-addon2"
+              type="number"
+              defaultValue={data.cantidad}
+              id="cantidad"
+            />
+            <Button
+              variant="outline-light"
+              onClick={() => cambiarCantidad(itemData.indexOf(data))}
+            >
+              Cambiar cantidad
+            </Button>
+          </InputGroup>
+        </Carousel.Caption>
+      </Carousel.Item>
+    ));
+
+  const Contenido =
+    itemData &&
+    itemData.map((data) => (
+      <Card.Text className=" cart-items" key={data.id}>
+        <span>{data.text}</span>
+        <span>{data.talla}</span>
+        <span>{data.cantidad}</span>
+      </Card.Text>
+    ));
+
+  const cargarArticulos = () => {
+    if (itemData && itemData.length !== 0) {
+      return (
+        <>
+          <Row>
+            <Col md={9}>
+              <Carousel className=" text-center" interval={null}>
+                {Items}
+              </Carousel>
+            </Col>
+
+            <Col md={3}>
+              <Card className=" text-center" style={{ width: "18rem" }}>
+                <Card.Body>
+                  <Card.Title>Resumen del carrito</Card.Title>
+                  <Card.Subtitle className="mb-2 text-muted">
+                    Contenidos
+                  </Card.Subtitle>
+                  {Contenido}
+                  <Link to={"/interfazPago"}>
+                    <Button
+                      onClick={calcularTotal}
+                      className="btn-dark btn-outline-light"
+                    >
+                      Continuar con el pago
+                    </Button>
+                  </Link>
+                </Card.Body>
+              </Card>
+            </Col>
+          </Row>
+        </>
+      );
+    } else {
+      return (
+        <>
+          <div>
+            <h1>No hay nada en el carrito :(</h1>
+          </div>
+        </>
+      );
+    }
+  };
 
   return (
     <>
@@ -145,28 +161,7 @@ function Carrito() {
       <br />
       <br />
       <br />
-      <Container>
-        <Row>
-          <Col md={9}>
-            <Carousel className=" text-center" interval={null}>
-              {Items}
-            </Carousel>
-          </Col>
-
-          <Col md={3}>
-            <Card className=" text-center" style={{ width: "18rem" }}>
-              <Card.Body>
-                <Card.Title>Resumen del carrito</Card.Title>
-                <Card.Subtitle className="mb-2 text-muted">
-                  Contenidos
-                </Card.Subtitle>
-                {Contenido}
-                <Button className="btn-dark btn-outline-light">Pagar</Button>
-              </Card.Body>
-            </Card>
-          </Col>
-        </Row>
-      </Container>
+      <Container>{cargarArticulos()}</Container>
       <br />
       <br />
       <br />
