@@ -18,3 +18,10 @@
 .border-toper{
   border-top: white 1px solid ;
 }
+
+.bottom-fixed{
+  position: fixed;
+  bottom: 0;
+  width: 100vw
+  ;
+}
