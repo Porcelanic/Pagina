@@ -140,7 +140,6 @@ function Header() {
                 >
                   <Nav.Item>
                     <Nav.Link>
-                      <FontAwesomeIcon />{" "}
                       {"😎 Artista: " + localStorage.username}
                     </Nav.Link>
                   </Nav.Item>
