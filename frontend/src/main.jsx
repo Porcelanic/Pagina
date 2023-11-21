@@ -1,15 +1,16 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import './index.css'
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/js/bootstrap.min.js';
-import { RouterProvider, createHashRouter } from 'react-router-dom'
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.min.js";
+import { RouterProvider, createHashRouter } from "react-router-dom";
 
-import Login from './Pages/Login.jsx'
-import Registro from './Pages/Registro.jsx'
-import Catalogo from './Pages/Catalogo';
-import Pago from './Pages/Pago.jsx';
+import Login from "./Pages/Login.jsx";
+import Registro from "./Pages/Registro.jsx";
+import Catalogo from "./Pages/Catalogo";
+import Pago from "./Pages/Pago.jsx";
 import Carrito from "./Pages/Carrito.jsx";
+import FormEstampado from "./Pages/FormEstampado.jsx";
 const router = createHashRouter([
   {
     path: "/",
@@ -25,11 +26,15 @@ const router = createHashRouter([
   },
   {
     path: "/interfazPago",
-    element: <Pago />
+    element: <Pago />,
   },
   {
     path: "/carrito",
     element: <Carrito />,
+  },
+  {
+    path: "/FormEstampado",
+    element: <FormEstampado />,
   },
 ]);
 

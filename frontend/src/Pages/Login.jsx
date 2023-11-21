@@ -34,39 +34,75 @@ function Login() {
 
   const loadCliente = async (email) => {
     try {
-      if (cliente.email.length > 45) {
-        setAlertText("El correo es mayor a 45 caracteres");
-        setAlertState("danger");
-        setShowAlert(true);
-      } else if (cliente.password.length > 45) {
-        setAlertText("La contraseña es mayor a 45 caracteres");
-        setAlertState("danger");
-        setShowAlert(true);
-      } else {
-        const res = await fetch(`http://localhost:4000/clients/${email}`);
-        if (res.ok) {
-          const data = await res.json();
-          cliente.nombre = data.nombre;
-          cliente.email = data.email;
-          cliente.storedPassword = data.password;
-
-          if (cliente.password !== cliente.storedPassword) {
-            setAlertText("Cotraseña incorrecta");
-            setAlertState("danger");
-            setShowAlert(true);
-          } else {
-            setAlertText("Correo y contraseña válidos :D");
-            setAlertState("success");
-            setShowAlert(true);
-            localStorage.setItem("email", cliente.email);
-            localStorage.setItem("username", cliente.nombre);
-            setTimeout(() => window.location.reload(), 3000);
-          }
-        } else {
-          setAlertText("Correo no registrado");
+      let tipoUsuario = document.querySelector("#tipoUsuario").value;
+      if (tipoUsuario) {
+        if (cliente.email.length > 45) {
+          setAlertText("El correo es mayor a 45 caracteres");
           setAlertState("danger");
-          setShowAlert(true); // Mostrar la alerta en caso de error
+          setShowAlert(true);
+        } else if (cliente.password.length > 45) {
+          setAlertText("La contraseña es mayor a 45 caracteres");
+          setAlertState("danger");
+          setShowAlert(true);
+        } else {
+          if (tipoUsuario == "Cliente") {
+            const res = await fetch(`http://localhost:4000/clients/${email}`);
+            if (res.ok) {
+              const data = await res.json();
+              cliente.nombre = data.nombre;
+              cliente.email = data.email;
+              cliente.storedPassword = data.password;
+
+              if (cliente.password !== cliente.storedPassword) {
+                setAlertText("Cotraseña incorrecta");
+                setAlertState("danger");
+                setShowAlert(true);
+              } else {
+                setAlertText("Correo y contraseña válidos :D");
+                setAlertState("success");
+                setShowAlert(true);
+                localStorage.setItem("email", cliente.email);
+                localStorage.setItem("username", cliente.nombre);
+                localStorage.setItem("tipoDeCliente", "Cliente");
+                setTimeout(() => window.location.reload(), 3000);
+              }
+            } else {
+              setAlertText("Correo no registrado");
+              setAlertState("danger");
+              setShowAlert(true); // Mostrar la alerta en caso de error
+            }
+          } else if (tipoUsuario == "Artista") {
+            const res = await fetch(`http://localhost:4000/artists/${email}`);
+            if (res.ok) {
+              const data = await res.json();
+              cliente.nombre = data.nombre;
+              cliente.email = data.email;
+              cliente.storedPassword = data.password;
+
+              if (cliente.password !== cliente.storedPassword) {
+                setAlertText("Cotraseña incorrecta");
+                setAlertState("danger");
+                setShowAlert(true);
+              } else {
+                setAlertText("Correo y contraseña válidos :D");
+                setAlertState("success");
+                setShowAlert(true);
+                localStorage.setItem("email", cliente.email);
+                localStorage.setItem("username", cliente.nombre);
+                localStorage.setItem("tipoDeCliente", "Artista");
+                setTimeout(() => window.location.reload(), 3000);
+              }
+            } else {
+              setAlertText("Correo no registrado");
+              setAlertState("danger");
+              setShowAlert(true); // Mostrar la alerta en caso de error
+            }
+          }
         }
+      } else {
+        setAlertText("¿Qué tipo de usuario eres?");
+        setAlertState("danger");
+        setShowAlert(true);
       }
     } catch (error) {
       setShowAlert(true); // Mostrar la alerta en caso de error
@@ -104,6 +140,18 @@ function Login() {
           <Image src="/logo.png" fluid width="50%" />
         </Form.Group>
         <Form onSubmit={handleFormSubmit}>
+          <Form.Group className="mb-3" controlId="tipoUsuario">
+            <Form.Select
+              aria-label="Default select example"
+              data-testid="Tipo de registro"
+              onChange={null}
+            >
+              <option value="">Tipo de registro</option>
+              <option value="Cliente">Cliente</option>
+              <option value="Artista">Artista</option>
+            </Form.Select>
+          </Form.Group>
+
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Control
               type="email"
