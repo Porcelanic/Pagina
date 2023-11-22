@@ -24,14 +24,6 @@ function Login() {
   const [alertText, setAlertText] = useState(""); // Nuevo estado para manejar la visibilidad de la alerta
   const [alertState, setAlertState] = useState(""); // Nuevo estado para manejar la visibilidad de la alerta
 
-  const params = useParams();
-
-  useEffect(() => {
-    if (params.email) {
-      loadCliente(params.email);
-    }
-  }, [params.email]);
-
   const loadCliente = async (email) => {
     try {
       let tipoUsuario = document.querySelector("#tipoUsuario").value;

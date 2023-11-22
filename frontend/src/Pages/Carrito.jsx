@@ -62,7 +62,7 @@ function Carrito() {
   };
 
   const cambiarCantidad = (posicion) => {
-    let cantidad = document.querySelector("#cantidad").value;
+    let cantidad = document.querySelector("#cantidad" + posicion).value;
     itemData[posicion].cantidad = cantidad;
     localStorage.setItem("itemData", JSON.stringify(itemData));
     window.location.reload();
@@ -87,7 +87,7 @@ function Carrito() {
               aria-describedby="basic-addon2"
               type="number"
               defaultValue={data.cantidad}
-              id="cantidad"
+              id={"cantidad" + itemData.indexOf(data)}
             />
             <Button
               variant="outline-light"
@@ -110,6 +110,16 @@ function Carrito() {
       </Card.Text>
     ));
 
+  const precioTotal =
+    itemData &&
+    itemData.reduce((acc, item) => {
+      return acc + item.price * item.cantidad;
+    }, 0);
+
+  const mostrarPrecioTotal = () => {
+    localStorage.setItem("precioTotal", precioTotal);
+    return <p>Valor a pagar = ${precioTotal}</p>;
+  };
   const cargarArticulos = () => {
     if (itemData && itemData.length !== 0) {
       return (
@@ -129,6 +139,7 @@ function Carrito() {
                     Contenidos
                   </Card.Subtitle>
                   {Contenido}
+                  {mostrarPrecioTotal()}
                   <Link to={"/interfazPago"}>
                     <Button
                       onClick={calcularTotal}

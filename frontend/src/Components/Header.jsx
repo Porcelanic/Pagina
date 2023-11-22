@@ -14,12 +14,13 @@ import {
   faStar,
 } from "@fortawesome/free-solid-svg-icons";
 
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 
 function Header() {
   const [isUserAuthenticated, setIsUserAuthenticated] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const username = localStorage.getItem("username");
@@ -38,6 +39,8 @@ function Header() {
     localStorage.removeItem("username");
     localStorage.removeItem("email");
     localStorage.removeItem("itemData");
+    localStorage.removeItem("precioTotal");
+    navigate("/login");
     window.location.reload();
   };
 
@@ -96,7 +99,7 @@ function Header() {
                       <FontAwesomeIcon icon={faCartShopping} /> Carrito
                     </Nav.Link>
                   </Nav.Item>
-                  <Nav.Item onClick={reset}>
+                  <Nav.Item onClick={() => reset()}>
                     <Nav.Link>
                       <FontAwesomeIcon icon={faSignOut} /> Cerrar sesión
                     </Nav.Link>
@@ -154,7 +157,7 @@ function Header() {
                     </Nav.Link>
                   </Nav.Item>
 
-                  <Nav.Item onClick={reset}>
+                  <Nav.Item onClick={() => reset()}>
                     <Nav.Link>
                       <FontAwesomeIcon icon={faSignOut} /> Cerrar sesión
                     </Nav.Link>
