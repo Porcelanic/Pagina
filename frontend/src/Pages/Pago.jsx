@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Header from "../Components/Header";
 import Footer from "../Components/Footer";
 import ThemeSwitcher from "../Components/ThemeSwitcher";
@@ -7,6 +7,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
+import Alert from "react-bootstrap/Alert";
 
 export default function Pago() {
   const [datosEnvio, setDatosEnvio] = useState({
@@ -26,6 +27,9 @@ export default function Pago() {
   });
 
   const [telefono, setTelefono] = useState("");
+  const [showAlert, setShowAlert] = useState(false); // Nuevo estado para manejar la visibilidad de la alerta
+  const [alertText, setAlertText] = useState(""); // Nuevo estado para manejar la visibilidad de la alerta
+  const [alertState, setAlertState] = useState(""); // Nuevo estado para manejar la visibilidad de la alerta
 
   const VALOR = parseFloat(localStorage.valor).toLocaleString("es-CO", {
     style: "currency",
@@ -87,7 +91,10 @@ export default function Pago() {
       if ("error" == text) {
         alert("Error");
       } else {
-        alert("Exito");
+        setAlertText("Pago exitoso");
+        setAlertState("success");
+        setShowAlert(true);
+        localStorage.removeItem("itemData");
       }
     } catch (error) {
       console.log("error");
@@ -106,7 +113,9 @@ export default function Pago() {
       if ("error" == text) {
         alert("Error al procesar el pago");
       } else {
-        alert("Pago exitoso !!");
+        setAlertText("Pago exitoso");
+        setAlertState("success");
+        setShowAlert(true);
       }
     } catch (error) {
       console.log("error");
@@ -139,6 +148,15 @@ export default function Pago() {
   return (
     <>
       <Header />
+      <Alert
+        className="alert mt-5"
+        variant={alertState}
+        show={showAlert}
+        onClose={() => setShowAlert(false)}
+        dismissible
+      >
+        {alertText}
+      </Alert>
       <Form onSubmit={clientSubmit} className="mb-5 pb-5">
         <Row className="d-flex justify-content-around">
           <Col className="recuadro bordered p-5" md={{ span: 8, offset: 2 }}>
