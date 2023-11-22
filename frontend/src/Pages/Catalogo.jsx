@@ -82,9 +82,9 @@ function Catalogo() {
       setShowAlert(true);
       setAlertText("Pon una talla");
       setAlertState("danger");
-    } else if (!cantidad || cantidad <= 0 || cantidad >= 100) {
+    } else if (!cantidad || cantidad <= 0 || cantidad > 100) {
       setShowAlert(true);
-      setAlertText("La cantidad debe estar entre 0 y 100");
+      setAlertText("La cantidad debe estar entre 1 y 100");
       setAlertState("danger");
     } else {
       let order = {
@@ -95,7 +95,6 @@ function Catalogo() {
         text,
         price,
       };
-      console.log(order);
       let itemData;
       if (JSON.parse(localStorage.getItem("itemData"))) {
         itemData = JSON.parse(localStorage.getItem("itemData"));
