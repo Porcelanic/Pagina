@@ -121,7 +121,7 @@ function Catalogo() {
           <Col xs={{ span: 8, offset: 2 }}>
             <Row width="100%" className=" p-5">
               <Col className="centered" width="80%">
-                <img src="../public/logo.png" alt="" />
+                <img src="/logo.png" alt="" />
               </Col>
               <Col>
                 <br />

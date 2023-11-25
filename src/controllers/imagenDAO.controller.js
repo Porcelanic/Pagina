@@ -24,7 +24,7 @@ export const saveImage = async  (req, res) => {
     }
 
     if (req.file) {
-      const filePath = `frontend/public/Estampados/${req.file.filename}`;
+      const filePath = `Estampados/${req.file.filename}`;
       return res.status(200).json({ filePath }); // Sending the path as JSON response
     }
 

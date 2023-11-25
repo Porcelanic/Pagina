@@ -3,7 +3,7 @@ export const db = {
   password: process.env.DB_PASSWORD || "1234",
   host: process.env.DB_HOST || "localhost",
   port: process.env.DB_PORT || 5432,
-  database: process.env.DB_DATABASE || "Camisas",
+  database: process.env.DB_DATABASE || "Camisas1",
 };
 
 export const port = process.env.PORT || 4000;

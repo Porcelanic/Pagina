@@ -1,4 +1,3 @@
-import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -11,6 +10,7 @@ import Catalogo from "./Pages/Catalogo";
 import Pago from "./Pages/Pago.jsx";
 import Carrito from "./Pages/Carrito.jsx";
 import FormEstampado from "./Pages/FormEstampado.jsx";
+import CatalogoEstampados from "./Pages/CatalogoEstampados.jsx";
 const router = createHashRouter([
   {
     path: "/",
@@ -35,6 +35,10 @@ const router = createHashRouter([
   {
     path: "/formEstampado",
     element: <FormEstampado />,
+  },
+  {
+    path: "/catalogoEstampado",
+    element: <CatalogoEstampados/>,
   },
 ]);
 

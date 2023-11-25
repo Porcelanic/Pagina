@@ -15,7 +15,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 function Header() {
   const [isUserAuthenticated, setIsUserAuthenticated] = useState(false);
@@ -150,8 +150,18 @@ function Header() {
                   <Nav.Item>
                     <Nav.Link
                       as={Link}
-                      to="/FormEstampado"
-                      active={location.pathname === "/FormEstampado"}
+                      to="/catalogoEstampado"
+                      active={location.pathname === "/catalogoEstampado"}
+                    >
+                      <FontAwesomeIcon icon={faStar} /> Estampados
+                    </Nav.Link>
+                  </Nav.Item>
+
+                  <Nav.Item>
+                    <Nav.Link
+                      as={Link}
+                      to="/formEstampado"
+                      active={location.pathname === "/formEstampado"}
                     >
                       <FontAwesomeIcon icon={faStar} /> Publicar estampados
                     </Nav.Link>

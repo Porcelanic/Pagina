@@ -84,7 +84,7 @@ function Login() {
                 localStorage.setItem("email", cliente.email);
                 localStorage.setItem("username", cliente.nombre);
                 localStorage.setItem("tipoDeCliente", "Artista");
-                setTimeout(() => navigate("/formEstampado"), 200);
+                setTimeout(() => navigate("/catalogoEstampado"), 200);
               }
             } else {
               setAlertText("Correo no registrado");

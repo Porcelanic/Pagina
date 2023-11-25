@@ -15,7 +15,8 @@ import {
   saveImage
 } from "../controllers/imagenDAO.controller.js";
 import {
-  createEstampado
+  createEstampado,
+  getEstampados
 } from "../controllers/estampadoDAO.controller.js";
 import { createPago } from "../controllers/pagoDAO.controller.js";
 
@@ -39,5 +40,6 @@ router.post("/payment", createPago);
 // Rutas estampado
 router.post("/image", saveImage);
 router.post("/estampado", createEstampado);
+router.get("/getEstampados", getEstampados);
 
 export default router;

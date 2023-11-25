@@ -75,6 +75,7 @@ export default function FormEstampado() {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(estampado),
           });
+    setTimeout(() => navigate("/catalogoEstampado"), 200);
   }
 
 
@@ -124,6 +125,7 @@ export default function FormEstampado() {
                   type="submit"
                   className="ms-3 d-grid"
                   size="md"
+                  disabled={!file ||!estampado.nombre || !estampado.categoria}
                 >
                   Publicar
                 </Button>
