@@ -60,7 +60,7 @@ function Registro() {
             setAlertText("El registro se realizó correctamente");
             setAlertState("success");
             setShowAlert(true);
-            setTimeout(() => navigate("/login"), 3000);
+            setTimeout(() => navigate("/login"), 500);
           }
         } else if (cliente.tipoCliente == "Cliente") {
           const response = await fetch("http://localhost:4000/clients", {
@@ -80,7 +80,7 @@ function Registro() {
             setAlertText("El registro se realizó correctamente");
             setAlertState("success");
             setShowAlert(true);
-            setTimeout(() => navigate("/login"), 3000);
+            setTimeout(() => navigate("/login"), 500);
           }
         }
       }

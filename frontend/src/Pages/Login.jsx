@@ -4,12 +4,14 @@ import ThemeSwitcher from "../Components/ThemeSwitcher";
 import Image from "react-bootstrap/Image";
 import Alert from "react-bootstrap/Alert";
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate} from "react-router-dom";
+import { useState } from "react";
 import Header from "../Components/Header";
 import "../Styles/Login.css";
 
 function Login() {
+  const navigate = useNavigate();
+
   const [cliente, setCliente] = useState({
     nombre: "",
     telefono: null,
@@ -56,7 +58,7 @@ function Login() {
                 localStorage.setItem("email", cliente.email);
                 localStorage.setItem("username", cliente.nombre);
                 localStorage.setItem("tipoDeCliente", "Cliente");
-                setTimeout(() => window.location.reload(), 3000);
+                setTimeout(() => navigate("/"), 200);
               }
             } else {
               setAlertText("Correo no registrado");
@@ -82,7 +84,7 @@ function Login() {
                 localStorage.setItem("email", cliente.email);
                 localStorage.setItem("username", cliente.nombre);
                 localStorage.setItem("tipoDeCliente", "Artista");
-                setTimeout(() => window.location.reload(), 3000);
+                setTimeout(() => navigate("/formEstampado"), 200);
               }
             } else {
               setAlertText("Correo no registrado");

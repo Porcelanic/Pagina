@@ -33,7 +33,7 @@ const router = createHashRouter([
     element: <Carrito />,
   },
   {
-    path: "/FormEstampado",
+    path: "/formEstampado",
     element: <FormEstampado />,
   },
 ]);
