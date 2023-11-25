@@ -11,10 +11,13 @@ import {
   createDireccion,
   getDireccion,
 } from "../controllers/direccionDAO.controller.js";
-import { createPago } from "../controllers/pagoDAO.controller.js";
 import {
   saveImage
 } from "../controllers/imagenDAO.controller.js";
+import {
+  createEstampado
+} from "../controllers/estampadoDAO.controller.js";
+import { createPago } from "../controllers/pagoDAO.controller.js";
 
 const router = Router();
 
@@ -34,6 +37,7 @@ router.get("/addresses/:email", getDireccion);
 router.post("/payment", createPago);
 
 // Rutas estampado
-router.post("/image", saveImage)
+router.post("/image", saveImage);
+router.post("/estampado", createEstampado);
 
 export default router;

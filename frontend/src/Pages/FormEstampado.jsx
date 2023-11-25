@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate} from "react-router-dom";
 import Header from "../Components/Header";
 import Footer from "../Components/Footer";
 import ThemeSwitcher from "../Components/ThemeSwitcher";
@@ -10,6 +11,8 @@ import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/esm/Container";
 
 export default function FormEstampado() {
+  const navigate = useNavigate();
+
   const [file, setFile] = useState(null);
 
   const handleFileChange = (e) => {
@@ -17,12 +20,26 @@ export default function FormEstampado() {
     setFile(selectedFile);
   };
 
+  const [estampado, setEstampado] = useState({
+    diseño:"",
+    nombre: "",
+    categoria: "",
+    artista_email: localStorage.getItem("email"),
+  });
+
+  const estampadoChange = (e) =>{
+    setEstampado({ ...estampado, [e.target.name]: e.target.value });
+  }
+  const handleSelect = (e) => {
+    setEstampado({ ...estampado, categoria: e.target.value });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (file) {
       const formData = new FormData();
       formData.append("file", file);
-
+  
       fetch("http://localhost:4000/image", {
         method: "POST",
         body: formData,
@@ -36,8 +53,7 @@ export default function FormEstampado() {
         })
         .then((data) => {
           // Handle the file path returned from the server
-          console.log("File uploaded successfully! Path:", data.filePath);
-          // Use the path as needed in your application
+          setEstampado({ ...estampado, diseño: data.filePath });
         })
         .catch((error) => {
           // Handle errors
@@ -45,6 +61,23 @@ export default function FormEstampado() {
         });
     }
   };
+
+  useEffect(() => {
+    if (estampado.diseño !== "") {
+      toDB();
+    }
+  }, [estampado.diseño])
+
+  const toDB = () =>{
+    console.log(estampado.diseño)
+    fetch("http://localhost:4000/estampado", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(estampado),
+          });
+  }
+
+
 
   return (
     <>
@@ -59,16 +92,21 @@ export default function FormEstampado() {
                 <Form.Control type="file" onChange={handleFileChange} />
               </Form.Group>
               <Form.Group className="mb-3">
-                <Form.Control
-                  type="text"
-                  placeholder="Nombre"
-                  maxLength={20}
-                />
+                <Form.Control type="text" 
+                name="nombre"
+                placeholder="nombre"
+                onChange={estampadoChange}
+                value={estampado.nombre}
+                 maxLength={20} />
                 <Form.Text>Ponle un nombre unico a tu estampado</Form.Text>
               </Form.Group>
 
               <Form.Group className="mb-3" controlId="Categoria">
-                <Form.Select data-testid="Categoria">
+                <Form.Select
+                  aria-label="Default select example"
+                  onChange={handleSelect}
+                  data-testid="Categoria"
+                >
                   <option value="">Categoria</option>
                   <option value="Abstracto">Abstracto</option>
                   <option value="Naturales">Naturales</option>
@@ -76,7 +114,9 @@ export default function FormEstampado() {
                   <option value="Tematicos">Temáticos</option>
                   <option value="Grafico">Otro</option>
                 </Form.Select>
-                <Form.Text>Con que categoria crees que se identifica tu estampado?</Form.Text>
+                <Form.Text>
+                  Con que categoria crees que se identifica tu estampado?
+                </Form.Text>
               </Form.Group>
               <div className="d-grid ">
                 <Button
