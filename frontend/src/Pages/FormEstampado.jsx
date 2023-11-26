@@ -69,7 +69,6 @@ export default function FormEstampado() {
   }, [estampado.diseño])
 
   const toDB = () =>{
-    console.log(estampado.diseño)
     fetch("http://localhost:4000/estampado", {
             method: "POST",
             headers: { "Content-Type": "application/json" },

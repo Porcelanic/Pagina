@@ -41,7 +41,7 @@ function CatalogoEstampados() {
       className="text-center mt-3"
       // Agregar lógica de clic aquí si es necesario
     >
-        <Carta img={data.diseño} text={data.nombre}/>
+        <Carta img={data.diseño} text={data.nombre} artista={data.nombre_artista} />
    
     </Col>
   ));

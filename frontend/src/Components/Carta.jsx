@@ -9,7 +9,9 @@ function Carta(prop) {
         <Card.Img className="custom-img" variant="top" src={prop.img} />
         <Card.Body>
           <Card.Text>
-            {prop.text} {prop.price ? `$${prop.price}` : ''}
+            {prop.text} 
+            <br/>
+            {prop.price ? `$${prop.price}` : `${prop.artista}`}
           </Card.Text>
         </Card.Body>
       </Card>
