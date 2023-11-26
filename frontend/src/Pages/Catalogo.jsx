@@ -45,7 +45,7 @@ function Catalogo() {
       // Agregar lógica de clic aquí si es necesario
       onClick={() => { setEstampadoElegido(index); console.log(estampadoElegido); }}
     >
-      <Carta img={data.diseño} text={data.nombre} />
+      <Carta img={data.diseño} text={data.nombre} artista={data.nombre_artista}/>
 
     </Col>
   ));
@@ -147,7 +147,7 @@ function Catalogo() {
 
   return (
     <>
-      <Container fluid className=" align-items-center content m-0 p-0">
+      <Container fluid className=" align-items-center m-0 p-0">
         <Row className="width-100vw">
           <Header />
         </Row>
