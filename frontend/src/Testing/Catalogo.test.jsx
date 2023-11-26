@@ -24,30 +24,26 @@ describe("Pruebas unitarias", () => {
     </BrowserRouter>
   );
 
-  test("Cargan los botones", () => {
-    expect(screen.findByText("Ver más camisas deportivas")).toBeDefined();
+  test("Cargan los titulos", () => {
+    expect(screen.getByTestId("Camisas deportivas")).toBeDefined();
+    expect(screen.getByTestId("Camisas para estampar")).toBeDefined();
   });
 });
 
 describe("Pruebas de integracion", () => {
   test("Carga el header", () => {
-    expect(screen.findByText("Estampas")).toBeDefined();
-    expect(screen.findByText("Carrito")).toBeDefined();
-    expect(screen.findByText("Usuario")).toBeDefined();
+    expect(screen.getByTestId("Header")).toBeDefined();
   });
 
   test("Carga el footer", () => {
-    expect(screen.findByText("About us")).toBeDefined();
-    expect(screen.findByText("Contact us")).toBeDefined();
-    expect(screen.findByText("Join us")).toBeDefined();
+    expect(screen.getByTestId("Footer")).toBeDefined();
   });
 
   test("Deben cargar las camisas ", () => {
-    expect(screen.findByText("custom-card")).toBeDefined();
-    expect(screen.findByText("card")).toBeDefined();
+    expect(screen.getByTestId("Camisas")).toBeDefined();
   });
 
   test("Debe cargar el themeswitcher", () => {
-    expect(screen.findByText("Toggle theme")).toBeDefined();
+    expect(screen.getByTestId("ThemeSwitcher")).toBeDefined();
   });
 });

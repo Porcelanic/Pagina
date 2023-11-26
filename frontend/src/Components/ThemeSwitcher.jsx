@@ -37,24 +37,24 @@ function ThemeSwitcher() {
       }
 
       const themeSwitcherText = document.querySelector("#bd-theme-text");
-    const activeThemeIcon = document.querySelector(".theme-icon-active use");
-    const btnToActive = document.querySelector(
-      `[data-bs-theme-value="${theme}"]`
-    );
-    const svgOfActiveBtn = btnToActive
-      .querySelector("svg use")
-      .getAttribute("href");
+      const activeThemeIcon = document.querySelector(".theme-icon-active use");
+      const btnToActive = document.querySelector(
+        `[data-bs-theme-value="${theme}"]`
+      );
+      const svgOfActiveBtn = btnToActive
+        .querySelector("svg use")
+        .getAttribute("href");
 
-    document.querySelectorAll("[data-bs-theme-value]").forEach((element) => {
-      element.classList.remove("active");
-      element.setAttribute("aria-pressed", "false");
-    });
+      document.querySelectorAll("[data-bs-theme-value]").forEach((element) => {
+        element.classList.remove("active");
+        element.setAttribute("aria-pressed", "false");
+      });
 
-    btnToActive.classList.add("active");
-    btnToActive.setAttribute("aria-pressed", "true");
-    activeThemeIcon.setAttribute("href", svgOfActiveBtn);
-    const themeSwitcherLabel = `${themeSwitcherText.textContent} (${btnToActive.dataset.bsThemeValue})`;
-    themeSwitcher.setAttribute("aria-label", themeSwitcherLabel);
+      btnToActive.classList.add("active");
+      btnToActive.setAttribute("aria-pressed", "true");
+      activeThemeIcon.setAttribute("href", svgOfActiveBtn);
+      const themeSwitcherLabel = `${themeSwitcherText.textContent} (${btnToActive.dataset.bsThemeValue})`;
+      themeSwitcher.setAttribute("aria-label", themeSwitcherLabel);
 
       if (focus) {
         themeSwitcher.focus();
@@ -91,7 +91,7 @@ function ThemeSwitcher() {
     showActiveTheme(storedTheme || getPreferredTheme());
   });
   return (
-    <div>
+    <div data-testid="ThemeSwitcher">
       <svg xmlns="http://www.w3.org/2000/svg" className="d-none">
         <symbol id="check2" viewBox="0 0 16 16">
           <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z" />
@@ -108,7 +108,10 @@ function ThemeSwitcher() {
         </symbol>
       </svg>
 
-      <div className="dropdown position-fixed bottom-0 end-0 mb-3 me-3 bd-mode-toggle " style={{ zIndex: 2 }}>
+      <div
+        className="dropdown position-fixed bottom-0 end-0 mb-3 me-3 bd-mode-toggle "
+        style={{ zIndex: 2 }}
+      >
         <button
           className="btn btn-primary py-2 dropdown-toggle d-flex align-items-center"
           id="bd-theme"
