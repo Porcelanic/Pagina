@@ -110,7 +110,7 @@ function Catalogo() {
     let img = selectedShirt.img;
     let text = selectedShirt.text;
     let price = selectedShirt.price;
-    let estampa = estampados[estampadoElegido].diseño;
+    let estampa = (estampadoElegido >= 0) ? estampados[estampadoElegido].diseño : '';
     if (!talla) {
       setShowAlert(true);
       setAlertText("Pon una talla");
@@ -174,7 +174,7 @@ function Catalogo() {
         <div className="align-self-start ps-5 pt-5">
           <h1>Camisas deportivas: </h1>
         </div>
-        <Row className="align-items-center" onClick={() => setEstampable(false)}> {Cartas} </Row>
+        <Row className="align-items-center" onClick={() => { setEstampable(false); setEstampadoElegido(-1) }}> {Cartas} </Row>
         <div className="align-self-start ps-5 pt-5 mb-5">
           <h1>Camisas para estampar: </h1>
         </div>

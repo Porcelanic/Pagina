@@ -75,7 +75,7 @@ function Carrito() {
       <Carousel.Item key={data.id}>
         <div className="contenedor-img">
           <Image src={data.img} className="camisa-fondo" alt="Selected Image" />
-          <Image src={data.estampa} className="camisa-centrada" />
+          {(data.estampa != '') ? <Image src={data.estampa} className="camisa-centrada" /> : <></>}
         </div>
         <Carousel.Caption>
           {data.cantidad > 1 ? plural(data) : singular(data)};
