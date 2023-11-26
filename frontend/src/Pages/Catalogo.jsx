@@ -24,13 +24,31 @@ import "../Styles/Offcanvas.css";
 {
   /* Hooks */
 }
-import { useState } from "react";
+import '../Styles/Catalogo.css';
+import { useEffect, useState } from "react";
 
 function Catalogo() {
   const [showAlert, setShowAlert] = useState(false);
   const [alertText, setAlertText] = useState("");
   const [alertState, setAlertState] = useState("");
+  const [estampable, setEstampable] = useState(false);
+  const [estampados, setEstampados] = useState([]);
+  const [estampadoElegido, setEstampadoElegido] = useState(-1);
+  const CartaEstampado = estampados.map((data, index) => (
+    <Col
+      key={index}
+      xs="12"
+      sm="6"
+      md="4"
+      lg="3"
+      className="text-center mt-3"
+      // Agregar lógica de clic aquí si es necesario
+      onClick={() => { setEstampadoElegido(index); console.log(estampadoElegido); }}
+    >
+      <Carta img={data.diseño} text={data.nombre} />
 
+    </Col>
+  ));
   const cardData = [
     { id: 1, img: "/RM.jpg", text: "Real Madrid 2023", price: 100000 },
     { id: 2, img: "/RM.jpg", text: "Real Madrid 2023", price: 100000 },
@@ -41,6 +59,19 @@ function Catalogo() {
     { id: 7, img: "/Liverpool.jpeg", text: "Liverpool 2023", price: 100000 },
     { id: 8, img: "/Tottenham.jpg", text: "Tottenham 2023", price: 100000 },
   ];
+
+
+  useEffect(() => {
+    // Llamar al endpoint para obtener los estampados
+    fetch('http://localhost:4000/getEstampados') // Asegúrate de que la ruta sea correcta según tu configuración de servidor
+      .then(response => response.json())
+      .then(data => {
+        setEstampados(data); // Establecer los estampados en el estado local
+      })
+      .catch(error => {
+        console.error('Error al obtener los estampados:', error);
+      });
+  }, []); // La dependencia vacía asegura que esta llamada solo se haga una vez al cargar el componente
 
   const Cartas = cardData.map((data) => (
     <Col
@@ -58,6 +89,7 @@ function Catalogo() {
   ));
 
   const [show, setShow] = useState(false);
+  const [show2, setShow2] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const handleClose = () => {
     setShow(false);
@@ -78,6 +110,7 @@ function Catalogo() {
     let img = selectedShirt.img;
     let text = selectedShirt.text;
     let price = selectedShirt.price;
+    let estampa = estampados[estampadoElegido].diseño;
     if (!talla) {
       setShowAlert(true);
       setAlertText("Pon una talla");
@@ -94,6 +127,7 @@ function Catalogo() {
         img,
         text,
         price,
+        estampa,
       };
       let itemData;
       if (JSON.parse(localStorage.getItem("itemData"))) {
@@ -110,6 +144,7 @@ function Catalogo() {
       setAlertState("success");
     }
   };
+
   return (
     <>
       <Container fluid className=" align-items-center content m-0 p-0">
@@ -139,11 +174,13 @@ function Catalogo() {
         <div className="align-self-start ps-5 pt-5">
           <h1>Camisas deportivas: </h1>
         </div>
-        <Row className="align-items-center"> {Cartas} </Row>
+        <Row className="align-items-center" onClick={() => setEstampable(false)}> {Cartas} </Row>
         <div className="align-self-start ps-5 pt-5 mb-5">
           <h1>Camisas para estampar: </h1>
         </div>
-        <Row className="align-items-center"> {Cartas} </Row>
+        <Row className="align-items-center" onClick={() => { setEstampable(true); setEstampadoElegido(-1) }}>
+          {Cartas}
+        </Row>
 
         <ThemeSwitcher />
         <Offcanvas show={show} onHide={handleClose} placement="end">
@@ -152,15 +189,23 @@ function Catalogo() {
           </Offcanvas.Header>
 
           <Offcanvas.Body className=" centered-items text-center">
-            {selectedImage && (
-              <Image
-                src={selectedImage}
-                className=" img-to-size"
-                fluid
-                thumbnail
-                alt="Selected Image"
-              />
-            )}
+            <div className="contenedor">
+              {selectedImage && (
+                <Image
+                  src={selectedImage}
+                  className=" img-to-size imagen-fondo"
+                  fluid
+                  thumbnail
+                  alt="Selected Image"
+                />
+
+              )}
+
+              {(estampadoElegido >= 0) ?
+                <Image className="imagen-centrada" src={estampados[estampadoElegido].diseño} />
+                : <></>}
+            </div>
+
             <br />
 
             <Form>
@@ -188,14 +233,14 @@ function Catalogo() {
               </Form.Group>
               <br />
               <Form.Group>
-                <Form.Check
-                  disabled
+                {/* <Form.Check
+                  disabled={!estampable}
                   type="checkbox"
                   label={`¿Deseas agregar un estampado a la camisa?`}
                   id={`disabled-default-checkbox`}
-                />
+                /> */}
                 <br />
-                <Button disabled>Agregar Estampado</Button>
+                {estampable ? <Button onClick={() => { setShow2(true) }}>Agregar Estampado</Button> : <></>}
               </Form.Group>
               <Form.Group>
                 <br />
@@ -213,6 +258,19 @@ function Catalogo() {
             >
               {alertText}
             </Alert>
+          </Offcanvas.Body>
+        </Offcanvas>
+
+        <Offcanvas show={show2} onHide={() => setShow2(false)} placement="start">
+          <Offcanvas.Header closeButton>
+            <Offcanvas.Title>Selecciona tu estampado</Offcanvas.Title>
+          </Offcanvas.Header>
+
+          <Offcanvas.Body className=" centered-items text-center">
+
+            {CartaEstampado.length > 0 ? CartaEstampado : <p className="h2">No hay estampados disponibles</p>}
+            <br />
+
           </Offcanvas.Body>
         </Offcanvas>
         <br />

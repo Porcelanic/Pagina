@@ -15,6 +15,7 @@ import ThemeSwitcher from "../Components/ThemeSwitcher";
 import { Link } from "react-router-dom";
 
 import "..//Styles/Carrito.css";
+
 function Carrito() {
   const itemData = JSON.parse(localStorage.getItem("itemData"));
 
@@ -72,7 +73,10 @@ function Carrito() {
     itemData &&
     itemData.map((data) => (
       <Carousel.Item key={data.id}>
-        <Image src={data.img} className=" custom-imge" alt="Selected Image" />
+        <div className="contenedor-img">
+          <Image src={data.img} className="camisa-fondo" alt="Selected Image" />
+          <Image src={data.estampa} className="camisa-centrada" />
+        </div>
         <Carousel.Caption>
           {data.cantidad > 1 ? plural(data) : singular(data)};
           <Button
