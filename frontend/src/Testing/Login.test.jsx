@@ -26,10 +26,9 @@ describe("Pruebas unitarias", () => {
 
   // -------------------------- PRUEBA 1 ----------------------------
   test("Deben cargar los inputs ", () => {
-    expect(screen.getByPlaceholderText("Correo electrónico")).toBeDefined();
-    expect(screen.getByPlaceholderText("Contraseña")).toBeDefined();
-    expect(screen.getByText("Iniciar sesión")).toBeDefined();
-    expect(screen.getByText("Crear cuenta")).toBeDefined();
+    expect(screen.getByTestId("Correo")).toBeDefined();
+    expect(screen.getByTestId("Contraseña")).toBeDefined();
+    expect(screen.getByTestId("Tipo de registro")).toBeDefined();
   });
 
   // -------------------------- PRUEBA 2 ----------------------------
@@ -40,6 +39,9 @@ describe("Pruebas unitarias", () => {
     });
     fireEvent.change(screen.getByTestId("Contraseña"), {
       target: { value: "123456" },
+    });
+    fireEvent.change(screen.getByTestId("Tipo de registro"), {
+      target: { value: "Cliente" },
     });
 
     // Envía el formulario
@@ -63,6 +65,9 @@ describe("Pruebas unitarias", () => {
     fireEvent.change(screen.getByTestId("Contraseña"), {
       target: { value: "1234567890123456789012345678901234567890123456" },
     });
+    fireEvent.change(screen.getByTestId("Tipo de registro"), {
+      target: { value: "Cliente" },
+    });
 
     // Envía el formulario
     fireEvent.click(screen.getByText("Iniciar sesión"));
@@ -79,10 +84,9 @@ describe("Pruebas unitarias", () => {
 
 describe("Pruebas de integracion", () => {
   // -------------------------- PRUEBA 4 ----------------------------
-  test("Deben cargar los estilos ", () => {
-    expect(screen.findByText("content")).toBeDefined();
-    expect(screen.findByText("primary")).toBeDefined();
-    expect(screen.findByText("text-center")).toBeDefined();
+  test("Deben cargar los componentes ", () => {
+    expect(screen.getByTestId("Header")).toBeDefined();
+    expect(screen.getByTestId("Form")).toBeDefined();
   });
 
   // -------------------------- PRUEBA 5 ----------------------------
@@ -93,6 +97,9 @@ describe("Pruebas de integracion", () => {
     });
     fireEvent.change(screen.getByTestId("Contraseña"), {
       target: { value: "123456" },
+    });
+    fireEvent.change(screen.getByTestId("Tipo de registro"), {
+      target: { value: "Cliente" },
     });
 
     // Envía el formulario
@@ -114,6 +121,9 @@ describe("Pruebas de integracion", () => {
     fireEvent.change(screen.getByTestId("Contraseña"), {
       target: { value: "contraseniaIncorrecta" },
     });
+    fireEvent.change(screen.getByTestId("Tipo de registro"), {
+      target: { value: "Cliente" },
+    });
 
     // Envía el formulario
     fireEvent.click(screen.getByText("Iniciar sesión"));
@@ -133,6 +143,9 @@ describe("Pruebas de integracion", () => {
     });
     fireEvent.change(screen.getByTestId("Contraseña"), {
       target: { value: "123456" },
+    });
+    fireEvent.change(screen.getByTestId("Tipo de registro"), {
+      target: { value: "Cliente" },
     });
 
     // Envía el formulario

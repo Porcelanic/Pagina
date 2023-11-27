@@ -84,7 +84,9 @@ function Registro() {
           }
         }
       }
-    } catch (error) { console.log("Error") }
+    } catch (error) {
+      console.log("Error");
+    }
   };
 
   const clientChange = (e) =>
@@ -108,7 +110,7 @@ function Registro() {
           {alertText}
         </Alert>
 
-        <Form onSubmit={clientSubmit}>
+        <Form onSubmit={clientSubmit} data-testid="Form">
           <Form.Group className="mb-5 mt-5" controlId="formBasicTipo">
             <Image src="/logo.png" fluid width="50%" />
           </Form.Group>

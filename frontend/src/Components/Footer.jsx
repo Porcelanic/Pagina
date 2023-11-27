@@ -20,6 +20,7 @@ const Footer = () => {
         <Container
           fluid
           className="border-toper align-items-center  bg-body-tertiary m-0 px-0 py-2"
+          data-testid="Footer"
         >
           <Row>
             <Col xs lg={4}></Col>

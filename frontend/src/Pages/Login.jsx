@@ -4,7 +4,7 @@ import ThemeSwitcher from "../Components/ThemeSwitcher";
 import Image from "react-bootstrap/Image";
 import Alert from "react-bootstrap/Alert";
 import { Link } from "react-router-dom";
-import { useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import Header from "../Components/Header";
 import "../Styles/Login.css";
@@ -133,7 +133,7 @@ function Login() {
         <Form.Group className="mb-5 mt-5" controlId="formBasicTipo">
           <Image src="/logo.png" fluid width="50%" />
         </Form.Group>
-        <Form onSubmit={handleFormSubmit}>
+        <Form onSubmit={handleFormSubmit} data-testid="Form">
           <Form.Group className="mb-3" controlId="tipoUsuario">
             <Form.Select
               aria-label="Default select example"
@@ -182,7 +182,11 @@ function Login() {
         <Form.Group>
           <hr />
           <Link to={"/registro"}>
-            <Button variant="outline-primary" type="submit">
+            <Button
+              variant="outline-primary"
+              type="submit"
+              data-testid="Crear cuenta"
+            >
               Crear cuenta
             </Button>
           </Link>

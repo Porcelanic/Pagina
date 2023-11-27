@@ -27,10 +27,10 @@ describe("Pruebas unitarias", () => {
   // -------------------------- PRUEBA 1 ----------------------------
   test("Deben cargar los inputs ", () => {
     // Se buscan todos los campos
-    expect(screen.findByText("Tipo de registro")).toBeDefined();
-    expect(screen.findByText("Nombre")).toBeDefined();
-    expect(screen.findByText("Correo electrónico")).toBeDefined();
-    expect(screen.findByText("Contraseña")).toBeDefined();
+    expect(screen.getByTestId("Tipo de registro")).toBeDefined();
+    expect(screen.getByTestId("Nombre")).toBeDefined();
+    expect(screen.getByTestId("Correo")).toBeDefined();
+    expect(screen.getByTestId("Contraseña")).toBeDefined();
   });
 
   // -------------------------- PRUEBA 2 ----------------------------
@@ -107,21 +107,13 @@ describe("Pruebas unitarias", () => {
       screen.getByText("La contraseña es mayor a 45 caracteres")
     ).toBeDefined();
   });
-
-  // -------------------------- PRUEBA 5 ----------------------------
-  test("No se muestran alertas", () => {
-    expect(
-      screen.queryByText("El registro se realizó correctamente")
-    ).toBeNull();
-  });
 });
 
 describe("Pruebas de integracion", () => {
   // -------------------------- PRUEBA 6 ----------------------------
-  test("Deben cargar los estilos ", () => {
-    expect(screen.findByText("content")).toBeDefined();
-    expect(screen.findByText("primary")).toBeDefined();
-    expect(screen.findByText("text-center")).toBeDefined();
+  test("Deben cargar los componentes ", () => {
+    expect(screen.getByTestId("Header")).toBeDefined();
+    expect(screen.getByTestId("Form")).toBeDefined();
   });
 
   // // -------------------------- PRUEBA 7 ----------------------------

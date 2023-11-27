@@ -52,6 +52,7 @@ function Header() {
       return (
         <>
           <Navbar
+            data-testid="Header"
             sticky="top"
             key="md"
             expand="md"
@@ -117,6 +118,7 @@ function Header() {
       return (
         <>
           <Navbar
+            data-testid="Header"
             sticky="top"
             key="md"
             expand="md"
@@ -182,6 +184,7 @@ function Header() {
       return (
         <>
           <Navbar
+            data-testid="Header"
             sticky="top"
             key="md"
             expand="md"
