@@ -23,24 +23,32 @@ export const getEstampados = async (req, res, next) => {
       "SELECT diseño, nombre, artista_email FROM estampado LIMIT 20"
     );
 
-    const artistasEmails = estampados.rows.map(estampado => estampado.artista_email);
-    const artistas = await pool.query(
-      `SELECT nombre, email FROM artista WHERE email IN (${artistasEmails.map((_, index) => `$${index + 1}`).join(', ')})`,
-      artistasEmails
-    );
+    if (estampados.rowCount != 0) {
+      const artistasEmails = estampados.rows.map(
+        (estampado) => estampado.artista_email
+      );
+      const artistas = await pool.query(
+        `SELECT nombre, email FROM artista WHERE email IN (${artistasEmails
+          .map((_, index) => `$${index + 1}`)
+          .join(", ")})`,
+        artistasEmails
+      );
 
-    const artistasMap = artistas.rows.reduce((acc, artista) => {
-      acc[artista.email] = artista.nombre;
-      return acc;
-    }, {});
+      const artistasMap = artistas.rows.reduce((acc, artista) => {
+        acc[artista.email] = artista.nombre;
+        return acc;
+      }, {});
 
-    const estampadosConNombreArtista = estampados.rows.map(estampado => ({
-      diseño: estampado.diseño,
-      nombre: estampado.nombre,
-      nombre_artista: artistasMap[estampado.artista_email]
-    }));
-
-    res.json(estampadosConNombreArtista);
+      const estampadosConNombreArtista = estampados.rows.map((estampado) => ({
+        diseño: estampado.diseño,
+        nombre: estampado.nombre,
+        nombre_artista: artistasMap[estampado.artista_email],
+      }));
+      res.json(estampadosConNombreArtista);
+    }else{
+      console.log(0)
+      res.json(estampados);
+    }
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

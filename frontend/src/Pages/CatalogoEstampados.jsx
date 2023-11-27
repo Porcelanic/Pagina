@@ -24,7 +24,9 @@ function CatalogoEstampados() {
     fetch('http://localhost:4000/getEstampados') // Asegúrate de que la ruta sea correcta según tu configuración de servidor
       .then(response => response.json())
       .then(data => {
-        setEstampados(data); // Establecer los estampados en el estado local
+        if(data.rowCount!=0){
+          setEstampados(data); // Establecer los estampados en el estado local
+        }
       })
       .catch(error => {
         console.error('Error al obtener los estampados:', error);

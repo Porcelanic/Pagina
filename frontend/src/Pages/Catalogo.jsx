@@ -34,6 +34,7 @@ function Catalogo() {
   const [estampable, setEstampable] = useState(false);
   const [estampados, setEstampados] = useState([]);
   const [estampadoElegido, setEstampadoElegido] = useState(-1);
+
   const CartaEstampado = estampados.map((data, index) => (
     <Col
       key={index}
@@ -49,6 +50,7 @@ function Catalogo() {
 
     </Col>
   ));
+
   const cardData = [
     { id: 1, img: "/RM.jpg", text: "Real Madrid 2023", price: 100000 },
     { id: 2, img: "/RM.jpg", text: "Real Madrid 2023", price: 100000 },
@@ -60,13 +62,14 @@ function Catalogo() {
     { id: 8, img: "/Tottenham.jpg", text: "Tottenham 2023", price: 100000 },
   ];
 
-
   useEffect(() => {
     // Llamar al endpoint para obtener los estampados
     fetch('http://localhost:4000/getEstampados') // Asegúrate de que la ruta sea correcta según tu configuración de servidor
       .then(response => response.json())
       .then(data => {
-        setEstampados(data); // Establecer los estampados en el estado local
+        if(data.rowCount!=0){
+          setEstampados(data); // Establecer los estampados en el estado local
+        }
       })
       .catch(error => {
         console.error('Error al obtener los estampados:', error);
