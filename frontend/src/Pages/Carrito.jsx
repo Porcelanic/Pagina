@@ -18,6 +18,7 @@ import "..//Styles/Carrito.css";
 
 function Carrito() {
   const itemData = JSON.parse(localStorage.getItem("itemData"));
+  const IVA = 0.19;
 
   const plural = (data) => {
     return (
@@ -122,7 +123,7 @@ function Carrito() {
 
   const mostrarPrecioTotal = () => {
     localStorage.setItem("precioTotal", precioTotal);
-    return <p>Valor a pagar = ${precioTotal}</p>;
+    return <p>Valor a pagar = ${precioTotal * (1+IVA)}</p>;
   };
   const cargarArticulos = () => {
     if (itemData && itemData.length !== 0) {
@@ -144,6 +145,9 @@ function Carrito() {
                   </Card.Subtitle>
                   {Contenido}
                   {mostrarPrecioTotal()}
+                  <p>
+                    (Incluye iva del {IVA * 100}%)
+                  </p>
                   <Link to={"/interfazPago"}>
                     <Button
                       onClick={calcularTotal}
