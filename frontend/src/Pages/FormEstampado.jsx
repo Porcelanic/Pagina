@@ -112,7 +112,7 @@ export default function FormEstampado() {
                   <option value="Naturales">Naturales</option>
                   <option value="Retro">Retro</option>
                   <option value="Tematicos">Temáticos</option>
-                  <option value="Grafico">Otro</option>
+                  <option value="Otro">Otro</option>
                 </Form.Select>
                 <Form.Text>
                   Con que categoria crees que se identifica tu estampado?
