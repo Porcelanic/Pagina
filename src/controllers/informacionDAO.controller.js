@@ -1,7 +1,6 @@
 import { pool } from "../db.js";
 
 export const createInformacion = async (req, res, next) => {
-  try {
     const { barrio, ciudad, pais, codigopostal, direccion, telefono } =
       req.body;
 
@@ -9,7 +8,7 @@ export const createInformacion = async (req, res, next) => {
       "INSERT INTO informacion (barrio, ciudad, pais, codigopostal, direccion, telefono) VALUES($1, $2, $3, $4, $5, $6) RETURNING *",
       [barrio, ciudad, pais, codigopostal, direccion, telefono]
     );
-  } catch (error) {}
+    res.send("bien");
 };
 
 // export const getDireccion = async (req, res, next) => {

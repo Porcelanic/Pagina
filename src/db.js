@@ -9,4 +9,3 @@ export const pool = new pg.Pool({
   database: db.database,
 });
 
-pool.on('connect', () => console.log('DB connected'))

@@ -1,3 +1,5 @@
+/* eslint-disable no-empty */
+/* eslint-disable no-unused-vars */
 import { useState } from "react";
 import Header from "../Components/Header";
 import Footer from "../Components/Footer";
@@ -12,38 +14,36 @@ import { useNavigate } from "react-router-dom";
 
 export default function Pago() {
   const [datosEnvio, setDatosEnvio] = useState({
-    iddireccion: "",
-    barrio: "",
-    ciudad: "",
-    pais: "",
-    codigopostal: "",
-    direccion: "",
-    telefono: "",
+    iddireccion: "1",
+    barrio: "1",
+    ciudad: "1",
+    pais: "1",
+    codigopostal: "1",
+    direccion: "1",
+    telefono: "1",
   });
 
   const [infoPago, setInfoPago] = useState({
-    numeroTarjeta: "",
-    nombreTitular: "",
-    fechaVencimiento: "",
-    cvv: "",
+    numeroTarjeta: "1",
+    nombreTitular: "1",
+    fechaVencimiento: "1",
+    cvv: "1",
   });
   const navigate = useNavigate();
   const [showAlert, setShowAlert] = useState(false); // Nuevo estado para manejar la visibilidad de la alerta
   const [alertText, setAlertText] = useState(""); // Nuevo estado para manejar la visibilidad de la alerta
   const [alertState, setAlertState] = useState(""); // Nuevo estado para manejar la visibilidad de la alerta
 
-  const dataSubmit = () => {
+  const dataSubmit = async (e) => {
+    e.preventDefault();
     informacionSubmit();
     pagoSubmit();
     pedidoSubmit();
-    let itemData = JSON.parse(localStorage.getItem("itemData"));
-    itemData = agregarNumeroPorMaterial(itemData);
-    camisaSubmit(itemData);
 
     setAlertText("Pago exitoso");
     setAlertState("success");
     setShowAlert(true);
-    localStorage.removeItem("itemData");
+
     setTimeout(() => navigate("/"), 1000);
   };
 
@@ -73,13 +73,17 @@ export default function Pago() {
 
   const pedidoSubmit = async () => {
     try {
-      const response = await fetch("http://localhost:4000/createOrders", {
+      fetch("http://localhost:4000/createOrders", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           valor: localStorage.getItem("precioTotal"),
           email: localStorage.getItem("email"),
         }),
+      }).then((response) => {
+        let itemData = JSON.parse(localStorage.getItem("itemData"));
+        itemData = agregarNumeroPorMaterial(itemData);
+        camisaSubmit(itemData);
       });
     } catch (error) {}
   };
@@ -139,10 +143,7 @@ export default function Pago() {
       >
         {alertText}
       </Alert>
-      <Form
-        onSubmit={() => dataSubmit(localStorage.getItem("email"))}
-        className="mb-5 pb-5"
-      >
+      <Form onSubmit={dataSubmit} className="mb-5 pb-5">
         <Row className="d-flex justify-content-around">
           <Col className="recuadro bordered p-5" md={{ span: 8, offset: 2 }}>
             <h2 className="text-center mb-5">Datos de envio</h2>
