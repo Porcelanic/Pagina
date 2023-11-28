@@ -7,6 +7,7 @@ import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import InputGroup from "react-bootstrap/InputGroup";
 import Form from "react-bootstrap/Form";
+import Alert from "react-bootstrap/Alert";
 
 import Footer from "../Components/Footer";
 import Header from "../Components/Header";
@@ -15,10 +16,13 @@ import ThemeSwitcher from "../Components/ThemeSwitcher";
 import { Link } from "react-router-dom";
 
 import "..//Styles/Carrito.css";
-
+import { useState } from "react";
 function Carrito() {
   const itemData = JSON.parse(localStorage.getItem("itemData"));
   const IVA = 0.19;
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertText, setAlertText] = useState("");
+  const [alertState, setAlertState] = useState("");
 
   const plural = (data) => {
     return (
@@ -65,9 +69,15 @@ function Carrito() {
 
   const cambiarCantidad = (posicion) => {
     let cantidad = document.querySelector("#cantidad" + posicion).value;
-    itemData[posicion].cantidad = cantidad;
-    localStorage.setItem("itemData", JSON.stringify(itemData));
-    window.location.reload();
+    if (cantidad > 0 && cantidad <= 100) {
+      itemData[posicion].cantidad = cantidad;
+      localStorage.setItem("itemData", JSON.stringify(itemData));
+      window.location.reload();
+    } else {
+      setShowAlert(true);
+      setAlertText("La cantidad debe estar entre 1 y 100");
+      setAlertState("danger");
+    }
   };
 
   const Items =
@@ -76,7 +86,11 @@ function Carrito() {
       <Carousel.Item key={data.id}>
         <div className="contenedor-img">
           <Image src={data.img} className="camisa-fondo" alt="Selected Image" />
-          {(data.estampa != '') ? <Image src={data.estampa} className="camisa-centrada" /> : <></>}
+          {data.estampa != "" ? (
+            <Image src={data.estampa} className="camisa-centrada" />
+          ) : (
+            <></>
+          )}
         </div>
         <Carousel.Caption>
           {data.cantidad > 1 ? plural(data) : singular(data)};
@@ -123,13 +137,22 @@ function Carrito() {
 
   const mostrarPrecioTotal = () => {
     localStorage.setItem("precioTotal", precioTotal);
-    return <p>Valor a pagar = ${precioTotal * (1+IVA)}</p>;
+    return <p>Valor a pagar = ${precioTotal * (1 + IVA)}</p>;
   };
   const cargarArticulos = () => {
     if (itemData && itemData.length !== 0) {
       return (
         <>
           <Row>
+            <Alert
+              className="mt-5"
+              variant={alertState}
+              show={showAlert}
+              onClose={() => setShowAlert(false)}
+              dismissible
+            >
+              {alertText}
+            </Alert>
             <Col md={9}>
               <Carousel className=" text-center" interval={null}>
                 {Items}
@@ -145,9 +168,7 @@ function Carrito() {
                   </Card.Subtitle>
                   {Contenido}
                   {mostrarPrecioTotal()}
-                  <p>
-                    (Incluye iva del {IVA * 100}%)
-                  </p>
+                  <p>(Incluye iva del {IVA * 100}%)</p>
                   <Link to={"/interfazPago"}>
                     <Button
                       onClick={calcularTotal}

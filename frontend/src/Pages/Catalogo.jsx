@@ -46,7 +46,6 @@ function Catalogo() {
       // Agregar lógica de clic aquí si es necesario
       onClick={() => {
         setEstampadoElegido(index);
-        console.log(estampadoElegido);
       }}
     >
       <Carta
@@ -71,10 +70,10 @@ function Catalogo() {
 
   useEffect(() => {
     // Llamar al endpoint para obtener los estampados
-    fetch('http://localhost:4000/getEstampados') // Asegúrate de que la ruta sea correcta según tu configuración de servidor
-      .then(response => response.json())
-      .then(data => {
-        if(data.rowCount!=0){
+    fetch("http://localhost:4000/getEstampados") // Asegúrate de que la ruta sea correcta según tu configuración de servidor
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.rowCount != 0) {
           setEstampados(data); // Establecer los estampados en el estado local
         }
       })
@@ -114,7 +113,9 @@ function Catalogo() {
 
   const agregarAlCarrito = () => {
     let cantidad = document.querySelector("#cantidad").value;
-    let talla = document.querySelector("#formBasicTipo").value;
+    let talla = document.querySelector("#Talla").value;
+    let material = document.querySelector("#Material").value;
+    let materialNumber = null;
     let selectedShirt = JSON.parse(localStorage.getItem("selectedShirt"));
     let id = selectedShirt.id;
     let img = selectedShirt.img;
@@ -125,6 +126,10 @@ function Catalogo() {
     if (!talla) {
       setShowAlert(true);
       setAlertText("Pon una talla");
+      setAlertState("danger");
+    } else if (!material) {
+      setShowAlert(true);
+      setAlertText("Elige un material");
       setAlertState("danger");
     } else if (!cantidad || cantidad <= 0 || cantidad > 100) {
       setShowAlert(true);
@@ -139,6 +144,8 @@ function Catalogo() {
         text,
         price,
         estampa,
+        materialNumber,
+        material,
       };
       let itemData;
       if (JSON.parse(localStorage.getItem("itemData"))) {
@@ -153,6 +160,11 @@ function Catalogo() {
       setShowAlert(true);
       setAlertText("Se agrego al carrito :D");
       setAlertState("success");
+      setTimeout(() => {
+        setShow(false);
+        setShow2(false);
+        setShowAlert(false);
+      }, 1000);
     }
   };
 
@@ -240,7 +252,7 @@ function Catalogo() {
             <br />
 
             <Form>
-              <Form.Group className="mb-3" controlId="formBasicTipo">
+              <Form.Group className="mb-3" controlId="Talla">
                 <Form.Select data-testid="Talla">
                   <option value="">Talla</option>
                   <option value="S">S</option>
@@ -261,6 +273,17 @@ function Catalogo() {
                   />
                 </InputGroup>
                 <Form.Text>¿Cuantas de estas camisas quieres?.</Form.Text>
+              </Form.Group>
+              <br />
+              <Form.Group className="mb-3" controlId="Material">
+                <Form.Select data-testid="Material">
+                  <option value="">Material</option>
+                  <option value="Poliester">Poliester</option>
+                  <option value="Lino">Lino</option>
+                  <option value="Lana">Lana</option>
+                  <option value="Algodon">Algodon</option>
+                </Form.Select>
+                <Form.Text>¿De qué material quieres la camisa?.</Form.Text>
               </Form.Group>
               <br />
               <Form.Group>
