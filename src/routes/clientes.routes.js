@@ -7,16 +7,13 @@ import {
   createArtista,
   getArtista,
 } from "../controllers/artistaDAO.controller.js";
-import {
-  createDireccion,
-  getDireccion,
-} from "../controllers/direccionDAO.controller.js";
-import {
-  saveImage
-} from "../controllers/imagenDAO.controller.js";
+import { createInformacion } from "../controllers/informacionDAO.controller.js";
+import { createPedido } from "../controllers/pedidoDAO.controller.js";
+import { createCamisa } from "../controllers/camisaDAO.controller.js";
+import { saveImage } from "../controllers/imagenDAO.controller.js";
 import {
   createEstampado,
-  getEstampados
+  getEstampados,
 } from "../controllers/estampadoDAO.controller.js";
 import { createPago } from "../controllers/pagoDAO.controller.js";
 
@@ -30,9 +27,15 @@ router.get("/clients/:email", getCliente);
 router.post("/artists", createArtista);
 router.get("/artists/:email", getArtista);
 
-// Rutas para insertar direccion
-router.post("/addresses", createDireccion);
-router.get("/addresses/:email", getDireccion);
+// Ruta para insertar la informacion
+router.post("/createInformations", createInformacion);
+// router.get("/addresses/:email", getDireccion);
+
+// Ruta para insertar el predido
+router.post("/createOrders", createPedido);
+
+// Ruta para insertar camisas
+router.post("/createShirts", createCamisa);
 
 // Rutas para pago
 router.post("/payment", createPago);

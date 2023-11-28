@@ -8,7 +8,6 @@ export const createEstampado = async (req, res, next) => {
       "INSERT INTO estampado (diseño, nombre, categoria, artista_email) VALUES($1, $2, $3, $4) RETURNING *",
       [diseño, nombre, categoria, artista_email]
     );
-    console.log(nombre);
     res.send("bien");
   } catch (error) {
     if (error.code === "23505") {
@@ -45,8 +44,7 @@ export const getEstampados = async (req, res, next) => {
         nombre_artista: artistasMap[estampado.artista_email],
       }));
       res.json(estampadosConNombreArtista);
-    }else{
-      console.log(0)
+    } else {
       res.json(estampados);
     }
   } catch (error) {
