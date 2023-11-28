@@ -8,6 +8,7 @@ import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Alert from "react-bootstrap/Alert";
+import { useNavigate } from "react-router-dom";
 
 export default function Pago() {
   const [datosEnvio, setDatosEnvio] = useState({
@@ -17,6 +18,9 @@ export default function Pago() {
     pais: "",
     codigopostal: "",
     direccion: "",
+=======
+    telefono: "",
+>>>>>>> Stashed changes
   });
 
   const [infoPago, setInfoPago] = useState({
@@ -25,12 +29,17 @@ export default function Pago() {
     fechaVencimiento: "",
     cvv: "",
   });
+<<<<<<< Updated upstream
 
   const [telefono, setTelefono] = useState("");
+=======
+  const navigate = useNavigate();
+>>>>>>> Stashed changes
   const [showAlert, setShowAlert] = useState(false); // Nuevo estado para manejar la visibilidad de la alerta
   const [alertText, setAlertText] = useState(""); // Nuevo estado para manejar la visibilidad de la alerta
   const [alertState, setAlertState] = useState(""); // Nuevo estado para manejar la visibilidad de la alerta
 
+<<<<<<< Updated upstream
   const VALOR = parseFloat(localStorage.valor).toLocaleString("es-CO", {
     style: "currency",
     currency: "COP",
@@ -78,6 +87,22 @@ export default function Pago() {
 
   const clientSubmit = async (e) => {
     e.preventDefault();
+=======
+  const dataSubmit = () => {
+    informacionSubmit();
+    pagoSubmit();
+    pedidoSubmit();
+    let itemData = JSON.parse(localStorage.getItem("itemData"));
+    itemData = agregarNumeroPorMaterial(itemData);
+    camisaSubmit(itemData);
+
+    setAlertText("Pago exitoso");
+    setAlertState("success");
+    setShowAlert(true);
+    localStorage.removeItem("itemData");
+    setTimeout(() => navigate("/"), 1000);
+  };
+>>>>>>> Stashed changes
 
     try {
       const response = await fetch("http://localhost:4000/addresses", {
