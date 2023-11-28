@@ -26,6 +26,9 @@ function CatalogoEstampados() {
       .then(data => {
         if(data.rowCount!=0){
           setEstampados(data); // Establecer los estampados en el estado local
+        }else{
+          console.log("no hay estampados")
+          console.log(estampados.length)
         }
       })
       .catch(error => {
@@ -77,7 +80,11 @@ function CatalogoEstampados() {
         <div className="align-self-start ps-5 pt-5">
           <h1>Estampados: </h1>
         </div>
-        <Row className="align-items-center"> {Cartas} </Row>
+        <Row className="align-items-center">{estampados.length > 0 ? (
+              Cartas
+            ) : (
+              <p className="h2">No hay estampados disponibles</p>
+            )} </Row>
 
         <ThemeSwitcher />
         <br />
