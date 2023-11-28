@@ -50,6 +50,7 @@ function Catalogo() {
       }}
     >
       <Carta
+        style={"d-block"}
         img={data.diseño}
         text={data.nombre}
         artista={data.nombre_artista}
