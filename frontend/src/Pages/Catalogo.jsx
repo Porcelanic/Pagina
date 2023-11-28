@@ -111,7 +111,7 @@ function Catalogo() {
     }
   };
 
-  const agregarAlCarrito = () => {
+  const agregarAlCarrito = async () => {
     let cantidad = document.querySelector("#cantidad").value;
     let talla = document.querySelector("#Talla").value;
     let material = document.querySelector("#Material").value;
@@ -121,6 +121,21 @@ function Catalogo() {
     let img = selectedShirt.img;
     let text = selectedShirt.text;
     let price = selectedShirt.price;
+    let limite;
+    try {
+      const res = await fetch(
+        `http://localhost:4000/materialQuantity/${material}`
+      );
+      if (res.ok) {
+        const data = await res.json();
+        limite = data.cantidad;
+      } else {
+        console.log("Sucedio un error buscando el material");
+        limite = 0;
+      }
+    } catch (error) {
+      console.error(error);
+    }
     let estampa =
       estampadoElegido >= 0 ? estampados[estampadoElegido].diseño : "";
     if (!talla) {
@@ -131,9 +146,9 @@ function Catalogo() {
       setShowAlert(true);
       setAlertText("Elige un material");
       setAlertState("danger");
-    } else if (!cantidad || cantidad <= 0 || cantidad > 100) {
+    } else if (!cantidad || cantidad <= 0 || cantidad > limite) {
       setShowAlert(true);
-      setAlertText("La cantidad debe estar entre 1 y 100");
+      setAlertText("La cantidad debe estar entre 1 y " + limite);
       setAlertState("danger");
     } else {
       let order = {

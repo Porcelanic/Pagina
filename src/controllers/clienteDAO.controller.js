@@ -29,8 +29,6 @@ export const getCliente = async (req, res) => {
     }
     res.json(result.rows[0]);
   } catch (error) {
-    console.log("Sucedio un error");
-    console.log(error);
     next(error);
   }
 };

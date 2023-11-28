@@ -14,13 +14,13 @@ import { useNavigate } from "react-router-dom";
 
 export default function Pago() {
   const [datosEnvio, setDatosEnvio] = useState({
-    iddireccion: "1",
-    barrio: "1",
-    ciudad: "1",
-    pais: "1",
-    codigopostal: "1",
-    direccion: "1",
-    telefono: "1",
+    iddireccion: "11",
+    barrio: "11",
+    ciudad: "11",
+    pais: "11",
+    codigopostal: "11",
+    direccion: "11",
+    telefono: "11",
   });
 
   const [infoPago, setInfoPago] = useState({
