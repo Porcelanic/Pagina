@@ -8,6 +8,7 @@ import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Alert from "react-bootstrap/Alert";
+import { useNavigate } from "react-router-dom";
 
 export default function Pago() {
   const [datosEnvio, setDatosEnvio] = useState({
@@ -17,6 +18,7 @@ export default function Pago() {
     pais: "",
     codigopostal: "",
     direccion: "",
+    telefono: "",
   });
 
   const [infoPago, setInfoPago] = useState({
@@ -25,80 +27,38 @@ export default function Pago() {
     fechaVencimiento: "",
     cvv: "",
   });
-
-  const [telefono, setTelefono] = useState("");
+  const navigate = useNavigate();
   const [showAlert, setShowAlert] = useState(false); // Nuevo estado para manejar la visibilidad de la alerta
   const [alertText, setAlertText] = useState(""); // Nuevo estado para manejar la visibilidad de la alerta
   const [alertState, setAlertState] = useState(""); // Nuevo estado para manejar la visibilidad de la alerta
 
-  const VALOR = parseFloat(localStorage.valor).toLocaleString("es-CO", {
-    style: "currency",
-    currency: "COP",
-  });
+  const dataSubmit = () => {
+    informacionSubmit();
+    pagoSubmit();
+    pedidoSubmit();
+    let itemData = JSON.parse(localStorage.getItem("itemData"));
+    itemData = agregarNumeroPorMaterial(itemData);
+    camisaSubmit(itemData);
 
-  // const obtenerDatosEnvio = async (email) => {
-  //   try {
-  //     const datosEnvio = await fetch(
-  //       `http://localhost:4000/addresses/${email}`
-  //     );
-  //     if (datosEnvio.ok) {
-  //       const data = await datosEnvio.json();
-  //       console.log(data);
-  //       setDatosEnvio({
-  //         ...datosEnvio,
-  //         iddireccion: data.iddireccion,
-  //         barrio: data.barrio,
-  //         ciudad: data.ciudad,
-  //         codigopostal: data.codigopostal,
-  //         direccion: data.direccion,
-  //         pais: data.pais,
-  //       });
-  //     } else {
-  //       alert("El cliente no tiene datos de envio");
-  //     }
+    setAlertText("Pago exitoso");
+    setAlertState("success");
+    setShowAlert(true);
+    localStorage.removeItem("itemData");
+    setTimeout(() => navigate("/"), 1000);
+  };
 
-  //     const datosCliente = await fetch(
-  //       `http://localhost:4000/clients/${email}`
-  //     );
-  //     if (datosCliente.ok) {
-  //       const data = await datosCliente.json();
-  //       console.log(data);
-  //       // setDatosEnvio({ ...datosEnvio, barrio: data.barrio, ciudad: data.ciudad, codigopostal: data.codigopostal, direccion: data.direccion, pais: data.pais })
-  //     } else {
-  //       alert("El cliente no tiene datos de envio");
-  //     }
-  //   } catch (error) {
-  //     setShowAlert(true); // Mostrar la alerta en caso de error
-  //     // Manejar errores de red o del servidor
-  //     console.error(error);
-  //   }
-  // };
-
-  const crearDireccion = async (e) => {};
-
-  const clientSubmit = async (e) => {
-    e.preventDefault();
-
+  const informacionSubmit = async () => {
     try {
-      const response = await fetch("http://localhost:4000/addresses", {
+      const response = await fetch(`http://localhost:4000/createInformations`, {
         // agregar a la tabla direccion
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(datosEnvio),
       });
+    } catch (error) {}
+  };
 
-      const text = await response.text();
-      if ("error" == text) {
-        alert("Error");
-      } else {
-        setAlertText("Pago exitoso");
-        setAlertState("success");
-        setShowAlert(true);
-        localStorage.removeItem("itemData");
-      }
-    } catch (error) {
-      console.log("error");
-    }
+  const pagoSubmit = async () => {
     try {
       const response = await fetch("http://localhost:4000/payment", {
         method: "POST",
@@ -108,19 +68,41 @@ export default function Pago() {
           valor: localStorage.getItem("precioTotal"),
         }),
       });
-
-      const text = await response.text();
-      if ("error" == text) {
-        alert("Error al procesar el pago");
-      } else {
-        setAlertText("Pago exitoso");
-        setAlertState("success");
-        setShowAlert(true);
-      }
-    } catch (error) {
-      console.log("error");
-    }
+    } catch (error) {}
   };
+
+  const pedidoSubmit = async () => {
+    try {
+      const response = await fetch("http://localhost:4000/createOrders", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          valor: localStorage.getItem("precioTotal"),
+          email: localStorage.getItem("email"),
+        }),
+      });
+    } catch (error) {}
+  };
+
+  const camisaSubmit = async (itemData) => {
+    try {
+      const response = await fetch("http://localhost:4000/createShirts", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(itemData),
+      });
+    } catch (error) {}
+  };
+
+  function agregarNumeroPorMaterial(itemData) {
+    const materials = ["Poliester", "Lino", "Lana", "Algodon"];
+
+    for (const item of itemData) {
+      item.materialNumber = materials.indexOf(item.material) + 1;
+    }
+
+    return itemData;
+  }
 
   function obtenerFecha() {
     // Obtén la fecha actual
@@ -157,7 +139,10 @@ export default function Pago() {
       >
         {alertText}
       </Alert>
-      <Form onSubmit={clientSubmit} className="mb-5 pb-5">
+      <Form
+        onSubmit={() => dataSubmit(localStorage.getItem("email"))}
+        className="mb-5 pb-5"
+      >
         <Row className="d-flex justify-content-around">
           <Col className="recuadro bordered p-5" md={{ span: 8, offset: 2 }}>
             <h2 className="text-center mb-5">Datos de envio</h2>
@@ -168,10 +153,8 @@ export default function Pago() {
                     type="number"
                     name="telefono"
                     placeholder="Telefono"
-                    onChange={(e) => {
-                      setTelefono(e.target.value);
-                    }}
-                    value={telefono}
+                    onChange={datosEnvioChange}
+                    value={datosEnvio.telefono}
                   />
                 </Form.Group>
               </Col>
