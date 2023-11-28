@@ -12,20 +12,20 @@ import { useNavigate } from "react-router-dom";
 
 export default function Pago() {
   const [datosEnvio, setDatosEnvio] = useState({
-    iddireccion: "",
-    barrio: "",
-    ciudad: "",
-    pais: "",
-    codigopostal: "",
-    direccion: "",
-    telefono: "",
+    iddireccion: "1",
+    barrio: "1",
+    ciudad: "1",
+    pais: "1",
+    codigopostal: "1",
+    direccion: "1",
+    telefono: "1",
   });
 
   const [infoPago, setInfoPago] = useState({
-    numeroTarjeta: "",
-    nombreTitular: "",
-    fechaVencimiento: "",
-    cvv: "",
+    numeroTarjeta: "1",
+    nombreTitular: "1",
+    fechaVencimiento: "0001-01-01",
+    cvv: "1",
   });
   const navigate = useNavigate();
   const [showAlert, setShowAlert] = useState(false); // Nuevo estado para manejar la visibilidad de la alerta
