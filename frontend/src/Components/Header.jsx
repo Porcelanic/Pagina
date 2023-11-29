@@ -116,6 +116,15 @@ function Header() {
                   <Nav.Item>
                     <Nav.Link
                       as={Link}
+                      to="/catalogoEstampado"
+                      active={location.pathname === "/catalogoEstampado"}
+                    >
+                      <FontAwesomeIcon icon={faStar} /> Estampados
+                    </Nav.Link>
+                  </Nav.Item>
+                  <Nav.Item>
+                    <Nav.Link
+                      as={Link}
                       to="/carrito"
                       active={location.pathname === "/carrito"}
                     >

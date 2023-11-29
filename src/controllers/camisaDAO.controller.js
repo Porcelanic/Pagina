@@ -9,10 +9,10 @@ export const createCamisa = async (req, res) => {
         estampa=null;
       }
       const newCamisa = await pool.query(
-        "INSERT INTO camisa (imagen, precio, talla, color, cantidad, estampado_idestampado, material_idmaterial, pedido_numerodepedido) VALUES($1, $2, $3, $4, $5, $6, $7, (SELECT MAX(numerodepedido) FROM pedido)) RETURNING *",
-        [img, price, talla, text, cantidad, null, materialNumber]
+        "INSERT INTO camisa (imagen, precio, talla, color, cantidad, estampado_idestampado, material_idmaterial, pedido_numerodepedido) VALUES($1, $2, $3, $4, $5, (SELECT idestampado FROM estampado WHERE diseño=$6), $7, (SELECT MAX(numerodepedido) FROM pedido)) RETURNING *",
+        [img, price, talla, text, cantidad, estampa, materialNumber]
       );
-    }
+    };
 
     res.send("bien");
 };
