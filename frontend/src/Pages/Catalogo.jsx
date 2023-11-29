@@ -131,14 +131,18 @@ function Catalogo() {
         limite = data.cantidad;
       } else {
         console.log("Sucedio un error buscando el material");
-        limite = 0;
+        limite = -1;
       }
     } catch (error) {
       console.error(error);
     }
     let estampa =
       estampadoElegido >= 0 ? estampados[estampadoElegido].diseño : "";
-    if (!talla) {
+    if (limite == 0) {
+      setShowAlert(true);
+      setAlertText("Ya no queda este material");
+      setAlertState("danger");
+    } else if (!talla) {
       setShowAlert(true);
       setAlertText("Pon una talla");
       setAlertState("danger");
@@ -168,19 +172,32 @@ function Catalogo() {
       } else {
         itemData = [];
       }
-
+      restarCantidad(material, cantidad);
       itemData.push(order);
       localStorage.setItem("itemData", JSON.stringify(itemData));
 
       setShowAlert(true);
       setAlertText("Se agrego al carrito :D");
       setAlertState("success");
-      setTimeout(() => {
-        setShow(false);
-        setShow2(false);
-        setShowAlert(false);
-      }, 1000);
     }
+    setTimeout(() => {
+      setShow(false);
+      setShow2(false);
+      setShowAlert(false);
+    }, 1000);
+  };
+
+  const restarCantidad = async (material, cantidad) => {
+    try {
+      const response = await fetch("http://localhost:4000/updateQuantity", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          material: material,
+          cantidad: cantidad,
+        }),
+      });
+    } catch (error) {}
   };
 
   return (

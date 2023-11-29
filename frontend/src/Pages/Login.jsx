@@ -57,6 +57,7 @@ function Login() {
                 setShowAlert(true);
                 localStorage.setItem("email", cliente.email);
                 localStorage.setItem("username", cliente.nombre);
+                localStorage.setItem("dinero", 1000000);
                 localStorage.setItem("tipoDeCliente", "Cliente");
                 setTimeout(() => navigate("/"), 200);
               }

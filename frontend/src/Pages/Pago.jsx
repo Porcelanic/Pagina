@@ -14,20 +14,20 @@ import { useNavigate } from "react-router-dom";
 
 export default function Pago() {
   const [datosEnvio, setDatosEnvio] = useState({
-    iddireccion: "11",
-    barrio: "11",
-    ciudad: "11",
-    pais: "11",
-    codigopostal: "11",
-    direccion: "11",
-    telefono: "11",
+    iddireccion: "",
+    barrio: "",
+    ciudad: "",
+    pais: "",
+    codigopostal: "",
+    direccion: "",
+    telefono: "",
   });
 
   const [infoPago, setInfoPago] = useState({
-    numeroTarjeta: "1",
-    nombreTitular: "1",
-    fechaVencimiento: "1",
-    cvv: "1",
+    numeroTarjeta: "",
+    nombreTitular: "",
+    fechaVencimiento: "",
+    cvv: "",
   });
   const navigate = useNavigate();
   const [showAlert, setShowAlert] = useState(false); // Nuevo estado para manejar la visibilidad de la alerta
@@ -39,7 +39,7 @@ export default function Pago() {
     informacionSubmit();
     pagoSubmit();
     pedidoSubmit();
-
+    descontarDinero();
     setAlertText("Pago exitoso");
     setAlertState("success");
     setShowAlert(true);
@@ -47,6 +47,11 @@ export default function Pago() {
     setTimeout(() => navigate("/"), 1000);
   };
 
+  const descontarDinero = () => {
+    const dineroDisponible = localStorage.getItem("dinero");
+    const valorDeCompra = localStorage.getItem("precioTotalIVA");
+    localStorage.setItem("dinero", dineroDisponible - valorDeCompra);
+  };
   const informacionSubmit = async () => {
     try {
       const response = await fetch(`http://localhost:4000/createInformations`, {
@@ -65,7 +70,7 @@ export default function Pago() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           fechaPago: obtenerFecha(),
-          valor: localStorage.getItem("precioTotal"),
+          valor: localStorage.getItem("precioTotalIVA"),
         }),
       });
     } catch (error) {}
@@ -282,7 +287,7 @@ export default function Pago() {
                 </Form.Group>
               </Col>
               <p className="ms-0 mb-3 h4 align-items-center">
-                Valor a pagar ${localStorage.getItem("precioTotal")}
+                Valor a pagar ${localStorage.getItem("precioTotalIVA")}
               </p>
               <div className="d-grid ">
                 <Button

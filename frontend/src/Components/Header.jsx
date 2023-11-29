@@ -12,12 +12,14 @@ import {
   faSignOut,
   faUsers,
   faStar,
+  faMoneyBill,
 } from "@fortawesome/free-solid-svg-icons";
 
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 function Header() {
+  let value = localStorage.getItem("dinero");
   const [isUserAuthenticated, setIsUserAuthenticated] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
@@ -26,6 +28,15 @@ function Header() {
     const username = localStorage.getItem("username");
     setIsUserAuthenticated(username !== null);
   }, [localStorage.username]);
+
+  function currencyFormatter({ currency, value }) {
+    const formatter = new Intl.NumberFormat("en-US", {
+      style: "currency",
+      minimumFractionDigits: 2,
+      currency,
+    });
+    return formatter.format(value);
+  }
 
   const user = () => {
     return (
@@ -40,6 +51,7 @@ function Header() {
     localStorage.removeItem("email");
     localStorage.removeItem("itemData");
     localStorage.removeItem("precioTotal");
+    localStorage.removeItem("dinero");
     navigate("/login");
     window.location.reload();
   };
@@ -77,6 +89,16 @@ function Header() {
                   variant="pills"
                   className="justify-content-end flex-grow-1 pe-3"
                 >
+                  <Nav.Item>
+                    <Nav.Link>
+                      🤑 Dinero:{" "}
+                      {currencyFormatter({
+                        currency: "USD",
+                        value,
+                      })}
+                    </Nav.Link>
+                  </Nav.Item>
+
                   <Nav.Item>
                     <Nav.Link>
                       <FontAwesomeIcon icon={faUser} /> {localStorage.username}

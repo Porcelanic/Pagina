@@ -33,6 +33,7 @@ function Carrito() {
         <p className="text-light">{data.text}</p>
         <p className="text-light">Valor unitario: ${data.price}</p>
         <p className="text-light">Cantidad de camisas: {data.cantidad}</p>
+        <p className="text-light">Material: {data.material}</p>
         <p className="text-light">
           Precio total: ${data.cantidad * data.price}
         </p>
@@ -48,6 +49,7 @@ function Carrito() {
         <p className="text-light">Talla de las camisas: {data.talla}</p>
         <p className="text-light">{data.text}</p>
         <p className="text-light">Precio: {data.price}</p>
+        <p className="text-light">Material: {data.material}</p>
         <br />
       </div>
     );
@@ -62,21 +64,72 @@ function Carrito() {
   }
 
   const eliminarDelCarrito = (posicion) => {
+    let material = itemData[posicion].material;
+    restarCantidad(material, -itemData[posicion].cantidad);
     itemData.splice(posicion, 1);
     localStorage.setItem("itemData", JSON.stringify(itemData));
     window.location.reload();
   };
 
-  const cambiarCantidad = (posicion) => {
+  const cambiarCantidad = async (posicion) => {
     let cantidad = document.querySelector("#cantidad" + posicion).value;
-    if (cantidad > 0 && cantidad <= 100) {
+    let material = itemData[posicion].material;
+    let limite;
+    try {
+      const res = await fetch(
+        `http://localhost:4000/materialQuantity/${material}`
+      );
+      if (res.ok) {
+        const data = await res.json();
+        limite = Number(data.cantidad) + Number(itemData[posicion].cantidad);
+      } else {
+        console.log("Sucedio un error buscando el material");
+        limite = -1;
+      }
+    } catch (error) {
+      console.error(error);
+    }
+    if (limite == 0) {
+      setShowAlert(true);
+      setAlertText("Ya no queda este material");
+      setAlertState("danger");
+    } else if (!cantidad || cantidad <= 0 || cantidad > limite) {
+      setShowAlert(true);
+      setAlertText("La cantidad debe estar entre 1 y " + limite);
+      setAlertState("danger");
+    } else {
+      restarCantidad(material, cantidad - itemData[posicion].cantidad);
       itemData[posicion].cantidad = cantidad;
       localStorage.setItem("itemData", JSON.stringify(itemData));
+
       window.location.reload();
+    }
+  };
+
+  const restarCantidad = async (material, cantidad) => {
+    try {
+      const response = await fetch("http://localhost:4000/updateQuantity", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          material: material,
+          cantidad: cantidad,
+        }),
+      });
+    } catch (error) {}
+  };
+
+  const verificarDinero = () => {
+    const dineroDisponible = localStorage.getItem("dinero");
+    const valorDeCompra = precioTotal * (1 + IVA);
+    return dineroDisponible < valorDeCompra;
+  };
+
+  const dirigirAPago = () => {
+    if (verificarDinero()) {
+      return "No te alcanza el dinero";
     } else {
-      setShowAlert(true);
-      setAlertText("La cantidad debe estar entre 1 y 100");
-      setAlertState("danger");
+      return "Continuar con el pago";
     }
   };
 
@@ -126,6 +179,7 @@ function Carrito() {
         <span>{data.text}</span>
         <span>{data.talla}</span>
         <span>{data.cantidad}</span>
+        <span>{data.material}</span>
       </Card.Text>
     ));
 
@@ -137,6 +191,7 @@ function Carrito() {
 
   const mostrarPrecioTotal = () => {
     localStorage.setItem("precioTotal", precioTotal);
+    localStorage.setItem("precioTotalIVA", precioTotal * (1 + IVA));
     return <p>Valor a pagar = ${precioTotal * (1 + IVA)}</p>;
   };
   const cargarArticulos = () => {
@@ -144,16 +199,16 @@ function Carrito() {
       return (
         <>
           <Row>
-            <Alert
-              className="mt-5"
-              variant={alertState}
-              show={showAlert}
-              onClose={() => setShowAlert(false)}
-              dismissible
-            >
-              {alertText}
-            </Alert>
             <Col md={9}>
+              <Alert
+                className="mt-5"
+                variant={alertState}
+                show={showAlert}
+                onClose={() => setShowAlert(false)}
+                dismissible
+              >
+                {alertText}
+              </Alert>
               <Carousel className=" text-center" interval={null}>
                 {Items}
               </Carousel>
@@ -169,14 +224,16 @@ function Carrito() {
                   {Contenido}
                   {mostrarPrecioTotal()}
                   <p>(Incluye iva del {IVA * 100}%)</p>
-                  <Link to={"/interfazPago"}>
-                    <Button
-                      onClick={calcularTotal}
-                      className="btn-dark btn-outline-light"
-                    >
-                      Continuar con el pago
-                    </Button>
-                  </Link>
+
+                  <Button
+                    disabled={verificarDinero()}
+                    onClick={calcularTotal}
+                    className="btn-dark btn-outline-light"
+                  >
+                    <Link to={"/interfazPago"} className="btn p-0 m-0">
+                      {dirigirAPago()}
+                    </Link>
+                  </Button>
                 </Card.Body>
               </Card>
             </Col>

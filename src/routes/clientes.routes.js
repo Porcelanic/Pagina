@@ -16,7 +16,10 @@ import {
   getEstampados,
 } from "../controllers/estampadoDAO.controller.js";
 import { createPago } from "../controllers/pagoDAO.controller.js";
-import { getCantidad } from "../controllers/materialDAO.controller.js";
+import {
+  getCantidad,
+  updateCantidad,
+} from "../controllers/materialDAO.controller.js";
 const router = Router();
 
 // Rutas para las consultas en cliente
@@ -42,6 +45,7 @@ router.post("/payment", createPago);
 
 // Rutas para obtener la cantidad
 router.get("/materialQuantity/:material", getCantidad);
+router.post("/updateQuantity", updateCantidad);
 
 // Rutas estampado
 router.post("/image", saveImage);
