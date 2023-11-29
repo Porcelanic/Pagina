@@ -107,8 +107,7 @@ function Carrito() {
   };
 
   const restarCantidad = async (material, cantidad) => {
-    try {
-      const response = await fetch("http://localhost:4000/updateQuantity", {
+    fetch("http://localhost:4000/updateQuantity", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -116,7 +115,6 @@ function Carrito() {
           cantidad: cantidad,
         }),
       });
-    } catch (error) {}
   };
 
   const verificarDinero = () => {

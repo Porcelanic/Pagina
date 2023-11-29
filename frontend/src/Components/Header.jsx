@@ -12,7 +12,6 @@ import {
   faSignOut,
   faUsers,
   faStar,
-  faMoneyBill,
 } from "@fortawesome/free-solid-svg-icons";
 
 import { Link, useLocation, useNavigate } from "react-router-dom";
