@@ -58,23 +58,73 @@ function Catalogo() {
   ));
 
   const cardData = [
-    { id: 1, img: "/Camisas/Deportivas/1.png", text: "Beja 2024", price: 100000 },
-    { id: 2, img: "/Camisas/Deportivas/2.png", text: "Andres pulido 1778", price: 100000 },
-    { id: 3, img: "/Camisas/Deportivas/3.png", text: "Millonarios 2023", price: 100000 },
-    { id: 4, img: "/Camisas/Deportivas/4.png", text: "No c 1999", price: 100000 },
-    { id: 5, img: "/Camisas/Deportivas/5.png", text: "Real Madrid 2023", price: 100000 },
-    { id: 6, img: "/Camisas/Deportivas/6.png", text: "Tottenham 2023", price: 100000 },
-    { id: 7, img: "/Camisas/Deportivas/7.png", text: "Bayer Much 2023", price: 100000 },
-    { id: 8, img: "/Camisas/Deportivas/8.png", text: "Cucuta 2023", price: 100000 },
+    {
+      id: 1,
+      img: "/Camisas/Deportivas/1.png",
+      text: "Beja 2024",
+      price: 100000,
+    },
+    {
+      id: 2,
+      img: "/Camisas/Deportivas/2.png",
+      text: "Andres pulido 1778",
+      price: 100000,
+    },
+    {
+      id: 3,
+      img: "/Camisas/Deportivas/3.png",
+      text: "Millonarios 2023",
+      price: 100000,
+    },
+    {
+      id: 4,
+      img: "/Camisas/Deportivas/4.png",
+      text: "No c 1999",
+      price: 100000,
+    },
+    {
+      id: 5,
+      img: "/Camisas/Deportivas/5.png",
+      text: "Real Madrid 2023",
+      price: 100000,
+    },
+    {
+      id: 6,
+      img: "/Camisas/Deportivas/6.png",
+      text: "Tottenham 2023",
+      price: 100000,
+    },
+    {
+      id: 7,
+      img: "/Camisas/Deportivas/7.png",
+      text: "Bayer Much 2023",
+      price: 100000,
+    },
+    {
+      id: 8,
+      img: "/Camisas/Deportivas/8.png",
+      text: "Cucuta 2023",
+      price: 100000,
+    },
   ];
   const estampablesData = [
     { id: 1, img: "/Camisas/Estampables/1.png", text: "Azul", price: 100000 },
     { id: 2, img: "/Camisas/Estampables/2.png", text: "Verde", price: 100000 },
     { id: 3, img: "/Camisas/Estampables/3.png", text: "Rojo", price: 100000 },
     { id: 4, img: "/Camisas/Estampables/4.png", text: "Blanco", price: 100000 },
-    { id: 5, img: "/Camisas/Estampables/5.png", text: "Azul oscuro", price: 100000 },
+    {
+      id: 5,
+      img: "/Camisas/Estampables/5.png",
+      text: "Azul oscuro",
+      price: 100000,
+    },
     { id: 6, img: "/Camisas/Estampables/6.png", text: "Rosado", price: 100000 },
-    { id: 7, img: "/Camisas/Estampables/7.png", text: "Verde oscuro", price: 100000 },
+    {
+      id: 7,
+      img: "/Camisas/Estampables/7.png",
+      text: "Verde oscuro",
+      price: 100000,
+    },
     { id: 8, img: "/Camisas/Estampables/8.png", text: "Gris", price: 100000 },
   ];
 
@@ -127,6 +177,9 @@ function Catalogo() {
   const handleClose = () => {
     setShow(false);
   };
+  const handleClose1 = () => {
+    setShow2(false);
+  };
   const handleShow = (data) => {
     if (localStorage.getItem("username") != null) {
       localStorage.setItem("selectedShirt", JSON.stringify(data));
@@ -162,7 +215,7 @@ function Catalogo() {
     }
     let estampa =
       estampadoElegido >= 0 ? estampados[estampadoElegido].diseño : "";
-    console.log(estampa)
+    console.log(estampa);
     if (limite == 0) {
       setShowAlert(true);
       setAlertText("Ya no queda este material");
@@ -213,14 +266,14 @@ function Catalogo() {
   };
 
   const restarCantidad = async (material, cantidad) => {
-      fetch("http://localhost:4000/updateQuantity", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          material: material,
-          cantidad: cantidad,
-        }),
-      });
+    fetch("http://localhost:4000/updateQuantity", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        material: material,
+        cantidad: cantidad,
+      }),
+    });
   };
 
   return (
@@ -380,11 +433,7 @@ function Catalogo() {
           </Offcanvas.Body>
         </Offcanvas>
 
-        <Offcanvas
-          show={show2}
-          onHide={() => setShow2(false)}
-          placement="start"
-        >
+        <Offcanvas show={show2} onHide={handleClose1} placement="start">
           <Offcanvas.Header closeButton>
             <Offcanvas.Title>Selecciona tu estampado</Offcanvas.Title>
           </Offcanvas.Header>
