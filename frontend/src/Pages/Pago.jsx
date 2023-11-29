@@ -37,14 +37,7 @@ export default function Pago() {
   const dataSubmit = async (e) => {
     e.preventDefault();
     informacionSubmit();
-    pagoSubmit();
-    pedidoSubmit();
     descontarDinero();
-    setAlertText("Pago exitoso");
-    setAlertState("success");
-    setShowAlert(true);
-
-    setTimeout(() => navigate("/"), 1000);
   };
 
   const descontarDinero = () => {
@@ -54,24 +47,28 @@ export default function Pago() {
   };
   const informacionSubmit = async () => {
     try {
-      const response = await fetch(`http://localhost:4000/createInformations`, {
+      fetch(`http://localhost:4000/createInformations`, {
         // agregar a la tabla direccion
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(datosEnvio),
+      }).then((response) => {
+        pagoSubmit();
       });
     } catch (error) {}
   };
 
   const pagoSubmit = async () => {
     try {
-      const response = await fetch("http://localhost:4000/payment", {
+      fetch("http://localhost:4000/payment", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           fechaPago: obtenerFecha(),
           valor: localStorage.getItem("precioTotalIVA"),
         }),
+      }).then((response) => {
+        pedidoSubmit();
       });
     } catch (error) {}
   };
@@ -87,6 +84,7 @@ export default function Pago() {
         }),
       }).then((response) => {
         let itemData = JSON.parse(localStorage.getItem("itemData"));
+        console.log(itemData);
         itemData = agregarNumeroPorMaterial(itemData);
         camisaSubmit(itemData);
       });
@@ -95,10 +93,16 @@ export default function Pago() {
 
   const camisaSubmit = async (itemData) => {
     try {
-      const response = await fetch("http://localhost:4000/createShirts", {
+      fetch("http://localhost:4000/createShirts", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(itemData),
+      }).then((response) => {
+        localStorage.removeItem("itemData");
+        setAlertText("Pago exitoso");
+        setAlertState("success");
+        setShowAlert(true);
+        setTimeout(() => navigate("/"), 1000);
       });
     } catch (error) {}
   };

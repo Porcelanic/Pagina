@@ -138,6 +138,7 @@ function Catalogo() {
     }
     let estampa =
       estampadoElegido >= 0 ? estampados[estampadoElegido].diseño : "";
+    console.log(estampa)
     if (limite == 0) {
       setShowAlert(true);
       setAlertText("Ya no queda este material");
