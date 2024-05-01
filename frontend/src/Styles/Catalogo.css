@@ -2,6 +2,11 @@
   position: relative;
 }
 
+.row {
+  margin-right: 0px;
+  margin-left: -15px;
+}
+
 .imagen-fondo {
   width: 100%;
   height: 100%;
