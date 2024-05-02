@@ -1,10 +1,11 @@
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Carta from "./Carta";
+import { useOffcanvas } from "../Placeholding/OffcanvasContext";
 
 import { useEffect, useState } from "react";
 
-function ContenedorCartas( prop ) {
+function ContenedorCartas(prop) {
   const estampables = [
     { id: 1, img: "/Camisas/Estampables/1.png", text: "Azul", price: 100000 },
     { id: 2, img: "/Camisas/Estampables/2.png", text: "Verde", price: 100000 },
@@ -76,9 +77,12 @@ function ContenedorCartas( prop ) {
     },
   ];
 
+  const { handleShow, setEstampable, setEstampadoElegido } = useOffcanvas();
+
   const cartas = prop.tipo === "estampables" ? estampables : deportivas;
 
-  const tipoCamisas = prop.tipo === "estampables" ? "para estampar" : "deportivas";
+  const tipoCamisas =
+    prop.tipo === "estampables" ? "para estampar" : "deportivas";
 
   return (
     <>
@@ -88,8 +92,8 @@ function ContenedorCartas( prop ) {
       <Row
         className="align-items-center"
         onClick={() => {
-          prop.setEstampable(prop.tipo === "estampables");
-          prop.setEstampadoElegido(-1);
+          setEstampable(prop.tipo === "estampables");
+          setEstampadoElegido(-1);
         }}
       >
         {cartas.map((data) => (
@@ -101,7 +105,7 @@ function ContenedorCartas( prop ) {
             lg="3"
             className="text-center mt-3"
           >
-            <div onClick={() => prop.handleShow(data)}>
+            <div onClick={() => handleShow(data)}>
               <Carta img={data.img} text={data.text} price={data.price} />
             </div>
           </Col>

@@ -133,8 +133,8 @@ function Carrito() {
 
   const Items =
     itemData &&
-    itemData.map((data) => (
-      <Carousel.Item key={data.id}>
+    itemData.map((data, index) => (
+      <Carousel.Item key={index}>
         <div className="contenedor-img">
           <Image src={data.img} className="camisa-fondo" alt="Selected Image" />
           {data.estampa != "" ? (
@@ -172,8 +172,8 @@ function Carrito() {
 
   const Contenido =
     itemData &&
-    itemData.map((data) => (
-      <Card.Text className=" cart-items" key={data.id}>
+    itemData.map((data, index) => (
+      <Card.Text className=" cart-items" key={index}>
         <span>{data.text}</span>
         <span>{data.talla}</span>
         <span>{data.cantidad}</span>
