@@ -14,7 +14,7 @@ import CatalogoEstampados from "./Pages/CatalogoEstampados.jsx";
 const router = createHashRouter([
   {
     path: "/",
-    element: <Catalogo />,
+    element: <Catalogo/>,
   },
   {
     path: "/registro",

@@ -17,6 +17,7 @@ import Carta from "../Components/Carta";
 import Footer from "../Components/Footer";
 import Header from "../Components/Header";
 import ThemeSwitcher from "../Components/ThemeSwitcher";
+import ContenedorCartas from "../Components/ContenedorCartas";
 {
   /* My css */
 }
@@ -57,77 +58,6 @@ function Catalogo() {
     </Col>
   ));
 
-  const cardData = [
-    {
-      id: 1,
-      img: "/Camisas/Deportivas/1.png",
-      text: "Beja 2024",
-      price: 100000,
-    },
-    {
-      id: 2,
-      img: "/Camisas/Deportivas/2.png",
-      text: "Andres pulido 1778",
-      price: 100000,
-    },
-    {
-      id: 3,
-      img: "/Camisas/Deportivas/3.png",
-      text: "Millonarios 2023",
-      price: 100000,
-    },
-    {
-      id: 4,
-      img: "/Camisas/Deportivas/4.png",
-      text: "No c 1999",
-      price: 100000,
-    },
-    {
-      id: 5,
-      img: "/Camisas/Deportivas/5.png",
-      text: "Real Madrid 2023",
-      price: 100000,
-    },
-    {
-      id: 6,
-      img: "/Camisas/Deportivas/6.png",
-      text: "Tottenham 2023",
-      price: 100000,
-    },
-    {
-      id: 7,
-      img: "/Camisas/Deportivas/7.png",
-      text: "Bayer Much 2023",
-      price: 100000,
-    },
-    {
-      id: 8,
-      img: "/Camisas/Deportivas/8.png",
-      text: "Cucuta 2023",
-      price: 100000,
-    },
-  ];
-  const estampablesData = [
-    { id: 1, img: "/Camisas/Estampables/1.png", text: "Azul", price: 100000 },
-    { id: 2, img: "/Camisas/Estampables/2.png", text: "Verde", price: 100000 },
-    { id: 3, img: "/Camisas/Estampables/3.png", text: "Rojo", price: 100000 },
-    { id: 4, img: "/Camisas/Estampables/4.png", text: "Blanco", price: 100000 },
-    {
-      id: 5,
-      img: "/Camisas/Estampables/5.png",
-      text: "Azul oscuro",
-      price: 100000,
-    },
-    { id: 6, img: "/Camisas/Estampables/6.png", text: "Rosado", price: 100000 },
-    {
-      id: 7,
-      img: "/Camisas/Estampables/7.png",
-      text: "Verde oscuro",
-      price: 100000,
-    },
-    { id: 8, img: "/Camisas/Estampables/8.png", text: "Gris", price: 100000 },
-  ];
-
   useEffect(() => {
     // Llamar al endpoint para obtener los estampados
     fetch("http://localhost:4000/getEstampados") // Asegúrate de que la ruta sea correcta según tu configuración de servidor
@@ -141,35 +71,6 @@ function Catalogo() {
         console.error("Error al obtener los estampados:", error);
       });
   }, []); // La dependencia vacía asegura que esta llamada solo se haga una vez al cargar el componente
-
-  const CartasDeportivas = cardData.map((data) => (
-    <Col
-      key={data.id}
-      xs="12"
-      sm="6"
-      md="4"
-      lg="3"
-      className="text-center mt-3"
-    >
-      <div onClick={() => handleShow(data)}>
-        <Carta img={data.img} text={data.text} price={data.price} />
-      </div>
-    </Col>
-  ));
-  const CartasEstampables = estampablesData.map((data) => (
-    <Col
-      key={data.id}
-      xs="12"
-      sm="6"
-      md="4"
-      lg="3"
-      className="text-center mt-3"
-    >
-      <div onClick={() => handleShow(data)}>
-        <Carta img={data.img} text={data.text} price={data.price} />
-      </div>
-    </Col>
-  ));
 
   const [show, setShow] = useState(false);
   const [show2, setShow2] = useState(false);
@@ -302,32 +203,9 @@ function Catalogo() {
           </Col>
         </Row>
 
-        <div className="align-self-start ps-5 pt-5">
-          <h1 data-testid="Camisas deportivas">Camisas deportivas: </h1>
-        </div>
-        <Row
-          className="align-items-center"
-          onClick={() => {
-            setEstampable(false);
-            setEstampadoElegido(-1);
-          }}
-          data-testid="Camisas"
-        >
-          {" "}
-          {CartasDeportivas}{" "}
-        </Row>
-        <div className="align-self-start ps-5 pt-5 mb-5">
-          <h1 data-testid="Camisas para estampar">Camisas para estampar: </h1>
-        </div>
-        <Row
-          className="align-items-center"
-          onClick={() => {
-            setEstampable(true);
-            setEstampadoElegido(-1);
-          }}
-        >
-          {CartasEstampables}
-        </Row>
+        <ContenedorCartas tipo='deportivas' setEstampable={setEstampable} setEstampadoElegido={setEstampadoElegido} handleShow={handleShow}/>
+        
+        <ContenedorCartas tipo='estampables' setEstampable={setEstampable} setEstampadoElegido={setEstampadoElegido} handleShow={handleShow}/>
 
         <ThemeSwitcher />
         <Offcanvas show={show} onHide={handleClose} placement="end">
