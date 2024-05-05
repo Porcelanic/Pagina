@@ -1,4 +1,5 @@
-import { useOffcanvas } from "../Placeholding/OffcanvasContext";
+import { useSpecific } from "../Context/SpecificContext";
+import { useGeneral } from "../Context/generalContext";
 import Image from "react-bootstrap/Image";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import Form from "react-bootstrap/Form";
@@ -8,21 +9,24 @@ import Alert from "react-bootstrap/Alert";
 
 function OffcanvasCamisa() {
   const {
-    show,
-    handleClose,
-    selectedImage,
-    estampable,
     showAlert,
-    alertState,
-    alertText,
-    setShow,
-    setShow2,
     setShowAlert,
+    alertText,
     setAlertText,
+    alertState,
     setAlertState,
-    estampadoElegido,
+  } = useSpecific();
+
+  const {
+    show,
+    setShow,
+    handleClose,
+    setShow2,
+    estampable, 
     estampados,
-  } = useOffcanvas();
+    estampadoElegido,
+    selectedImage,
+  } = useGeneral();
 
   const agregarAlCarrito = async () => {
     let cantidad = document.querySelector("#cantidad").value;

@@ -1,9 +1,8 @@
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Carta from "./Carta";
-import { useOffcanvas } from "../Placeholding/OffcanvasContext";
-
 import { useEffect, useState } from "react";
+import { useGeneral } from "../Context/generalContext";
 
 function ContenedorCartas(prop) {
   const estampables = [
@@ -77,7 +76,7 @@ function ContenedorCartas(prop) {
     },
   ];
 
-  const { handleShow, setEstampable, setEstampadoElegido } = useOffcanvas();
+  const { handleShow, setEstampable, setEstampadoElegido } = useGeneral();
 
   const cartas = prop.tipo === "estampables" ? estampables : deportivas;
 

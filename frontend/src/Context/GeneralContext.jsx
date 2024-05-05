@@ -1,20 +1,14 @@
 import React, { createContext, useContext, useState } from "react";
 
-const OffcanvasContext = createContext();
+const GeneralContext = createContext();
 
-export const OffcanvasProvider = ({ children }) => {
+export const GeneralProvider = ({ children }) => {
   const [show2, setShow2] = useState(false);
-  const handleClose1 = () => {
-    setShow2(false);
-  };
-  const [showAlert, setShowAlert] = useState(false);
-  const [alertText, setAlertText] = useState("");
-  const [alertState, setAlertState] = useState("");
+  const [show, setShow] = useState(false);
   const [estampable, setEstampable] = useState(false);
   const [estampados, setEstampados] = useState([]);
   const [estampadoElegido, setEstampadoElegido] = useState(-1);
   const [selectedImage, setSelectedImage] = useState(null);
-  const [show, setShow] = useState(false);
 
   const handleShow = (data) => {
     if (localStorage.getItem("username") != null) {
@@ -23,14 +17,17 @@ export const OffcanvasProvider = ({ children }) => {
       setShow(true);
     }
   };
+
   const handleClose = () => {
     setShow(false);
   };
 
-  
+  const handleClose1 = () => {
+    setShow2(false);
+  };
 
   return (
-    <OffcanvasContext.Provider
+    <GeneralContext.Provider
       value={{
         show,
         setShow,
@@ -39,26 +36,20 @@ export const OffcanvasProvider = ({ children }) => {
         show2,
         setShow2,
         handleClose1,
-        selectedImage,
-        showAlert,
-        setShowAlert,
-        alertText,
-        setAlertText,
-        alertState,
-        setAlertState,
-        estampable,
+        estampable, 
         setEstampable,
         estampados,
         setEstampados,
         estampadoElegido,
         setEstampadoElegido,
+        selectedImage,
       }}
     >
       {children}
-    </OffcanvasContext.Provider>
+    </GeneralContext.Provider>
   );
 };
 
-export const useOffcanvas = () => {
-  return useContext(OffcanvasContext);
+export const useGeneral = () => {
+  return useContext(GeneralContext);
 };

@@ -1,4 +1,4 @@
-import { useOffcanvas } from "../Placeholding/OffcanvasContext";
+import { useGeneral } from "../Context/generalContext";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import { useEffect, useState } from "react";
 import Row from "react-bootstrap/Row";
@@ -8,12 +8,12 @@ import Carta from "./Carta";
 
 function OffcanvasEstampado() {
   const {
-    show2,
-    handleClose1,
     estampados,
-    setEstampados,
+    handleClose1,
     setEstampadoElegido,
-  } = useOffcanvas();
+    setEstampados,
+    show2,
+  } = useGeneral();
 
   const CartaEstampado = estampados.map((data, index) => (
     <Col

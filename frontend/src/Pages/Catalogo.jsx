@@ -9,7 +9,8 @@ import Col from "react-bootstrap/Col";
 }
 import OffcanvasEstampado from "../Components/OffcanvasEstampado";
 import OffcanvasCamisa from "../Components/OffcanvasCamisa";
-import { OffcanvasProvider } from "../Placeholding/OffcanvasContext";
+import { GeneralProvider } from "../Context/generalContext";
+import { SpecificProvider } from "../Context/SpecificContext";
 import Footer from "../Components/Footer";
 import Header from "../Components/Header";
 import ThemeSwitcher from "../Components/ThemeSwitcher";
@@ -49,12 +50,14 @@ function Catalogo() {
             </Row>
           </Col>
         </Row>
-        <OffcanvasProvider>
+        <GeneralProvider>
           <ContenedorCartas tipo="deportivas" />
           <ContenedorCartas tipo="estampables" />
-          <OffcanvasCamisa />
+          <SpecificProvider>
+            <OffcanvasCamisa />
+          </SpecificProvider>
           <OffcanvasEstampado />
-        </OffcanvasProvider>
+        </GeneralProvider>
         <ThemeSwitcher />
         <br />
         <br />
