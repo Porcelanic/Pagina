@@ -1,4 +1,4 @@
-import { useGeneral } from "../Context/generalContext";
+import { useGeneral } from "../Utils/generalContext";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import { useEffect, useState } from "react";
 import Row from "react-bootstrap/Row";

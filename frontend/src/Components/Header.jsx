@@ -46,11 +46,7 @@ function Header() {
   };
 
   const reset = () => {
-    localStorage.removeItem("username");
-    localStorage.removeItem("email");
-    localStorage.removeItem("itemData");
-    localStorage.removeItem("precioTotal");
-    localStorage.removeItem("dinero");
+    localStorage.clear();
     navigate("/login");
     window.location.reload();
   };
@@ -239,6 +235,24 @@ function Header() {
                   variant="pills"
                   className="justify-content-end flex-grow-1 pe-3"
                 >
+                  <Nav.Item>
+                    <Nav.Link
+                      as={Link}
+                      to="/"
+                      active={location.pathname === "/"}
+                    >
+                      <FontAwesomeIcon icon={faShop} /> Catalogo
+                    </Nav.Link>
+                  </Nav.Item>
+                  <Nav.Item>
+                    <Nav.Link
+                      as={Link}
+                      to="/catalogoEstampado"
+                      active={location.pathname === "/catalogoEstampado"}
+                    >
+                      <FontAwesomeIcon icon={faStar} /> Estampados
+                    </Nav.Link>
+                  </Nav.Item>
                   <NavDropdown
                     title={user()}
                     id={`offcanvasNavbarDropdown-expand-md`}

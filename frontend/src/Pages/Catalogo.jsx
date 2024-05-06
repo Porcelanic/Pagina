@@ -9,8 +9,8 @@ import Col from "react-bootstrap/Col";
 }
 import OffcanvasEstampado from "../Components/OffcanvasEstampado";
 import OffcanvasCamisa from "../Components/OffcanvasCamisa";
-import { GeneralProvider } from "../Context/generalContext";
-import { SpecificProvider } from "../Context/SpecificContext";
+import { GeneralProvider } from "../Utils/generalContext";
+import { SpecificProvider } from "../Utils/SpecificContext";
 import Footer from "../Components/Footer";
 import Header from "../Components/Header";
 import ThemeSwitcher from "../Components/ThemeSwitcher";

@@ -1,5 +1,5 @@
-import { useSpecific } from "../Context/SpecificContext";
-import { useGeneral } from "../Context/generalContext";
+import { useSpecific } from "../Utils/SpecificContext";
+import { useGeneral } from "../Utils/generalContext";
 import Image from "react-bootstrap/Image";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import Form from "react-bootstrap/Form";

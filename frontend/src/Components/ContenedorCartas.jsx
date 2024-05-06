@@ -2,7 +2,7 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Carta from "./Carta";
 import { useEffect, useState } from "react";
-import { useGeneral } from "../Context/generalContext";
+import { useGeneral } from "../Utils/generalContext";
 
 function ContenedorCartas(prop) {
   const estampables = [
