@@ -29,7 +29,7 @@ const router = createBrowserRouter(
       </Route>
 
       <Route path="/" element={<ProtectedRoutes rolAutorizado="Cliente"/>}>
-        <Route path="interfazPago" element={<interfazPago/>} />
+        <Route path="interfazPago" element={<Pago/>} />
         <Route path="carrito" element={<Carrito/>} />
       </Route>
 
