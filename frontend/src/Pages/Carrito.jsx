@@ -15,7 +15,6 @@ function Carrito() {
       <br />
       <br />
       <br />
-
       <Container> 
         <SpecificProvider>
           <Contenido />
