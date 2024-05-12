@@ -33,7 +33,7 @@ class Cat extends Animal {
     }
 }
 
-const dog = new Dog("Buddy");
+const dog = new Dog("Hola");
 dog.makeSound(); // Output: Buddy barks.
 dog.move(10); // Output: Buddy moved 10m.
 

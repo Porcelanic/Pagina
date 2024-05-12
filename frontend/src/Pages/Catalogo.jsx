@@ -23,6 +23,7 @@ import "../Styles/Offcanvas.css";
   /* Hooks */
 }
 import "../Styles/Catalogo.css";
+import Header1 from "../Components/Header1";
 
 function Catalogo() {
   return (
@@ -30,6 +31,7 @@ function Catalogo() {
       <Container fluid className=" align-items-center m-0 p-0">
         <Row className="width-100vw">
           <Header />
+          <Header1 />
         </Row>
 
         <Row className="width-100vw">

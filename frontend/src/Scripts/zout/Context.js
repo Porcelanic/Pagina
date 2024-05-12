@@ -22,7 +22,7 @@ class Cat extends Animal {
         console.log(`${this.name} meows.`);
     }
 }
-const dog = new Dog("Buddy");
+const dog = new Dog("Hola");
 dog.makeSound(); // Output: Buddy barks.
 dog.move(10); // Output: Buddy moved 10m.
 const cat = new Cat("Whiskers");
