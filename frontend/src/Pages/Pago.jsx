@@ -1,7 +1,7 @@
 /* eslint-disable no-empty */
 /* eslint-disable no-unused-vars */
 import { useState } from "react";
-import Header from "../Components/Header";
+import Header from "../Clases/Header/Header";
 import Footer from "../Components/Footer";
 import ThemeSwitcher from "../Components/ThemeSwitcher";
 import "../Styles/pago.css";

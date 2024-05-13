@@ -6,7 +6,7 @@ import Alert from "react-bootstrap/Alert";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import Header from "../Components/Header";
+import Header from "../Clases/Header/Header";
 import "../Styles/Login.css";
 import {ContextoBooleano} from "../Classes/Estados/EstadoBooleano/Contexto"
 function Login() {
