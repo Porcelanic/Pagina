@@ -6,7 +6,7 @@ import Col from "react-bootstrap/Col";
 /* My components */
 import Carta from "../Components/Carta";
 import Footer from "../Components/Footer";
-import Header from "../Clases/Header/Header";
+import Header from "../Classes/Header/Header";
 import ThemeSwitcher from "../Components/ThemeSwitcher";
 
 /* My css */
