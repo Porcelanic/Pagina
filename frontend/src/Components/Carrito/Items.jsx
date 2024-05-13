@@ -23,7 +23,7 @@ function Items(prop) {
     let material = prop.itemData[posicion].material;
     restarCantidad(material, -prop.itemData[posicion].cantidad);
     prop.itemData.splice(posicion, 1);
-    localStorage.setItem("prop.itemData", JSON.stringify(prop.itemData));
+    localStorage.setItem("itemData", JSON.stringify(prop.itemData));
     window.location.reload();
   };
 
@@ -56,7 +56,7 @@ function Items(prop) {
     } else {
       restarCantidad(material, cantidad - prop.itemData[posicion].cantidad);
       prop.itemData[posicion].cantidad = cantidad;
-      localStorage.setItem("prop.itemData", JSON.stringify(prop.itemData));
+      localStorage.setItem("itemData", JSON.stringify(prop.itemData));
 
       window.location.reload();
     }

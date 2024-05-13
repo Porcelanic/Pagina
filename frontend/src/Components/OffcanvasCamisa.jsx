@@ -22,7 +22,7 @@ function OffcanvasCamisa() {
     setShow,
     handleClose,
     setShow2,
-    estampable, 
+    estampable,
     estampados,
     estampadoElegido,
     selectedImage,
@@ -39,6 +39,7 @@ function OffcanvasCamisa() {
     let text = selectedShirt.text;
     let price = selectedShirt.price;
     let limite;
+
     try {
       const res = await fetch(
         `http://localhost:4000/materialQuantity/${material}`

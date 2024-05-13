@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import Header from "../Components/Header";
 import "../Styles/Login.css";
-
+import {ContextoBooleano} from "../Classes/Estados/EstadoBooleano/Contexto"
 function Login() {
   const navigate = useNavigate();
 
@@ -22,6 +22,22 @@ function Login() {
     trial372: null,
   });
 
+  const [estados, setEstados] = useState({
+    estadoBooleano: new ContextoBooleano(),
+    estadoX: null,
+    estadoY: null,
+  })
+
+  const cambioEstadoFalso= () =>{
+    estados.estadoBooleano.cambioDeEstado();
+    setAlertText("");
+    console.log(estados.estadoBooleano.getEstado());
+  }
+
+  const cambioEstadoVerdadero= () =>{
+    estados.estadoBooleano.cambioDeEstado();
+    console.log(estados.estadoBooleano.getEstado());
+  }
   const [showAlert, setShowAlert] = useState(false); // Nuevo estado para manejar la visibilidad de la alerta
   const [alertText, setAlertText] = useState(""); // Nuevo estado para manejar la visibilidad de la alerta
   const [alertState, setAlertState] = useState(""); // Nuevo estado para manejar la visibilidad de la alerta
@@ -33,11 +49,11 @@ function Login() {
         if (cliente.email.length > 45) {
           setAlertText("El correo es mayor a 45 caracteres");
           setAlertState("danger");
-          setShowAlert(true);
+          cambioEstadoVerdadero();
         } else if (cliente.password.length > 45) {
           setAlertText("La contraseña es mayor a 45 caracteres");
           setAlertState("danger");
-          setShowAlert(true);
+          cambioEstadoVerdadero();
         } else {
           if (tipoUsuario == "Cliente") {
             const res = await fetch(`http://localhost:4000/clients/${email}`);
@@ -50,11 +66,11 @@ function Login() {
               if (cliente.password !== cliente.storedPassword) {
                 setAlertText("Cotraseña incorrecta");
                 setAlertState("danger");
-                setShowAlert(true);
+                cambioEstadoVerdadero();
               } else {
                 setAlertText("Correo y contraseña válidos :D");
                 setAlertState("success");
-                setShowAlert(true);
+                cambioEstadoVerdadero();
                 localStorage.setItem("email", cliente.email);
                 localStorage.setItem("username", cliente.nombre);
                 localStorage.setItem("dinero", 3000000);
@@ -64,7 +80,7 @@ function Login() {
             } else {
               setAlertText("Correo no registrado");
               setAlertState("danger");
-              setShowAlert(true); // Mostrar la alerta en caso de error
+              cambioEstadoVerdadero(); // Mostrar la alerta en caso de error
             }
           } else if (tipoUsuario == "Artista") {
             const res = await fetch(`http://localhost:4000/artists/${email}`);
@@ -77,11 +93,11 @@ function Login() {
               if (cliente.password !== cliente.storedPassword) {
                 setAlertText("Cotraseña incorrecta");
                 setAlertState("danger");
-                setShowAlert(true);
+                cambioEstadoVerdadero();
               } else {
                 setAlertText("Correo y contraseña válidos :D");
                 setAlertState("success");
-                setShowAlert(true);
+                cambioEstadoVerdadero();
                 localStorage.setItem("email", cliente.email);
                 localStorage.setItem("username", cliente.nombre);
                 localStorage.setItem("tipoDeCliente", "Artista");
@@ -90,17 +106,17 @@ function Login() {
             } else {
               setAlertText("Correo no registrado");
               setAlertState("danger");
-              setShowAlert(true); // Mostrar la alerta en caso de error
+              cambioEstadoVerdadero(); // Mostrar la alerta en caso de error
             }
           }
         }
       } else {
         setAlertText("¿Qué tipo de usuario eres?");
         setAlertState("danger");
-        setShowAlert(true);
+        cambioEstadoVerdadero();
       }
     } catch (error) {
-      setShowAlert(true); // Mostrar la alerta en caso de error
+      cambioEstadoVerdadero(); // Mostrar la alerta en caso de error
       // Manejar errores de red o del servidor
       console.error(error);
     }
@@ -123,8 +139,8 @@ function Login() {
       <Alert
         className="alert mt-5"
         variant={alertState}
-        show={showAlert}
-        onClose={() => setShowAlert(false)}
+        show={estados.estadoBooleano.getEstado()}
+        onClose={() => cambioEstadoFalso()}
         dismissible
       >
         {alertText}
