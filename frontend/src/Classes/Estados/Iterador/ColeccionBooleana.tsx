@@ -9,6 +9,12 @@ export class ColeccionBooleana extends Coleccion{
         this.array= new Array(2);
     }
 
+    printArray():void{
+        this.array.forEach(item => {
+            console.log(item);
+        });
+    }
+
     crearIterador(): void {
         this.iterador=new IteradorBooleano(this);
     }
@@ -23,5 +29,9 @@ export class ColeccionBooleana extends Coleccion{
 
     getIterador(): Iterador {
         return this.iterador;
+    }
+
+    agregar(number: number, EstadoBooleano:EstadoBooleano) {
+        this.array[number]=EstadoBooleano;
     }
 }

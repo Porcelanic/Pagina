@@ -1,0 +1,1 @@
+{"version":3,"file":"EstadoVerdadero.js","sourceRoot":"","sources":["../../Estados/EstadoBooleano/EstadoVerdadero.tsx"],"names":[],"mappings":";;;AACA,MAAa,eAAe;IAKxB;QACI,IAAI,CAAC,IAAI,GAAC,QAAQ,CAAC;QACnB,IAAI,CAAC,MAAM,GAAC,IAAI,CAAC;IACrB,CAAC;IAED,OAAO;QACH,OAAO,IAAI,CAAC,IAAI,CAAC;IACrB,CAAC;IAED,SAAS;QACL,OAAO,IAAI,CAAC,MAAM,CAAC;IACvB,CAAC;CACJ;AAjBD,0CAiBC"}

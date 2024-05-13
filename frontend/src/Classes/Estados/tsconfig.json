@@ -1,0 +1,9 @@
+{
+    "compilerOptions": {
+        "target": "ES6",
+        "module": "CommonJS",
+        "outDir": "zout",
+        "jsx": "react",
+        "sourceMap": true,
+    }
+}

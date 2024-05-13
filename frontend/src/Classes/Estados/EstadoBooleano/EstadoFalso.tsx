@@ -1,11 +1,12 @@
 import { EstadoBooleano } from "./Estado";
-export class EstadoVerdadero implements EstadoBooleano{
+export class EstadoFalso implements EstadoBooleano{
+    private static instancia: EstadoFalso;
     private estado:boolean;
     private name:string;
 
     constructor(){
-        this.name="Verdad";
-        this.estado=true;
+        this.name="Mentira";
+        this.estado=false;
     }
 
     getName(): string {

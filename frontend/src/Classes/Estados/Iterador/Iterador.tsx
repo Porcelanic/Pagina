@@ -1,3 +1,4 @@
+import { EstadoBooleano } from "../EstadoBooleano/Estado";
 import { Coleccion } from "./Coleccion"
 export abstract class Iterador {
     protected coleccion: Coleccion;
@@ -7,4 +8,6 @@ export abstract class Iterador {
     public abstract siguiente():void;
 
     public abstract tieneSiguiente():boolean;
+
+    public abstract buscarNombre(name:string): EstadoBooleano;
 }

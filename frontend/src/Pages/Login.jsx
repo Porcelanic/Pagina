@@ -8,9 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import Header from "../Components/Header";
 import "../Styles/Login.css";
-import { ContextoBooleano } from "../../Classes/Estados/EstadoBooleano/Contexto";
-import { EstadoVerdadero } from "../../Classes/Estados/EstadoBooleano/EstadoVerdadero";
-import { EstadoFalso } from "../../Classes/Estados/EstadoBooleano/EstadoFalso";
+import {ContextoBooleano} from "../Classes/Estados/EstadoBooleano/Contexto"
 function Login() {
   const navigate = useNavigate();
 
@@ -25,19 +23,19 @@ function Login() {
   });
 
   const [estados, setEstados] = useState({
-    estadoBooleano: new ContextoBooleano(new EstadoFalso()),
+    estadoBooleano: new ContextoBooleano(),
     estadoX: null,
     estadoY: null,
   })
 
   const cambioEstadoFalso= () =>{
-    estados.estadoBooleano.cambioDeEstado(new EstadoFalso());
+    estados.estadoBooleano.cambioDeEstado();
     setAlertText("");
     console.log(estados.estadoBooleano.getEstado());
   }
 
   const cambioEstadoVerdadero= () =>{
-    estados.estadoBooleano.cambioDeEstado(new EstadoVerdadero());
+    estados.estadoBooleano.cambioDeEstado();
     console.log(estados.estadoBooleano.getEstado());
   }
   const [showAlert, setShowAlert] = useState(false); // Nuevo estado para manejar la visibilidad de la alerta
