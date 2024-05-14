@@ -12,7 +12,7 @@ class ArtistaHeaderStrategy implements HeaderStrategy {
   private navigate = useNavigate();
 
   // Metodo para cerrar sesion
-  public reset = () => {
+  public reset = (): void => {
     localStorage.clear();
     this.navigate("/login");
     window.location.reload();
