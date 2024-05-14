@@ -5,9 +5,8 @@ import Image from "react-bootstrap/Image";
 import Alert from "react-bootstrap/Alert";
 import { useNavigate, Link } from "react-router-dom";
 import { useState } from "react";
-import Header from "../Components/Header";
 import { ConversionEmail } from "../Classes/Adapter/conversionEmail";
-
+import Header from "../Classes/Header/Header";
 
 function Registro() {
   const [showAlert, setShowAlert] = useState(false); // Nuevo estado para manejar la visibilidad de la alerta

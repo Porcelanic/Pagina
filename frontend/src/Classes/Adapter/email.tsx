@@ -1,4 +1,3 @@
-export interface Email {
-    
+export interface Email {  
     convertirEmail(email: string): string;
 }

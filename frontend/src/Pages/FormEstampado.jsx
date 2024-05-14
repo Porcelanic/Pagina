@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { useNavigate} from "react-router-dom";
-import Header from "../Components/Header";
+import { useNavigate } from "react-router-dom";
+import Header from "../Classes/Header/Header";
 import Footer from "../Components/Footer";
 import ThemeSwitcher from "../Components/ThemeSwitcher";
 import "../Styles/pago.css";
@@ -21,15 +21,15 @@ export default function FormEstampado() {
   };
 
   const [estampado, setEstampado] = useState({
-    diseño:"",
+    diseño: "",
     nombre: "",
     categoria: "",
     artista_email: localStorage.getItem("email"),
   });
 
-  const estampadoChange = (e) =>{
+  const estampadoChange = (e) => {
     setEstampado({ ...estampado, [e.target.name]: e.target.value });
-  }
+  };
   const handleSelect = (e) => {
     setEstampado({ ...estampado, categoria: e.target.value });
   };
@@ -39,7 +39,7 @@ export default function FormEstampado() {
     if (file) {
       const formData = new FormData();
       formData.append("file", file);
-  
+
       fetch("http://localhost:4000/image", {
         method: "POST",
         body: formData,
@@ -66,18 +66,16 @@ export default function FormEstampado() {
     if (estampado.diseño !== "") {
       toDB();
     }
-  }, [estampado.diseño])
+  }, [estampado.diseño]);
 
-  const toDB = () =>{
+  const toDB = () => {
     fetch("http://localhost:4000/estampado", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(estampado),
-          });
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(estampado),
+    });
     setTimeout(() => navigate("/catalogoEstampado"), 200);
-  }
-
-
+  };
 
   return (
     <>
@@ -92,12 +90,14 @@ export default function FormEstampado() {
                 <Form.Control type="file" onChange={handleFileChange} />
               </Form.Group>
               <Form.Group className="mb-3">
-                <Form.Control type="text" 
-                name="nombre"
-                placeholder="nombre"
-                onChange={estampadoChange}
-                value={estampado.nombre}
-                 maxLength={20} />
+                <Form.Control
+                  type="text"
+                  name="nombre"
+                  placeholder="nombre"
+                  onChange={estampadoChange}
+                  value={estampado.nombre}
+                  maxLength={20}
+                />
                 <Form.Text>Ponle un nombre unico a tu estampado</Form.Text>
               </Form.Group>
 
@@ -124,7 +124,7 @@ export default function FormEstampado() {
                   type="submit"
                   className="ms-3 d-grid"
                   size="md"
-                  disabled={!file ||!estampado.nombre || !estampado.categoria}
+                  disabled={!file || !estampado.nombre || !estampado.categoria}
                 >
                   Publicar
                 </Button>

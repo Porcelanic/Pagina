@@ -6,9 +6,10 @@ import Alert from "react-bootstrap/Alert";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import Header from "../Components/Header";
+import Header from "../Classes/Header/Header";
 import "../Styles/Login.css";
 import { ConversionEmail } from "../Classes/Adapter/conversionEmail";
+import {ContextoBooleano} from "../Classes/Estados/EstadoBooleano/Contexto"
 
 function Login() {
   const navigate = useNavigate();
@@ -26,7 +27,7 @@ function Login() {
   const emailAdapter = new ConversionEmail();
 
   const [estados, setEstados] = useState({
-    estadoBooleano: new ContextoBooleano(new EstadoFalso()),
+    estadoBooleano: new ContextoBooleano(),
     estadoX: null,
     estadoY: null,
   })
@@ -34,13 +35,13 @@ function Login() {
 
 
   const cambioEstadoFalso= () =>{
-    estados.estadoBooleano.cambioDeEstado(new EstadoFalso());
+    estados.estadoBooleano.cambioDeEstado();
     setAlertText("");
     console.log(estados.estadoBooleano.getEstado());
   }
 
   const cambioEstadoVerdadero= () =>{
-    estados.estadoBooleano.cambioDeEstado(new EstadoVerdadero());
+    estados.estadoBooleano.cambioDeEstado();
     console.log(estados.estadoBooleano.getEstado());
   }
   const [showAlert, setShowAlert] = useState(false); // Nuevo estado para manejar la visibilidad de la alerta
