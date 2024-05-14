@@ -1,3 +1,3 @@
-export interface Email {
-    convertirEmailAMinuscula(email: string): string;
+export interface Email {  
+    convertirEmail(email: string): string;
 }

@@ -8,7 +8,9 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import Header from "../Classes/Header/Header";
 import "../Styles/Login.css";
+import { ConversionEmail } from "../Classes/Adapter/conversionEmail";
 import {ContextoBooleano} from "../Classes/Estados/EstadoBooleano/Contexto"
+
 function Login() {
   const navigate = useNavigate();
 
@@ -22,11 +24,15 @@ function Login() {
     trial372: null,
   });
 
+  const emailAdapter = new ConversionEmail();
+
   const [estados, setEstados] = useState({
     estadoBooleano: new ContextoBooleano(),
     estadoX: null,
     estadoY: null,
   })
+
+
 
   const cambioEstadoFalso= () =>{
     estados.estadoBooleano.cambioDeEstado();
@@ -55,6 +61,8 @@ function Login() {
           setAlertState("danger");
           cambioEstadoVerdadero();
         } else {
+          email = emailAdapter.convertirEmailAMinuscula(cliente.email);
+          console.log(email)
           if (tipoUsuario == "Cliente") {
             const res = await fetch(`http://localhost:4000/clients/${email}`);
             if (res.ok) {
