@@ -8,10 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import Header from "../Components/Header";
 import "../Styles/Login.css";
-import { ContextoBooleano } from "../../Classes/Estados/EstadoBooleano/Contexto";
-import { EstadoVerdadero } from "../../Classes/Estados/EstadoBooleano/EstadoVerdadero";
-import { EstadoFalso } from "../../Classes/Estados/EstadoBooleano/EstadoFalso";
-import { ConversionEmail } from "../../Classes/Adapter/conversionEmail";
+import { ConversionEmail } from "../Classes/Adapter/conversionEmail";
 
 function Login() {
   const navigate = useNavigate();

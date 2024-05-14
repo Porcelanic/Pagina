@@ -6,7 +6,7 @@ import Alert from "react-bootstrap/Alert";
 import { useNavigate, Link } from "react-router-dom";
 import { useState } from "react";
 import Header from "../Components/Header";
-import { ConversionEmail } from "../../Classes/Adapter/conversionEmail";
+import { ConversionEmail } from "../Classes/Adapter/conversionEmail";
 
 
 function Registro() {
