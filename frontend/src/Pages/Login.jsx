@@ -11,6 +11,8 @@ import "../Styles/Login.css";
 import { ContextoBooleano } from "../../Classes/Estados/EstadoBooleano/Contexto";
 import { EstadoVerdadero } from "../../Classes/Estados/EstadoBooleano/EstadoVerdadero";
 import { EstadoFalso } from "../../Classes/Estados/EstadoBooleano/EstadoFalso";
+import { ConversionEmail } from "../../Classes/Adapter/conversionEmail";
+
 function Login() {
   const navigate = useNavigate();
 
@@ -24,11 +26,15 @@ function Login() {
     trial372: null,
   });
 
+  const emailAdapter = new ConversionEmail();
+
   const [estados, setEstados] = useState({
     estadoBooleano: new ContextoBooleano(new EstadoFalso()),
     estadoX: null,
     estadoY: null,
   })
+
+
 
   const cambioEstadoFalso= () =>{
     estados.estadoBooleano.cambioDeEstado(new EstadoFalso());
@@ -57,6 +63,8 @@ function Login() {
           setAlertState("danger");
           cambioEstadoVerdadero();
         } else {
+          email = emailAdapter.convertirEmailAMinuscula(cliente.email);
+          console.log(email)
           if (tipoUsuario == "Cliente") {
             const res = await fetch(`http://localhost:4000/clients/${email}`);
             if (res.ok) {

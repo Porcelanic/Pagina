@@ -6,6 +6,8 @@ import Alert from "react-bootstrap/Alert";
 import { useNavigate, Link } from "react-router-dom";
 import { useState } from "react";
 import Header from "../Components/Header";
+import { ConversionEmail } from "../../Classes/Adapter/conversionEmail";
+
 
 function Registro() {
   const [showAlert, setShowAlert] = useState(false); // Nuevo estado para manejar la visibilidad de la alerta
@@ -21,7 +23,10 @@ function Registro() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
+  const emailAdapter = new ConversionEmail();
+
   const clientSubmit = async (e) => {
+    console.log(cliente.email);
     e.preventDefault();
     setLoading(true);
     try {
@@ -30,7 +35,7 @@ function Registro() {
         setAlertText("El nombre es mayor a 45 caracteres");
         setAlertState("danger");
         setLoading(false);
-      } else if (cliente.email.length > 45) {
+      } else if (cliente.email.length > 45) {    
         setShowAlert(true);
         setAlertText("El correo es mayor a 45 caracteres");
         setAlertState("danger");
@@ -41,6 +46,7 @@ function Registro() {
         setAlertState("danger");
         setLoading(false);
       } else {
+        cliente.email = emailAdapter.convertirEmailAMinuscula(cliente.email);
         if (cliente.tipoCliente == "Artista") {
           const response = await fetch("http://localhost:4000/artists", {
             method: "POST",
@@ -57,6 +63,7 @@ function Registro() {
           } else {
             setLoading(false);
             setLoading(false);
+            console.log("emailMinuscula");
             setAlertText("El registro se realizó correctamente");
             setAlertState("success");
             setShowAlert(true);
@@ -81,6 +88,7 @@ function Registro() {
             setAlertState("success");
             setShowAlert(true);
             setTimeout(() => navigate("/login"), 500);
+            console.log(emailAdapter.convertirEmailAMinuscula(cliente.email));
           }
         }
       }
@@ -149,8 +157,10 @@ function Registro() {
               placeholder="Correo electrónico"
               onChange={clientChange}
               value={cliente.email}
+              
               data-testid="Correo"
             />
+            
             <Form.Text className="text-muted">
               Nunca compartiremos su dirección de correo electrónico.
             </Form.Text>
