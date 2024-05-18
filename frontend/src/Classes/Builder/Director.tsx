@@ -8,6 +8,7 @@ class Director {
   constructor(propiedades: { img: string, text: string, price?: number, artista?: string, style?: string }) {
     this.builder = new BuilderConcreto();
     this.builder.construirParte(propiedades);
+    this.builder.crearCarta();
   }
 
   construir(): Carta {

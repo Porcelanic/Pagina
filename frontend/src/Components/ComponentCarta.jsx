@@ -6,7 +6,7 @@ function CartaComponent({ img, text, price, artista, style }) {
   const director = new Director({ img, text, price, artista, style });
   const carta = director.construir();
 
-  return carta.createCol();
+  return carta.getCreateCol();
 }
 
 export default CartaComponent;

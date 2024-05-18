@@ -7,6 +7,11 @@ class Carta {
   private price?: number;
   private artista?: string;
   private style?: string;
+  private cardBody: JSX.Element;
+  private cardText: JSX.Element;
+  private createImg: JSX.Element;
+  private createCard: JSX.Element;
+  private createCol: JSX.Element;
 
   constructor() {
     this.img = "";
@@ -14,6 +19,11 @@ class Carta {
     this.price = undefined;
     this.artista = undefined;
     this.style = undefined;
+    this.cardBody = <></>;
+    this.cardText = <></>;
+    this.createImg = <></>;
+    this.createCard = <></>;
+    this.createCol = <></>;
   }
 
   setPropiedades({ img, text, price, artista, style }: { img: string, text: string, price?: number, artista?: string, style?: string }) {
@@ -24,43 +34,56 @@ class Carta {
     this.style = style;
   }
 
-  createText(): JSX.Element {
-    return (
-      <Card.Text>
-        {this.text}
-        <br />
-        {this.price ? `$${this.price}` : `${this.artista}`}
-      </Card.Text>
-    );
+  getPropiedades() {
+    return {
+      img: this.img,
+      text: this.text,
+      price: this.price,
+      artista: this.artista,
+      style: this.style,
+    };
   }
 
-  createBody(): JSX.Element {
-    const textElement = this.createText();
-    return <Card.Body>{textElement}</Card.Body>;
+  // Getters
+  getCardBody(): JSX.Element {
+    return this.cardBody;
   }
 
-  createImg(): JSX.Element {
-    return <Card.Img className="custom-img" variant="top" src={this.img} />;
+  getCardText(): JSX.Element {
+    return this.cardText;
   }
 
-  createCard(): JSX.Element {
-    const imgElement = this.createImg();
-    const bodyElement = this.createBody();
-    return (
-      <Card className="custom-card">
-        {imgElement}
-        {bodyElement}
-      </Card>
-    );
+  getCreateImg(): JSX.Element {
+    return this.createImg;
   }
 
-  createCol(): JSX.Element {
-    const cardElement = this.createCard();
-    return (
-      <Col className={this.style ? this.style : "text-center centered"}>
-        {cardElement}
-      </Col>
-    );
+  getCreateCard(): JSX.Element {
+    return this.createCard;
+  }
+
+  getCreateCol(): JSX.Element {
+    return this.createCol;
+  }
+
+  // Setters
+  setCardBody(cardBody: JSX.Element) {
+    this.cardBody = cardBody;
+  }
+
+  setCardText(cardText: JSX.Element) {
+    this.cardText = cardText;
+  }
+
+  setCreateImg(createImg: JSX.Element) {
+    this.createImg = createImg;
+  }
+
+  setCreateCard(createCard: JSX.Element) {
+    this.createCard = createCard;
+  }
+
+  setCreateCol(createCol: JSX.Element) {
+    this.createCol = createCol;
   }
 }
 
