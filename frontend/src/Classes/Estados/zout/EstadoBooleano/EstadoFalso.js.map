@@ -1,1 +1,0 @@
-{"version":3,"file":"EstadoFalso.js","sourceRoot":"","sources":["../../Estados/EstadoBooleano/EstadoFalso.tsx"],"names":[],"mappings":";;;AACA,MAAa,WAAW;IAKpB;QACI,IAAI,CAAC,IAAI,GAAC,SAAS,CAAC;QACpB,IAAI,CAAC,MAAM,GAAC,KAAK,CAAC;IACtB,CAAC;IAED,OAAO;QACH,OAAO,IAAI,CAAC,IAAI,CAAC;IACrB,CAAC;IAED,SAAS;QACL,OAAO,IAAI,CAAC,MAAM,CAAC;IACvB,CAAC;CACJ;AAjBD,kCAiBC"}

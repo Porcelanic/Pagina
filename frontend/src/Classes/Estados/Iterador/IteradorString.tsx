@@ -1,10 +1,11 @@
 import { Iterador } from "./Iterador";
+import { EstadoString } from "../EstadoString/EstadoString";
+import { ColeccionString } from "./ColeccionString";
 import { EstadoBooleano } from "../EstadoBooleano/EstadoBooleano";
-import { ColeccionBooleana } from "./ColeccionBooleana";
-export class IteradorBooleano extends Iterador{
-    constructor(ColeccionBooleana:ColeccionBooleana){
+export class IteradorString extends Iterador{
+    constructor(ColeccionString:ColeccionString){
         super();
-        this.coleccion=ColeccionBooleana;
+        this.coleccion=ColeccionString;
         this.indexActual=0;
     }
 
@@ -12,7 +13,7 @@ export class IteradorBooleano extends Iterador{
         return this.indexActual;
     };
 
-    siguiente():EstadoBooleano{
+    siguiente():EstadoString{
         this.indexActual++;
         return this.coleccion.buscar(this.indexActual-1);
     };
@@ -25,8 +26,8 @@ export class IteradorBooleano extends Iterador{
         }
     }
 
-    public buscarNombre(name: string): EstadoBooleano {
-        let estado:EstadoBooleano;
+    public buscarNombre(name: string): EstadoString {
+        let estado:EstadoString;
         this.indexActual=0;
         do{
             estado=this.siguiente();
