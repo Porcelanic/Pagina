@@ -4,10 +4,11 @@ import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 
 /* My components */
-import Carta from "../Components/Carta";
+//import ComponentCarta from "../Components/ComponentCarta";
 import Footer from "../Components/Footer";
 import Header from "../Classes/Header/Header";
 import ThemeSwitcher from "../Components/ThemeSwitcher";
+import CartaComponent from "../Components/ComponentCarta";
 
 /* My css */
 import "../Styles/Offcanvas.css";
@@ -33,9 +34,10 @@ function CatalogoEstampados() {
       .catch((error) => {
         console.error("Error al obtener los estampados:", error);
       });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); // La dependencia vacía asegura que esta llamada solo se haga una vez al cargar el componente
 
-  const Cartas = estampados.map((data, index) => (
+  const Cartas = (estampados.map((data, index) => 
     <Col
       key={index}
       xs="12"
@@ -45,7 +47,7 @@ function CatalogoEstampados() {
       className="text-center mt-3"
       // Agregar lógica de clic aquí si es necesario
     >
-      <Carta
+      <CartaComponent
         img={data.diseño}
         text={data.nombre}
         artista={data.nombre_artista}

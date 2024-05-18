@@ -1,7 +1,6 @@
-import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
-import Carta from "./Carta";
-import { useEffect, useState } from "react";
+//import React from "react";
+import { Col, Row } from "react-bootstrap";
+import ComponentCarta from "./ComponentCarta";
 import { useGeneral } from "../Utils/generalContext";
 
 function ContenedorCartas(prop) {
@@ -16,7 +15,10 @@ function ContenedorCartas(prop) {
       text: "Azul oscuro",
       price: 100000,
     },
-    { id: 6, img: "/Camisas/Estampables/6.png", text: "Rosado", price: 100000 },
+    { id: 6, 
+      img: "/Camisas/Estampables/6.png", 
+      text: "Rosado", 
+      price: 100000 },
     {
       id: 7,
       img: "/Camisas/Estampables/7.png",
@@ -96,7 +98,7 @@ function ContenedorCartas(prop) {
         }}
       >
         {cartas.map((data) => (
-          <Col
+           <Col
             key={data.id}
             xs="12"
             sm="6"
@@ -105,7 +107,13 @@ function ContenedorCartas(prop) {
             className="text-center mt-3"
           >
             <div onClick={() => handleShow(data)}>
-              <Carta img={data.img} text={data.text} price={data.price} />
+              <ComponentCarta 
+                img={data.img} 
+                text={data.text} 
+                price={data.price} 
+                artista={data.artista} 
+                style={data.style}  
+              />
             </div>
           </Col>
         ))}
