@@ -1,13 +1,18 @@
+import { ConversionEmail } from "./conversionEmail";
 import { Email } from "./email";
 
-export class AdapterEmail implements Email {
-    private email: Email;
+// AdapterEmail implementa la interfaz Email
+export class AdapterEmail extends ConversionEmail implements Email {
+    private email: ConversionEmail; // Cambio a ConversionEmail
 
-    constructor(email: Email) {
+    constructor(email: ConversionEmail) { // Cambio a ConversionEmail
+        super();
         this.email = email;
     }
 
-    convertirEmailAMinuscula(email: string): string {
+    // Implementación del método de la interfaz
+    convertirEmail(email: string): string {
+        // Llamar al método de ConversionEmail
         return this.email.convertirEmailAMinuscula(email);
     }
 }

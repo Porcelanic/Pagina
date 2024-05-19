@@ -11,6 +11,7 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Alert from "react-bootstrap/Alert";
 import { useNavigate } from "react-router-dom";
+import { FachadaDeEstados } from "../Classes/Estados/Fachada/FachadaDeEstados";
 
 export default function Pago() {
   const [datosEnvio, setDatosEnvio] = useState({
@@ -30,10 +31,12 @@ export default function Pago() {
     cvv: "",
   });
   const navigate = useNavigate();
-  const [showAlert, setShowAlert] = useState(false); // Nuevo estado para manejar la visibilidad de la alerta
-  const [alertText, setAlertText] = useState(""); // Nuevo estado para manejar la visibilidad de la alerta
-  const [alertState, setAlertState] = useState(""); // Nuevo estado para manejar la visibilidad de la alerta
+  const fachada= new FachadaDeEstados();
 
+  const [alertText, setAlertText] = useState("");
+  const [showAlert, setShowAlert] = useState(fachada.getMostrarAlerta());
+  const [alertState, setAlertState] = useState(fachada.getEstadoDeAlerta());
+  
   const dataSubmit = async (e) => {
     e.preventDefault();
     informacionSubmit();
@@ -100,8 +103,8 @@ export default function Pago() {
       }).then((response) => {
         localStorage.removeItem("itemData");
         setAlertText("Pago exitoso");
-        setAlertState("success");
-        setShowAlert(true);
+        setAlertState(fachada.cambioEstadoDeAlerta(0));
+        setShowAlert(fachada.cambioMostrarAlerta());
         setTimeout(() => navigate("/"), 1000);
       });
     } catch (error) {}
@@ -147,7 +150,7 @@ export default function Pago() {
         className="alert mt-5"
         variant={alertState}
         show={showAlert}
-        onClose={() => setShowAlert(false)}
+        onClose={() => setShowAlert(fachada.cambioMostrarAlerta())}
         dismissible
       >
         {alertText}

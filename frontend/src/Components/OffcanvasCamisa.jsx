@@ -5,17 +5,16 @@ import Offcanvas from "react-bootstrap/Offcanvas";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import { Button } from "react-bootstrap";
+import { useState } from "react";
 import Alert from "react-bootstrap/Alert";
+import { FachadaDeEstados } from "../Classes/Estados/Fachada/FachadaDeEstados";
 
 function OffcanvasCamisa() {
-  const {
-    showAlert,
-    setShowAlert,
-    alertText,
-    setAlertText,
-    alertState,
-    setAlertState,
-  } = useSpecific();
+  const fachada= new FachadaDeEstados();
+
+  const [alertText, setAlertText] = useState("");
+  const [showAlert, setShowAlert] = useState(fachada.getMostrarAlerta());
+  const [alertState, setAlertState] = useState(fachada.getEstadoDeAlerta());
 
   const {
     show,
@@ -58,21 +57,21 @@ function OffcanvasCamisa() {
       estampadoElegido >= 0 ? estampados[estampadoElegido].diseño : "";
     console.log(estampa);
     if (limite == 0) {
-      setShowAlert(true);
+      setShowAlert(fachada.cambioMostrarAlerta());
       setAlertText("Ya no queda este material");
-      setAlertState("danger");
+      setAlertState(fachada.cambioEstadoDeAlerta(1));
     } else if (!talla) {
-      setShowAlert(true);
+      setShowAlert(fachada.cambioMostrarAlerta());
       setAlertText("Pon una talla");
-      setAlertState("danger");
+      setAlertState(fachada.cambioEstadoDeAlerta(1));
     } else if (!material) {
-      setShowAlert(true);
+      setShowAlert(fachada.cambioMostrarAlerta());
       setAlertText("Elige un material");
-      setAlertState("danger");
+      setAlertState(fachada.cambioEstadoDeAlerta(1));
     } else if (!cantidad || cantidad <= 0 || cantidad > limite) {
-      setShowAlert(true);
+      setShowAlert(fachada.cambioMostrarAlerta());
       setAlertText("La cantidad debe estar entre 1 y " + limite);
-      setAlertState("danger");
+      setAlertState(fachada.cambioEstadoDeAlerta(1));
     } else {
       let order = {
         cantidad,
@@ -95,14 +94,16 @@ function OffcanvasCamisa() {
       itemData.push(order);
       localStorage.setItem("itemData", JSON.stringify(itemData));
 
-      setShowAlert(true);
+      setShowAlert(fachada.cambioMostrarAlerta());
       setAlertText("Se agrego al carrito :D");
-      setAlertState("success");
+      if(alertState!=="success"){
+        setAlertState(fachada.cambioEstadoDeAlerta(0));
+      }
     }
     setTimeout(() => {
       setShow(false);
       setShow2(false);
-      setShowAlert(false);
+      setShowAlert(fachada.cambioMostrarAlerta());
     }, 1000);
   };
 
@@ -209,7 +210,7 @@ function OffcanvasCamisa() {
           className="mt-5"
           variant={alertState}
           show={showAlert}
-          onClose={() => setShowAlert(false)}
+          onClose={() => setShowAlert(fachada.cambioMostrarAlerta())}
           dismissible
         >
           {alertText}

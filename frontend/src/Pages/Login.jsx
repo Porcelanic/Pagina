@@ -8,6 +8,8 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import Header from "../Classes/Header/Header";
 import "../Styles/Login.css";
+import { ConversionEmail } from "../Classes/Adapter/conversionEmail";
+import { FachadaDeEstados } from "../Classes/Estados/Fachada/FachadaDeEstados";
 
 function Login() {
   const navigate = useNavigate();
@@ -22,9 +24,12 @@ function Login() {
     trial372: null,
   });
 
-  const [showAlert, setShowAlert] = useState(false); // Nuevo estado para manejar la visibilidad de la alerta
-  const [alertText, setAlertText] = useState(""); // Nuevo estado para manejar la visibilidad de la alerta
-  const [alertState, setAlertState] = useState(""); // Nuevo estado para manejar la visibilidad de la alerta
+  const emailAdapter = new ConversionEmail();
+  const fachada= new FachadaDeEstados();
+
+  const [alertText, setAlertText] = useState("");
+  const [showAlert, setShowAlert] = useState(fachada.getMostrarAlerta());
+  const [alertState, setAlertState] = useState(fachada.getEstadoDeAlerta());
 
   const loadCliente = async (email) => {
     try {
@@ -32,13 +37,15 @@ function Login() {
       if (tipoUsuario) {
         if (cliente.email.length > 45) {
           setAlertText("El correo es mayor a 45 caracteres");
-          setAlertState("danger");
-          setShowAlert(true);
+          setAlertState(fachada.cambioEstadoDeAlerta(1));
+          setShowAlert(fachada.cambioMostrarAlerta());
         } else if (cliente.password.length > 45) {
           setAlertText("La contraseña es mayor a 45 caracteres");
-          setAlertState("danger");
-          setShowAlert(true);
+          setAlertState(fachada.cambioEstadoDeAlerta(1));
+          setShowAlert(fachada.cambioMostrarAlerta());
         } else {
+          email = emailAdapter.convertirEmailAMinuscula(cliente.email);
+          console.log(email);
           if (tipoUsuario == "Cliente") {
             const res = await fetch(`http://localhost:4000/clients/${email}`);
             if (res.ok) {
@@ -49,12 +56,12 @@ function Login() {
 
               if (cliente.password !== cliente.storedPassword) {
                 setAlertText("Cotraseña incorrecta");
-                setAlertState("danger");
-                setShowAlert(true);
+                setAlertState(fachada.cambioEstadoDeAlerta(1));
+                setShowAlert(fachada.cambioMostrarAlerta());
               } else {
                 setAlertText("Correo y contraseña válidos :D");
-                setAlertState("success");
-                setShowAlert(true);
+                setAlertState(fachada.cambioEstadoDeAlerta(0));
+                setShowAlert(fachada.cambioMostrarAlerta());
                 localStorage.setItem("email", cliente.email);
                 localStorage.setItem("username", cliente.nombre);
                 localStorage.setItem("dinero", 3000000);
@@ -63,8 +70,9 @@ function Login() {
               }
             } else {
               setAlertText("Correo no registrado");
-              setAlertState("danger");
-              setShowAlert(true); // Mostrar la alerta en caso de error
+              setAlertState(fachada.cambioEstadoDeAlerta(1));
+              setShowAlert(fachada.cambioMostrarAlerta());
+              // Mostrar la alerta en caso de error
             }
           } else if (tipoUsuario == "Artista") {
             const res = await fetch(`http://localhost:4000/artists/${email}`);
@@ -76,12 +84,12 @@ function Login() {
 
               if (cliente.password !== cliente.storedPassword) {
                 setAlertText("Cotraseña incorrecta");
-                setAlertState("danger");
-                setShowAlert(true);
+                setAlertState(fachada.cambioEstadoDeAlerta(1));
+                setShowAlert(fachada.cambioMostrarAlerta());
               } else {
                 setAlertText("Correo y contraseña válidos :D");
-                setAlertState("success");
-                setShowAlert(true);
+                setAlertState(fachada.cambioEstadoDeAlerta(0));
+                setShowAlert(fachada.cambioMostrarAlerta());
                 localStorage.setItem("email", cliente.email);
                 localStorage.setItem("username", cliente.nombre);
                 localStorage.setItem("tipoDeCliente", "Artista");
@@ -89,18 +97,21 @@ function Login() {
               }
             } else {
               setAlertText("Correo no registrado");
-              setAlertState("danger");
-              setShowAlert(true); // Mostrar la alerta en caso de error
+              setAlertState(fachada.cambioEstadoDeAlerta(1));
+              setShowAlert(fachada.cambioMostrarAlerta());
+              // Mostrar la alerta en caso de error
             }
           }
         }
       } else {
         setAlertText("¿Qué tipo de usuario eres?");
-        setAlertState("danger");
-        setShowAlert(true);
+        setAlertState(fachada.cambioEstadoDeAlerta(1));
+        setShowAlert(fachada.cambioMostrarAlerta());
       }
     } catch (error) {
-      setShowAlert(true); // Mostrar la alerta en caso de error
+      setAlertState(fachada.cambioEstadoDeAlerta(1));
+      setShowAlert(fachada.cambioMostrarAlerta());
+      // Mostrar la alerta en caso de error
       // Manejar errores de red o del servidor
       console.error(error);
     }
@@ -120,17 +131,17 @@ function Login() {
   return (
     <>
       <Header />
-      <Alert
-        className="alert mt-5"
-        variant={alertState}
-        show={showAlert}
-        onClose={() => setShowAlert(false)}
-        dismissible
-      >
-        {alertText}
-      </Alert>
+        <Alert
+          className="alert mt-5"
+          variant={alertState}
+          show={showAlert}
+          onClose={() => setShowAlert(fachada.cambioMostrarAlerta())}
+          dismissible
+        >
+          {alertText}
+        </Alert>
       <div className="text-center content">
-        <h1>WaySoft</h1>
+        <h1>Estampa Tu Idea</h1>
         <Form.Group className="mb-5 mt-5" controlId="formBasicTipo">
           <Image src="/logo.png" fluid width="50%" />
         </Form.Group>

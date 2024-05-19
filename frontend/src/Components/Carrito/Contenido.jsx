@@ -13,7 +13,6 @@ import { Link } from "react-router-dom";
 import { useSpecific } from "../../Utils/SpecificContext";
 import Items from "./Items";
 function Contenido() {
-  const carouselRef = useRef(null);
   const itemData = JSON.parse(localStorage.getItem("itemData"));
   const IVA = 0.19;
   const { showAlert, setShowAlert, alertText, alertState } = useSpecific();

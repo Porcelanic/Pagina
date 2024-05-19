@@ -20,7 +20,7 @@ class ClienteHeaderStrategy implements HeaderStrategy {
   private value = localStorage.getItem("dinero");
 
   // Metodo para formatear el dinero del usuario
-  public currencyFormatter({ currency, value }) {
+  public currencyFormatter({ currency, value }): string {
     const formatter = new Intl.NumberFormat("en-US", {
       style: "currency",
       minimumFractionDigits: 2,
@@ -30,7 +30,7 @@ class ClienteHeaderStrategy implements HeaderStrategy {
   }
 
   // Metodo para cerrar sesion
-  public reset = () => {
+  public reset = (): void => {
     localStorage.clear();
     this.navigate("/login");
     window.location.reload();

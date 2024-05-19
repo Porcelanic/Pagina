@@ -11,12 +11,12 @@ class HeaderContext {
     this.strategy = new NoAuthHeaderStrategy(); // Estrategia inicial por defecto
   }
 
-  public setStrategy(strategy: HeaderStrategy) {
+  public setStrategy(strategy: HeaderStrategy): void {
     this.strategy = strategy;
   }
 
   // Método para obtener y renderizar el navbar según el navbar necesario
-  public renderNavbar(isUserAuthenticated: boolean) {
+  public renderNavbar(isUserAuthenticated: boolean): JSX.Element {
     let tipoCliente = localStorage.getItem("tipoDeCliente");
 
     if (isUserAuthenticated && tipoCliente == "Cliente") {

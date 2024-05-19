@@ -5,12 +5,18 @@ import Image from "react-bootstrap/Image";
 import Alert from "react-bootstrap/Alert";
 import { useNavigate, Link } from "react-router-dom";
 import { useState } from "react";
+
+import { ConversionEmail } from "../Classes/Adapter/conversionEmail";
 import Header from "../Classes/Header/Header";
+import { FachadaDeEstados } from "../Classes/Estados/Fachada/FachadaDeEstados";
+
 
 function Registro() {
-  const [showAlert, setShowAlert] = useState(false); // Nuevo estado para manejar la visibilidad de la alerta
-  const [alertText, setAlertText] = useState(""); // Nuevo estado para manejar la visibilidad de la alerta
-  const [alertState, setAlertState] = useState(""); // Nuevo estado para manejar la visibilidad de la alerta
+  const fachada= new FachadaDeEstados();
+
+  const [alertText, setAlertText] = useState("");
+  const [showAlert, setShowAlert] = useState(fachada.getMostrarAlerta());
+  const [alertState, setAlertState] = useState(fachada.getEstadoDeAlerta());
 
   const [cliente, setCliente] = useState({
     nombre: "",
@@ -21,26 +27,30 @@ function Registro() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
+  const emailAdapter = new ConversionEmail();
+
   const clientSubmit = async (e) => {
+    console.log(cliente.email);
     e.preventDefault();
     setLoading(true);
     try {
       if (cliente.nombre.length > 45) {
-        setShowAlert(true);
+        setShowAlert(fachada.cambioMostrarAlerta());
         setAlertText("El nombre es mayor a 45 caracteres");
-        setAlertState("danger");
+        setAlertState(fachada.cambioEstadoDeAlerta(1));
         setLoading(false);
       } else if (cliente.email.length > 45) {
-        setShowAlert(true);
+        setShowAlert(fachada.cambioMostrarAlerta());
         setAlertText("El correo es mayor a 45 caracteres");
-        setAlertState("danger");
+        setAlertState(fachada.cambioEstadoDeAlerta(1));
         setLoading(false);
       } else if (cliente.password.length > 45) {
-        setShowAlert(true);
+        setShowAlert(fachada.cambioMostrarAlerta());
         setAlertText("La contraseña es mayor a 45 caracteres");
-        setAlertState("danger");
+        setAlertState(fachada.cambioEstadoDeAlerta(1));
         setLoading(false);
       } else {
+        cliente.email = emailAdapter.convertirEmailAMinuscula(cliente.email);
         if (cliente.tipoCliente == "Artista") {
           const response = await fetch("http://localhost:4000/artists", {
             method: "POST",
@@ -50,16 +60,17 @@ function Registro() {
           const text = await response.text();
           if ("error" == text) {
             setLoading(false);
-            setShowAlert(true);
+            setShowAlert(fachada.cambioMostrarAlerta());
             setAlertText("El usuario está duplicado");
-            setAlertState("danger");
+            setAlertState(fachada.cambioEstadoDeAlerta(1));
             setLoading(false);
           } else {
             setLoading(false);
             setLoading(false);
+            console.log("emailMinuscula");
             setAlertText("El registro se realizó correctamente");
-            setAlertState("success");
-            setShowAlert(true);
+            setAlertState(fachada.cambioEstadoDeAlerta(0));
+            setShowAlert(fachada.cambioMostrarAlerta());
             setTimeout(() => navigate("/login"), 500);
           }
         } else if (cliente.tipoCliente == "Cliente") {
@@ -71,16 +82,17 @@ function Registro() {
 
           const text = await response.text();
           if ("error" == text) {
-            setShowAlert(true);
+            setShowAlert(fachada.cambioMostrarAlerta());
             setAlertText("El usuario está duplicado");
-            setAlertState("danger");
+            setAlertState(fachada.cambioEstadoDeAlerta(1));
             setLoading(false);
           } else {
             setLoading(false);
             setAlertText("El registro se realizó correctamente");
-            setAlertState("success");
-            setShowAlert(true);
+            setAlertState(fachada.cambioEstadoDeAlerta(0));
+            setShowAlert(fachada.cambioMostrarAlerta());
             setTimeout(() => navigate("/login"), 500);
+            console.log(emailAdapter.convertirEmailAMinuscula(cliente.email));
           }
         }
       }
@@ -104,7 +116,7 @@ function Registro() {
           className="mt-5"
           variant={alertState}
           show={showAlert}
-          onClose={() => setShowAlert(false)}
+          onClose={() => setShowAlert(fachada.cambioMostrarAlerta())}
           dismissible
         >
           {alertText}
@@ -151,6 +163,7 @@ function Registro() {
               value={cliente.email}
               data-testid="Correo"
             />
+
             <Form.Text className="text-muted">
               Nunca compartiremos su dirección de correo electrónico.
             </Form.Text>
