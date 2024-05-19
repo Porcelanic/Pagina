@@ -8,6 +8,7 @@ import Col from "react-bootstrap/Col";
   /* My components */
 }
 import OffcanvasEstampado from "../Components/OffcanvasEstampado";
+import OffcanvaEstampado from "../Components/OffcanvasEstampado";
 import OffcanvasCamisa from "../Components/OffcanvasCamisa";
 import { GeneralProvider } from "../Utils/generalContext";
 import { SpecificProvider } from "../Utils/SpecificContext";
@@ -56,7 +57,7 @@ function Catalogo() {
           <SpecificProvider>
             <OffcanvasCamisa />
           </SpecificProvider>
-          <OffcanvasEstampado />
+          <OffcanvaEstampado />
         </GeneralProvider>
         <ThemeSwitcher />
         <br />

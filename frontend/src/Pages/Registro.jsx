@@ -5,9 +5,11 @@ import Image from "react-bootstrap/Image";
 import Alert from "react-bootstrap/Alert";
 import { useNavigate, Link } from "react-router-dom";
 import { useState } from "react";
+
 import { ConversionEmail } from "../Classes/Adapter/conversionEmail";
 import Header from "../Classes/Header/Header";
 import { FachadaDeEstados } from "../Classes/Estados/Fachada/FachadaDeEstados";
+
 
 function Registro() {
   const fachada= new FachadaDeEstados();
