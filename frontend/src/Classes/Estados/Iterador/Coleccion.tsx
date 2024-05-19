@@ -1,16 +1,14 @@
+import { EstadoString } from "../EstadoString/EstadoString";
+import { EstadoBooleano } from "../EstadoBooleano/EstadoBooleano";
 import { Iterador } from "./Iterador";
 export abstract class Coleccion{
-    public iterador: Iterador;
+    protected array:any[];
 
-    abstract crearIterador(): void;
-
-    abstract getIterador(): Iterador;
+    abstract crearIterador(): Iterador;
 
     abstract getArrayLenght(): number;
 
-    abstract printArray():void
-
     abstract buscar(number:number):any;
 
-    abstract agregar(number:number, any:any):void;
+    abstract agregar(number:number, estado:any):void;
 }

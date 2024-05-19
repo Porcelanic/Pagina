@@ -1,4 +1,4 @@
-import { EstadoBooleano } from "./Estado";
+import { EstadoBooleano } from "./EstadoBooleano";
 export class EstadoVerdadero implements EstadoBooleano{
     private static instancia: EstadoVerdadero;
     private estado:boolean;

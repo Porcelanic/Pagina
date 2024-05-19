@@ -1,34 +1,24 @@
 import { Coleccion } from "./Coleccion";
 import { Iterador } from "./Iterador";
 import { IteradorBooleano } from "./IteradorBooleano";
-import { EstadoBooleano } from "../EstadoBooleano/Estado";
+import { EstadoBooleano } from "../EstadoBooleano/EstadoBooleano";
+
 export class ColeccionBooleana extends Coleccion{
-    private array:EstadoBooleano[];
     constructor(){
         super();
         this.array= new Array(2);
     }
 
-    printArray():void{
-        this.array.forEach(item => {
-            console.log(item);
-        });
-    }
-
-    crearIterador(): void {
-        this.iterador=new IteradorBooleano(this);
+    crearIterador(): Iterador {
+        return new IteradorBooleano(this);
     }
 
     getArrayLenght():number{
         return this.array.length;
     }
 
-    buscar(number: number) {
+    buscar(number: number): EstadoBooleano {
         return this.array[number];
-    }
-
-    getIterador(): Iterador {
-        return this.iterador;
     }
 
     agregar(number: number, EstadoBooleano:EstadoBooleano) {

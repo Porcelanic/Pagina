@@ -1,5 +1,6 @@
-import { EstadoString } from "./Estado";
+import { EstadoString } from "./EstadoString";
 export class EstadoSuccess implements EstadoString{
+    private static instancia: EstadoSuccess;
     private estado:string;
     private name:string;
 
