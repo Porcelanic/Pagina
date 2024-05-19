@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Header from "../Clases/Header/Header";
+import Header from "../Classes/Header/Header";
 import Footer from "../Components/Footer";
 import ThemeSwitcher from "../Components/ThemeSwitcher";
 import "../Styles/pago.css";

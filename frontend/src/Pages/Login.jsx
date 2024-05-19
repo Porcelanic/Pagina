@@ -6,7 +6,7 @@ import Alert from "react-bootstrap/Alert";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import Header from "../Clases/Header/Header";
+import Header from "../Classes/Header/Header";
 import "../Styles/Login.css";
 
 function Login() {
