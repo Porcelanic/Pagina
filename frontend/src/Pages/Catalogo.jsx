@@ -41,7 +41,7 @@ function Catalogo() {
               <Col>
                 <br />
                 <br />
-                <h1>Waysoft</h1>
+                <h1>Estampa Tu Idea</h1>
                 <br />
                 <h3>Los mejores precios!</h3>
                 <br />

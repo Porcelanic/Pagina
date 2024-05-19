@@ -26,6 +26,7 @@ function Login() {
 
   const emailAdapter = new ConversionEmail();
 
+  // eslint-disable-next-line no-unused-vars
   const [estados, setEstados] = useState({
     estadoBooleano: new ContextoBooleano(),
     estadoX: null,
@@ -44,6 +45,7 @@ function Login() {
     estados.estadoBooleano.cambioDeEstado();
     console.log(estados.estadoBooleano.getEstado());
   }
+  // eslint-disable-next-line no-unused-vars
   const [showAlert, setShowAlert] = useState(false); // Nuevo estado para manejar la visibilidad de la alerta
   const [alertText, setAlertText] = useState(""); // Nuevo estado para manejar la visibilidad de la alerta
   const [alertState, setAlertState] = useState(""); // Nuevo estado para manejar la visibilidad de la alerta
@@ -154,7 +156,7 @@ function Login() {
         {alertText}
       </Alert>
       <div className="text-center content">
-        <h1>WaySoft</h1>
+        <h1>Estampa Tu Idea</h1>
         <Form.Group className="mb-5 mt-5" controlId="formBasicTipo">
           <Image src="/logo.png" fluid width="50%" />
         </Form.Group>

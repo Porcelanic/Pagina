@@ -72,7 +72,7 @@ function Header() {
                 height="35"
                 className="d-inline-block align-top"
               />
-              WaySoft
+              Estampa Tu Idea
             </Navbar.Brand>
             <Navbar.Offcanvas
               id={`offcanvasNavbar-expand-md`}
@@ -157,7 +157,7 @@ function Header() {
                 height="35"
                 className="d-inline-block align-top"
               />
-              WaySoft
+              Estampa Tu Idea
             </Navbar.Brand>
             <Navbar.Offcanvas
               id={`offcanvasNavbar-expand-md`}
@@ -223,7 +223,7 @@ function Header() {
                 height="35"
                 className="d-inline-block align-top"
               />
-              WaySoft
+              Estampa Tu Idea
             </Navbar.Brand>
             <Navbar.Offcanvas
               id={`offcanvasNavbar-expand-md`}
