@@ -29,7 +29,7 @@ function Contenido() {
   const Contenido =
     itemData &&
     itemData.map((data, index) => (
-      <Card.Text className=" cart-items" key={index}>
+      <Card.Text className="cart-items" key={index}>
         <span>{data.text}</span>
         <span>{data.talla}</span>
         <span>{data.cantidad}</span>
