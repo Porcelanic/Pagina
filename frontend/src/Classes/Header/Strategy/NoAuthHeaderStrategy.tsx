@@ -35,7 +35,7 @@ class NoAuthHeaderStrategy implements HeaderStrategy {
             height="35"
             className="d-inline-block align-top"
           />
-          WaySoft
+          Estampa tu idea
         </Navbar.Brand>
         <Navbar.Offcanvas
           id={`offcanvasNavbar-expand-md`}

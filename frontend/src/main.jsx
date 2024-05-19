@@ -13,7 +13,7 @@ import ProtectedRoutes from "./Utils/ProtectedRoutes.jsx";
 import Login from "./Pages/Login.jsx";
 import Registro from "./Pages/Registro.jsx";
 import Catalogo from "./Pages/Catalogo";
-import Pago from "./Pages/Pago.jsx";
+import Pago from "./Pages/Pago1.tsx";
 import Carrito from "./Pages/Carrito.jsx";
 import FormEstampado from "./Pages/FormEstampado.jsx";
 import CatalogoEstampados from "./Pages/CatalogoEstampados.jsx";
@@ -22,19 +22,19 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <>
       <Route path="/" element={<Catalogo />} />
-      <Route path="catalogoEstampado" element={<CatalogoEstampados/>} /> 
+      <Route path="catalogoEstampado" element={<CatalogoEstampados />} />
       <Route path="/" element={<ProtectedRoutes />}>
-        <Route path="/login" element={<Login/>} />
+        <Route path="/login" element={<Login />} />
         <Route path="/registro" element={<Registro />} />
       </Route>
 
-      <Route path="/" element={<ProtectedRoutes rolAutorizado="Cliente"/>}>
-        <Route path="interfazPago" element={<Pago/>} />
-        <Route path="carrito" element={<Carrito/>} />
+      <Route path="/" element={<ProtectedRoutes rolAutorizado="Cliente" />}>
+        <Route path="interfazPago" element={<Pago />} />
+        <Route path="carrito" element={<Carrito />} />
       </Route>
 
-      <Route path="/" element={<ProtectedRoutes rolAutorizado="Artista"/>}> 
-        <Route path="formEstampado" element={<FormEstampado/>} />
+      <Route path="/" element={<ProtectedRoutes rolAutorizado="Artista" />}>
+        <Route path="formEstampado" element={<FormEstampado />} />
       </Route>
     </>
   )
