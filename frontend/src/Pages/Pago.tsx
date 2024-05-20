@@ -15,7 +15,7 @@ import ComandoPedido from "../Classes/Pago/Comando/ComandoPedido";
 import ComandoCrearCamisa from "../Classes/Pago/Comando/ComandoCrearCamisa";
 import ComandoPago from "../Classes/Pago/Comando/ComandoPago";
 import ComandoCrearInformacion from "../Classes/Pago/Comando/ComandoCrearInformacion";
-import DatosEnvio from "..//Classes/Pago/Tipos/DatosEnvio";
+import DatosEnvio from "../Classes/Pago/Tipos/DatosEnvio";
 import InfoPago from "../Classes/Pago/Tipos/InfoPago";
 import ItemData from "../Classes/Pago/Tipos/ItemData";
 
@@ -47,10 +47,11 @@ const Pago: React.FC = () => {
   const [alertState, setAlertState] = useState<string>(
     fachada.getEstadoDeAlerta()
   );
-
+  // Implementacion del patron comando
   const dataSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    // Se crea un invocador y se agregan los comandos necesarios con la respectiva informacion
     const invocador = new Invocador();
     invocador.agregarComando(new ComandoCrearInformacion(datosEnvio));
     invocador.agregarComando(new ComandoPago({ fechaPago: obtenerFecha() }));
@@ -68,8 +69,10 @@ const Pago: React.FC = () => {
       )
     );
 
+    // Se ejecutan los comandos y se espera a que se resuelvan
     await invocador.ejecutarComandos();
 
+    // Se muestra la alerta de pago exitoso y se redirige al inicio
     descontarDinero();
     setAlertText("Pago exitoso");
     localStorage.removeItem("itemData");
