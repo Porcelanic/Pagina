@@ -13,7 +13,7 @@ class ComandoCrearCamisa extends Comando {
   }
 
   // Llama al metodo de la clase Receptor para crear las camisas
-  async ejecutar() {
+  public async ejecutar(): Promise<void> {
     await Receptor.createShirts(this.itemData);
   }
 }

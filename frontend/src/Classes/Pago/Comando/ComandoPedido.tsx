@@ -13,7 +13,7 @@ class ComandoPedido extends Comando {
   }
 
   // Llama al metodo de la clase Receptor para crear el pedido
-  async ejecutar() {
+  public async ejecutar(): Promise<void> {
     await Receptor.createOrder(this.detallesPedido);
   }
 }

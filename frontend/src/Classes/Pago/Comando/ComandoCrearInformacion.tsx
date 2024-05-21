@@ -12,7 +12,7 @@ class ComandoCrearInformacion extends Comando {
   }
 
   // Llama al metodo de la clase Receptor para crear la informacion de envio
-  async ejecutar() {
+  public async ejecutar(): Promise<void> {
     await Receptor.createInformations(this.datosEnvio);
   }
 }

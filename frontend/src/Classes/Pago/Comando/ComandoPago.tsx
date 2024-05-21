@@ -10,7 +10,7 @@ class ComandoPago extends Comando {
     this.infoPago = infoPago;
   }
 
-  async ejecutar() {
+  public async ejecutar(): Promise<void> {
     await Receptor.processPayment(this.infoPago);
   }
 }
