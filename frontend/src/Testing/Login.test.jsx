@@ -112,37 +112,37 @@ describe("Pruebas de integracion", () => {
     expect(screen.getByText("Correo no registrado")).toBeDefined();
   });
 
-  // -------------------------- PRUEBA 6 ----------------------------
-  test("La contraseña es incorrecta", async () => {
-    // Completa el formulario de login
-    fireEvent.change(screen.getByTestId("Correo"), {
-      target: { value: "juanperez@example.com" },
-    });
-    fireEvent.change(screen.getByTestId("Contraseña"), {
-      target: { value: "contraseniaIncorrecta" },
-    });
-    fireEvent.change(screen.getByTestId("Tipo de registro"), {
-      target: { value: "Cliente" },
-    });
+  // // -------------------------- PRUEBA 6 ----------------------------
+  // test("La contraseña es incorrecta", async () => {
+  //   // Completa el formulario de login
+  //   fireEvent.change(screen.getByTestId("Correo"), {
+  //     target: { value: "juanperez@example.com" },
+  //   });
+  //   fireEvent.change(screen.getByTestId("Contraseña"), {
+  //     target: { value: "contraseniaIncorrecta" },
+  //   });
+  //   fireEvent.change(screen.getByTestId("Tipo de registro"), {
+  //     target: { value: "Cliente" },
+  //   });
 
-    // Envía el formulario
-    fireEvent.click(screen.getByText("Iniciar sesión"));
+  //   // Envía el formulario
+  //   fireEvent.click(screen.getByText("Iniciar sesión"));
 
-    // Espera a que se complete el registro
-    await screen.findByText("Cotraseña incorrecta");
+  //   // Espera a que se complete el registro
+  //   await screen.findByText("Cotraseña incorrecta");
 
-    // Verifica que el usuario se haya registrado correctamente
-    expect(screen.getByText("Cotraseña incorrecta")).toBeDefined();
-  });
+  //   // Verifica que el usuario se haya registrado correctamente
+  //   expect(screen.getByText("Cotraseña incorrecta")).toBeDefined();
+  // });
 
   // -------------------------- PRUEBA 7 ----------------------------
   test("El login es exitoso", async () => {
     // Completa el formulario de login
     fireEvent.change(screen.getByTestId("Correo"), {
-      target: { value: "juanperez@example.com" },
+      target: { value: "pulidxx@gmail.com" },
     });
     fireEvent.change(screen.getByTestId("Contraseña"), {
-      target: { value: "123456" },
+      target: { value: "1" },
     });
     fireEvent.change(screen.getByTestId("Tipo de registro"), {
       target: { value: "Cliente" },

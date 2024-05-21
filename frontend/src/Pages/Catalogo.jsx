@@ -36,7 +36,7 @@ function Catalogo() {
         <Row className="width-100vw">
           <Col xs={{ span: 8, offset: 2 }}>
             <Row width="100%" className=" p-5">
-              <Col className="centered" width="80%">
+              <Col className="centered" width="80%" data-testid="camisas">
                 <img src="/logo.png" alt="" />
               </Col>
               <Col>
