@@ -1,16 +1,16 @@
 import Carousel from "react-bootstrap/Carousel";
 import Image from "react-bootstrap/Image";
-import Row from "react-bootstrap/Row";
-import Container from "react-bootstrap/Container";
-import Col from "react-bootstrap/Col";
+//import Row from "react-bootstrap/Row";
+//import Container from "react-bootstrap/Container";
+//import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
-import Card from "react-bootstrap/Card";
+//import Card from "react-bootstrap/Card";
 import InputGroup from "react-bootstrap/InputGroup";
 import Form from "react-bootstrap/Form";
-import Alert from "react-bootstrap/Alert";
+//import Alert from "react-bootstrap/Alert";
 
 import Pluralidad from "./Pluralidad";
-import { Link } from "react-router-dom";
+//import { Link } from "react-router-dom";
 import { useSpecific } from "../../Utils/SpecificContext";
 function Items(prop) {
 

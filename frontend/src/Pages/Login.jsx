@@ -101,6 +101,33 @@ function Login() {
               setShowAlert(fachada.cambioMostrarAlerta());
               // Mostrar la alerta en caso de error
             }
+          } else if (tipoUsuario == "Administrador") {
+            const res = await fetch(`http://localhost:4000/admin/${email}`);
+            if (res.ok) {
+              const data = await res.json();
+              cliente.nombre = data.nombre;
+              cliente.email = data.email;
+              cliente.storedPassword = data.password;
+
+              if (cliente.password !== cliente.storedPassword) {
+                setAlertText("Cotraseña incorrecta");
+                setAlertState(fachada.cambioEstadoDeAlerta(1));
+                setShowAlert(fachada.cambioMostrarAlerta());
+              } else {
+                setAlertText("Correo y contraseña válidos :D");
+                setAlertState(fachada.cambioEstadoDeAlerta(0));
+                setShowAlert(fachada.cambioMostrarAlerta());
+                localStorage.setItem("email", cliente.email);
+                localStorage.setItem("username", cliente.nombre);
+                localStorage.setItem("tipoDeCliente", "Administrador");
+                setTimeout(() => navigate("/catalogoEstampado"), 200);
+              }
+            } else {
+              setAlertText("Correo no registrado");
+              setAlertState(fachada.cambioEstadoDeAlerta(1));
+              setShowAlert(fachada.cambioMostrarAlerta());
+              // Mostrar la alerta en caso de error
+            }
           }
         }
       } else {
@@ -155,6 +182,7 @@ function Login() {
               <option value="">Tipo de registro</option>
               <option value="Cliente">Cliente</option>
               <option value="Artista">Artista</option>
+              <option value="Administrador">Administrador</option>
             </Form.Select>
           </Form.Group>
 

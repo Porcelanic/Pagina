@@ -7,6 +7,10 @@ import {
   createArtista,
   getArtista,
 } from "../controllers/artistaDAO.controller.js";
+import {
+  createAdministrador,
+  getAdministrador,
+} from "../controllers/administradorDAO.controller.js";
 import { createInformacion } from "../controllers/informacionDAO.controller.js";
 import { createPedido } from "../controllers/pedidoDAO.controller.js";
 import { createCamisa } from "../controllers/camisaDAO.controller.js";
@@ -29,6 +33,10 @@ router.get("/clients/:email", getCliente);
 // Rutas para las consultas en artistas
 router.post("/artists", createArtista);
 router.get("/artists/:email", getArtista);
+
+// Rutas para las consultas en administrador
+router.post("/admin", createAdministrador);
+router.get("/admin/:email", getAdministrador);
 
 // Ruta para insertar la informacion
 router.post("/createInformations", createInformacion);

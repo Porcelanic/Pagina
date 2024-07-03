@@ -9,7 +9,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 
-import ProtectedRoutes from "./Utils/ProtectedRoutes.jsx";
+//import ProtectedRoutes from "./Utils/ProtectedRoutes.jsx";
 import Login from "./Pages/Login.jsx";
 import Registro from "./Pages/Registro.jsx";
 import Catalogo from "./Pages/Catalogo";
@@ -22,20 +22,13 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <>
       <Route path="/" element={<Catalogo />} />
-      <Route path="catalogoEstampado" element={<CatalogoEstampados/>} /> 
-      <Route path="/" element={<ProtectedRoutes />}>
-        <Route path="/login" element={<Login/>} />
-        <Route path="/registro" element={<Registro />} />
-      </Route>
-
-      <Route path="/" element={<ProtectedRoutes rolAutorizado="Cliente"/>}>
-        <Route path="interfazPago" element={<Pago/>} />
-        <Route path="carrito" element={<Carrito/>} />
-      </Route>
-
-      <Route path="/" element={<ProtectedRoutes rolAutorizado="Artista"/>}> 
-        <Route path="formEstampado" element={<FormEstampado/>} />
-      </Route>
+      <Route path="catalogoEstampado" element={<CatalogoEstampados />} />
+      <Route path="formEstampado" element={<FormEstampado />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/registro" element={<Registro />} />
+      <Route path="interfazPago" element={<Pago />} />
+      <Route path="carrito" element={<Carrito />} />
+      <Route path="formEstampado" element={<FormEstampado />} />
     </>
   )
 );
