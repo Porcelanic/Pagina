@@ -2,6 +2,7 @@ import HeaderStrategy from "./HeaderStrategy";
 import ClienteHeaderStrategy from "./ClienteHeaderStrategy";
 import NoAuthHeaderStrategy from "./NoAuthHeaderStrategy";
 import ArtistaHeaderStrategy from "./ArtistaHeaderStrategy";
+import AdministradorHeaderStrategy from "./AdministradorHeaderStrategy";
 
 // Clase de contexto que gestiona la estrategia
 class HeaderContext {
@@ -23,7 +24,9 @@ class HeaderContext {
       this.setStrategy(new ClienteHeaderStrategy());
     } else if (isUserAuthenticated && tipoCliente == "Artista") {
       this.setStrategy(new ArtistaHeaderStrategy());
-    } else {
+    } else if (isUserAuthenticated && tipoCliente == "Administrador") {
+      this.setStrategy(new AdministradorHeaderStrategy());
+    }else {
       this.setStrategy(new NoAuthHeaderStrategy());
     }
     return this.strategy.renderNavbar(); // Renderiza el navbar según la estrategia
