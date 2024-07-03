@@ -8,6 +8,7 @@ import Col from "react-bootstrap/Col";
   /* My components */
 }
 import OffcanvasEstampado from "../Components/OffcanvasEstampado";
+import OffcanvaEstampado from "../Components/OffcanvasEstampado";
 import OffcanvasCamisa from "../Components/OffcanvasCamisa";
 import { GeneralProvider } from "../Utils/generalContext";
 import { SpecificProvider } from "../Utils/SpecificContext";
@@ -35,7 +36,7 @@ function Catalogo() {
         <Row className="width-100vw">
           <Col xs={{ span: 8, offset: 2 }}>
             <Row width="100%" className=" p-5">
-              <Col className="centered" width="80%">
+              <Col className="centered" width="80%" data-testid="camisas">
                 <img src="/logo.png" alt="" />
               </Col>
               <Col>
@@ -56,7 +57,7 @@ function Catalogo() {
           <SpecificProvider>
             <OffcanvasCamisa />
           </SpecificProvider>
-          <OffcanvasEstampado />
+          <OffcanvaEstampado />
         </GeneralProvider>
         <ThemeSwitcher />
         <br />

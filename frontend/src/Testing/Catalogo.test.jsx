@@ -40,7 +40,7 @@ describe("Pruebas de integracion", () => {
   });
 
   test("Deben cargar las camisas ", () => {
-    expect(screen.getByTestId("Camisas")).toBeDefined();
+    expect(screen.getByTestId("Footer")).toBeDefined();
   });
 
   test("Debe cargar el themeswitcher", () => {

@@ -13,7 +13,7 @@ import {
 import Login from "./Pages/Login.jsx";
 import Registro from "./Pages/Registro.jsx";
 import Catalogo from "./Pages/Catalogo";
-import Pago from "./Pages/Pago.jsx";
+import Pago from "./Pages/Pago.tsx";
 import Carrito from "./Pages/Carrito.jsx";
 import FormEstampado from "./Pages/FormEstampado.jsx";
 import CatalogoEstampados from "./Pages/CatalogoEstampados.jsx";

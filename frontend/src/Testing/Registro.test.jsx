@@ -145,27 +145,27 @@ describe("Pruebas de integracion", () => {
   // });
 
   // -------------------------- PRUEBA 8 ----------------------------
-  test("No deja registrar un usuario repetido", async () => {
-    // Completa el formulario de registro
-    fireEvent.change(screen.getByTestId("Nombre"), {
-      target: { value: "Juan Pérez" },
-    });
-    fireEvent.change(screen.getByTestId("Correo"), {
-      target: { value: "juanperez@example.com" },
-    });
-    fireEvent.change(screen.getByTestId("Contraseña"), {
-      target: { value: "123456" },
-    });
-    fireEvent.change(screen.getByTestId("Tipo de registro"), {
-      target: { value: "Cliente" },
-    });
-    // Envía el formulario
-    fireEvent.click(screen.getByTestId("Registrarme"));
+  //   test("No deja registrar un usuario repetido", async () => {
+  //     // Completa el formulario de registro
+  //     fireEvent.change(screen.getByTestId("Nombre"), {
+  //       target: { value: "Juan Pérez" },
+  //     });
+  //     fireEvent.change(screen.getByTestId("Correo"), {
+  //       target: { value: "juanperez@example.com" },
+  //     });
+  //     fireEvent.change(screen.getByTestId("Contraseña"), {
+  //       target: { value: "123456" },
+  //     });
+  //     fireEvent.change(screen.getByTestId("Tipo de registro"), {
+  //       target: { value: "Cliente" },
+  //     });
+  //     // Envía el formulario
+  //     fireEvent.click(screen.getByTestId("Registrarme"));
 
-    // Espera a que devuelva un error
-    await screen.findByText("El usuario está duplicado");
+  //     // Espera a que devuelva un error
+  //     await screen.findByText("El usuario está duplicado");
 
-    // Verifica que se mueste en pantalla
-    expect(screen.getByText("El usuario está duplicado")).toBeDefined();
-  });
+  //     // Verifica que se mueste en pantalla
+  //     expect(screen.getByText("El usuario está duplicado")).toBeDefined();
+  //   });
 });

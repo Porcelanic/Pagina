@@ -10,7 +10,7 @@ import Alert from "react-bootstrap/Alert";
 import { FachadaDeEstados } from "../Classes/Estados/Fachada/FachadaDeEstados";
 
 function OffcanvasCamisa() {
-  const fachada= new FachadaDeEstados();
+  const fachada = new FachadaDeEstados();
 
   const [alertText, setAlertText] = useState("");
   const [showAlert, setShowAlert] = useState(fachada.getMostrarAlerta());
@@ -96,7 +96,7 @@ function OffcanvasCamisa() {
 
       setShowAlert(fachada.cambioMostrarAlerta());
       setAlertText("Se agrego al carrito :D");
-      if(alertState!=="success"){
+      if (alertState !== "success") {
         setAlertState(fachada.cambioEstadoDeAlerta(0));
       }
     }
@@ -119,12 +119,20 @@ function OffcanvasCamisa() {
   };
 
   return (
-    <Offcanvas show={show} onHide={handleClose} placement="end">
+    <Offcanvas
+      show={show}
+      onHide={handleClose}
+      placement="end"
+      data-testid="Offcanvas"
+    >
       <Offcanvas.Header closeButton>
         <Offcanvas.Title>¿Como quieres tu camisa?</Offcanvas.Title>
       </Offcanvas.Header>
 
-      <Offcanvas.Body className=" centered-items text-center">
+      <Offcanvas.Body
+        className=" centered-items text-center"
+        data-testid="Offcanvas"
+      >
         <div className="contenedor">
           {selectedImage && (
             <Image

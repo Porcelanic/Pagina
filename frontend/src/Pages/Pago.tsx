@@ -1,6 +1,5 @@
-/* eslint-disable no-empty */
-/* eslint-disable no-unused-vars */
-import { useState } from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Header from "../Classes/Header/Header";
 import Footer from "../Components/Footer";
 import ThemeSwitcher from "../Components/ThemeSwitcher";
@@ -10,11 +9,18 @@ import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Alert from "react-bootstrap/Alert";
-import { useNavigate } from "react-router-dom";
 import { FachadaDeEstados } from "../Classes/Estados/Fachada/FachadaDeEstados";
+import Invocador from "../Classes/Pago/Comando/Invocador";
+import ComandoPedido from "../Classes/Pago/Comando/ComandoPedido";
+import ComandoCrearCamisa from "../Classes/Pago/Comando/ComandoCrearCamisa";
+import ComandoPago from "../Classes/Pago/Comando/ComandoPago";
+import ComandoCrearInformacion from "../Classes/Pago/Comando/ComandoCrearInformacion";
+import DatosEnvio from "../Classes/Pago/Tipos/DatosEnvio";
+import InfoPago from "../Classes/Pago/Tipos/InfoPago";
+import ItemData from "../Classes/Pago/Tipos/ItemData";
 
-export default function Pago() {
-  const [datosEnvio, setDatosEnvio] = useState({
+const Pago: React.FC = () => {
+  const [datosEnvio, setDatosEnvio] = useState<DatosEnvio>({
     iddireccion: "",
     barrio: "",
     ciudad: "",
@@ -24,122 +30,87 @@ export default function Pago() {
     telefono: "",
   });
 
-  const [infoPago, setInfoPago] = useState({
+  const [infoPago, setInfoPago] = useState<InfoPago>({
     numeroTarjeta: "",
     nombreTitular: "",
     fechaVencimiento: "",
     cvv: "",
   });
-  const navigate = useNavigate();
-  const fachada= new FachadaDeEstados();
 
-  const [alertText, setAlertText] = useState("");
-  const [showAlert, setShowAlert] = useState(fachada.getMostrarAlerta());
-  const [alertState, setAlertState] = useState(fachada.getEstadoDeAlerta());
-  
-  const dataSubmit = async (e) => {
+  const navigate = useNavigate();
+  const fachada = new FachadaDeEstados();
+
+  const [alertText, setAlertText] = useState<string>("");
+  const [showAlert, setShowAlert] = useState<boolean>(
+    fachada.getMostrarAlerta()
+  );
+  const [alertState, setAlertState] = useState<string>(
+    fachada.getEstadoDeAlerta()
+  );
+  // Implementacion del patron comando
+  const dataSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    informacionSubmit();
+
+    // Se crea un invocador y se agregan los comandos necesarios con la respectiva informacion
+    const invocador = new Invocador();
+    invocador.agregarComando(new ComandoCrearInformacion(datosEnvio));
+    invocador.agregarComando(new ComandoPago({ fechaPago: obtenerFecha() }));
+    invocador.agregarComando(
+      new ComandoPedido({
+        valor: localStorage.getItem("precioTotalIVA") || "",
+        email: localStorage.getItem("email") || "",
+      })
+    );
+    invocador.agregarComando(
+      new ComandoCrearCamisa(
+        agregarNumeroPorMaterial(
+          JSON.parse(localStorage.getItem("itemData") || "[]")
+        )
+      )
+    );
+
+    // Se ejecutan los comandos y se espera a que se resuelvan
+    await invocador.ejecutarComandos();
+
+    // Se muestra la alerta de pago exitoso y se redirige al inicio
     descontarDinero();
+    setAlertText("Pago exitoso");
+    localStorage.removeItem("itemData");
+    setAlertState(fachada.cambioEstadoDeAlerta(0));
+    setShowAlert(fachada.cambioMostrarAlerta());
+    setTimeout(() => navigate("/"), 1000);
   };
 
   const descontarDinero = () => {
-    const dineroDisponible = localStorage.getItem("dinero");
-    const valorDeCompra = localStorage.getItem("precioTotalIVA");
-    localStorage.setItem("dinero", dineroDisponible - valorDeCompra);
-  };
-  const informacionSubmit = async () => {
-    try {
-      fetch(`http://localhost:4000/createInformations`, {
-        // agregar a la tabla direccion
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(datosEnvio),
-      }).then((response) => {
-        pagoSubmit();
-      });
-    } catch (error) {}
+    const dineroDisponible = Number(localStorage.getItem("dinero"));
+    const valorDeCompra = Number(localStorage.getItem("precioTotalIVA"));
+    localStorage.setItem(
+      "dinero",
+      (dineroDisponible - valorDeCompra).toString()
+    );
   };
 
-  const pagoSubmit = async () => {
-    try {
-      fetch("http://localhost:4000/payment", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          fechaPago: obtenerFecha(),
-          valor: localStorage.getItem("precioTotalIVA"),
-        }),
-      }).then((response) => {
-        pedidoSubmit();
-      });
-    } catch (error) {}
-  };
-
-  const pedidoSubmit = async () => {
-    try {
-      fetch("http://localhost:4000/createOrders", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          valor: localStorage.getItem("precioTotal"),
-          email: localStorage.getItem("email"),
-        }),
-      }).then((response) => {
-        let itemData = JSON.parse(localStorage.getItem("itemData"));
-        console.log(itemData);
-        itemData = agregarNumeroPorMaterial(itemData);
-        camisaSubmit(itemData);
-      });
-    } catch (error) {}
-  };
-
-  const camisaSubmit = async (itemData) => {
-    try {
-      fetch("http://localhost:4000/createShirts", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(itemData),
-      }).then((response) => {
-        localStorage.removeItem("itemData");
-        setAlertText("Pago exitoso");
-        setAlertState(fachada.cambioEstadoDeAlerta(0));
-        setShowAlert(fachada.cambioMostrarAlerta());
-        setTimeout(() => navigate("/"), 1000);
-      });
-    } catch (error) {}
-  };
-
-  function agregarNumeroPorMaterial(itemData) {
+  const agregarNumeroPorMaterial = (itemData: ItemData[]): ItemData[] => {
     const materials = ["Poliester", "Lino", "Lana", "Algodon"];
+    return itemData.map((item) => ({
+      ...item,
+      materialNumber: materials.indexOf(item.material) + 1,
+    }));
+  };
 
-    for (const item of itemData) {
-      item.materialNumber = materials.indexOf(item.material) + 1;
-    }
-
-    return itemData;
-  }
-
-  function obtenerFecha() {
-    // Obtén la fecha actual
+  const obtenerFecha = (): string => {
     const fechaActual = new Date();
-
-    // Obtén los componentes de la fecha (año, mes, día)
     const anio = fechaActual.getFullYear();
-    const mes = String(fechaActual.getMonth() + 1).padStart(2, "0"); // El mes es devuelto en base 0
+    const mes = String(fechaActual.getMonth() + 1).padStart(2, "0");
     const dia = String(fechaActual.getDate()).padStart(2, "0");
+    return `${anio}-${mes}-${dia}`;
+  };
 
-    // Formatea la fecha en el formato deseado (AAAA-MM-DD)
-    const fechaFormateada = `${anio}-${mes}-${dia}`;
-
-    return fechaFormateada;
-  }
-
-  const datosEnvioChange = (e) => {
+  const datosEnvioChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setDatosEnvio({ ...datosEnvio, [e.target.name]: e.target.value });
   };
 
-  const infoPagoChange = (e) => {
+  const infoPagoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInfoPago({ ...infoPago, [e.target.name]: e.target.value });
   };
 
@@ -240,15 +211,14 @@ export default function Pago() {
 
         <Row className="d-flex justify-content-around">
           <Col className="recuadro bordered p-5" md={{ span: 8, offset: 2 }}>
-            <h2 className="text-center mb-5">Información de Pago</h2>
+            <h2 className="text-center mb-5">Datos de pago</h2>
             <Row>
               <Col>
                 <Form.Group className="mb-3">
                   <Form.Control
                     type="number"
                     name="numeroTarjeta"
-                    placeholder="Numero de tarjeta"
-                    maxLength={45}
+                    placeholder="Numero de Tarjeta"
                     onChange={infoPagoChange}
                     value={infoPago.numeroTarjeta}
                   />
@@ -259,8 +229,7 @@ export default function Pago() {
                   <Form.Control
                     type="text"
                     name="nombreTitular"
-                    placeholder="Nombre del titular"
-                    maxLength={45}
+                    placeholder="Nombre del Titular"
                     onChange={infoPagoChange}
                     value={infoPago.nombreTitular}
                   />
@@ -269,20 +238,18 @@ export default function Pago() {
             </Row>
             <Row>
               <Col>
-                <Form.Group className="mb-3" controlId="formBasicUsername">
+                <Form.Group className="mb-3">
                   <Form.Control
                     type="date"
                     name="fechaVencimiento"
-                    placeholder="Fecha de vencimiento"
-                    maxLength={45}
+                    placeholder="Fecha de Vencimiento"
                     onChange={infoPagoChange}
                     value={infoPago.fechaVencimiento}
                   />
-                  <Form.Text>Fecha de vencimiento</Form.Text>
                 </Form.Group>
               </Col>
               <Col>
-                <Form.Group className="mb-3" controlId="formBasicUsername">
+                <Form.Group className="mb-3">
                   <Form.Control
                     type="number"
                     name="cvv"
@@ -296,34 +263,33 @@ export default function Pago() {
               <p className="ms-0 mb-3 h4 align-items-center">
                 Valor a pagar ${localStorage.getItem("precioTotalIVA")}
               </p>
-              <div className="d-grid ">
-                <Button
-                  variant="outline-light"
-                  type="submit"
-                  className="ms-3 d-grid"
-                  size="md"
-                  disabled={
-                    !datosEnvio.barrio ||
-                    !datosEnvio.ciudad ||
-                    !datosEnvio.pais ||
-                    !datosEnvio.codigopostal ||
-                    !datosEnvio.direccion ||
-                    !infoPago.numeroTarjeta ||
-                    !infoPago.nombreTitular ||
-                    !infoPago.fechaVencimiento ||
-                    !infoPago.cvv
-                  }
-                >
-                  Pagar
-                </Button>
-              </div>
             </Row>
+
+            <Button
+              variant="outline-light"
+              type="submit"
+              className="ms-3 d-grid"
+              disabled={
+                !datosEnvio.barrio ||
+                !datosEnvio.ciudad ||
+                !datosEnvio.pais ||
+                !datosEnvio.codigopostal ||
+                !datosEnvio.direccion ||
+                !infoPago.numeroTarjeta ||
+                !infoPago.nombreTitular ||
+                !infoPago.fechaVencimiento ||
+                !infoPago.cvv
+              }
+            >
+              Pagar
+            </Button>
           </Col>
         </Row>
       </Form>
-
       <ThemeSwitcher />
       <Footer />
     </>
   );
-}
+};
+
+export default Pago;
