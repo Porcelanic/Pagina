@@ -24,6 +24,13 @@ function Login() {
     trial372: null,
   });
 
+  const [login, setLogin] = useState(
+    {
+      email: "",
+      password: "",
+    }
+  );
+
   const emailAdapter = new ConversionEmail();
   const fachada= new FachadaDeEstados();
 
@@ -44,10 +51,9 @@ function Login() {
           setAlertState(fachada.cambioEstadoDeAlerta(1));
           setShowAlert(fachada.cambioMostrarAlerta());
         } else {
-          email = emailAdapter.convertirEmailAMinuscula(cliente.email);
-          console.log(email);
+          cliente.email = emailAdapter.convertirEmailAMinuscula(cliente.email);
           if (tipoUsuario == "Cliente") {
-            const res = await fetch(`http://localhost:4000/clients/${email}`);
+            const res = await fetch(`http://localhost:4000/clients/${cliente.email}`);
             if (res.ok) {
               const data = await res.json();
               cliente.nombre = data.nombre;
@@ -75,23 +81,25 @@ function Login() {
               // Mostrar la alerta en caso de error
             }
           } else if (tipoUsuario == "Artista") {
-            const res = await fetch(`http://localhost:4000/artists/${email}`);
-            if (res.ok) {
+            const res = await fetch("http://localhost:3000/artista/Login", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(cliente),
+            });
+            if (res.ok) { 
+              
               const data = await res.json();
-              cliente.nombre = data.nombre;
-              cliente.email = data.email;
-              cliente.storedPassword = data.password;
-
-              if (cliente.password !== cliente.storedPassword) {
-                setAlertText("Cotraseña incorrecta");
+              console.log(data);
+              if (data.message) {
+                setAlertText(data.message);
                 setAlertState(fachada.cambioEstadoDeAlerta(1));
                 setShowAlert(fachada.cambioMostrarAlerta());
               } else {
                 setAlertText("Correo y contraseña válidos :D");
                 setAlertState(fachada.cambioEstadoDeAlerta(0));
                 setShowAlert(fachada.cambioMostrarAlerta());
-                localStorage.setItem("email", cliente.email);
-                localStorage.setItem("username", cliente.nombre);
+                localStorage.setItem("email", data.user[0].email);
+                localStorage.setItem("username", data.user[0].nombre);
                 localStorage.setItem("tipoDeCliente", "Artista");
                 setTimeout(() => navigate("/catalogoEstampado"), 200);
               }

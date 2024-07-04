@@ -52,7 +52,7 @@ function Registro() {
       } else {
         cliente.email = emailAdapter.convertirEmailAMinuscula(cliente.email);
         if (cliente.tipoCliente == "Artista") {
-          const response = await fetch("http://localhost:4000/artists", {
+          const response = await fetch("http://localhost:3000/artista/crearArtista", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(cliente),
