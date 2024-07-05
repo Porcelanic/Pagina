@@ -52,13 +52,13 @@ function Registro() {
       } else {
         cliente.email = emailAdapter.convertirEmailAMinuscula(cliente.email);
         if (cliente.tipoCliente == "Artista") {
-          const response = await fetch("http://localhost:3000/artista/crearArtista", {
+          const res = await fetch("http://localhost:3000/artista/crearArtista", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(cliente),
           });
-          const text = await response.text();
-          if ("error" == text) {
+          const data = await res.json();
+          if (data.statusCode == 200) {
             setLoading(false);
             setShowAlert(fachada.cambioMostrarAlerta());
             setAlertText("El usuario está duplicado");
@@ -74,14 +74,13 @@ function Registro() {
             setTimeout(() => navigate("/login"), 500);
           }
         } else if (cliente.tipoCliente == "Cliente") {
-          const response = await fetch("http://localhost:4000/clients", {
+          const res = await fetch("http://localhost:3000/cliente/crearCliente", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(cliente),
           });
-
-          const text = await response.text();
-          if ("error" == text) {
+          const data = await res.json();
+          if (data.statusCode == 200) {
             setShowAlert(fachada.cambioMostrarAlerta());
             setAlertText("El usuario está duplicado");
             setAlertState(fachada.cambioEstadoDeAlerta(1));
