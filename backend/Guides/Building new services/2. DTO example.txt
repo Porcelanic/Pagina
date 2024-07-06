@@ -1,0 +1,47 @@
+2. DTO example:
+
+import { IsBoolean, IsDate, IsEmail, IsNotEmpty, IsString } from 'class-validator';
+import {  PartialType } from '@nestjs/swagger';
+import { Transform, TransformFnParams } from 'class-transformer';
+
+function stringToDate({ value }: TransformFnParams) {
+  return new Date(value);
+}
+
+
+export class crearUsuarioDto {
+  @IsNotEmpty()
+  @IsString()
+  cedula: string;
+
+  @IsNotEmpty()
+  @IsString()
+  nombre: string;
+
+  @IsNotEmpty()
+  @IsString()
+  apellido: string;
+
+  @IsNotEmpty()
+  @Transform(stringToDate)
+  fechaNacimiento: Date;
+
+  @IsNotEmpty()
+  @IsString()
+  telefono: string;
+
+  @IsNotEmpty()
+  @IsString()
+  direccion: string;
+
+  @IsNotEmpty()
+  @IsEmail() 
+  correo: string;
+
+  @IsNotEmpty()
+  @IsString()
+  password: string;
+
+}
+
+export class actualizarUsuarioDto extends PartialType(crearUsuarioDto) {}

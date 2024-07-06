@@ -1,0 +1,1 @@
+This folder seems to be one that is automatically created and updated once the backend is ran, so it shouldn't be tampered with

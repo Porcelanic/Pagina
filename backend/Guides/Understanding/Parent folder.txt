@@ -1,0 +1,3 @@
+this refers to the folder that contains all the other folders, in it there are also some loose files which serve the purpose of the 
+configuration of the APP this configuration is quite advanced and i myself am not sure how to handle it so i reccomend to just leave those 
+files alone
