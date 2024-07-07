@@ -10,27 +10,50 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Alert from "react-bootstrap/Alert";
 import { FachadaDeEstados } from "../Classes/Estados/Fachada/FachadaDeEstados";
-import Invocador from "../Classes/Pago/Comando/Invocador";
-import ComandoPedido from "../Classes/Pago/Comando/ComandoPedido";
-import ComandoCrearCamisa from "../Classes/Pago/Comando/ComandoCrearCamisa";
-import ComandoPago from "../Classes/Pago/Comando/ComandoPago";
-import ComandoCrearInformacion from "../Classes/Pago/Comando/ComandoCrearInformacion";
-import DatosEnvio from "../Classes/Pago/Tipos/DatosEnvio";
-import InfoPago from "../Classes/Pago/Tipos/InfoPago";
-import ItemData from "../Classes/Pago/Tipos/ItemData";
 
 const Pago: React.FC = () => {
-  const [datosEnvio, setDatosEnvio] = useState<DatosEnvio>({
-    iddireccion: "",
+  const [datosEnvio, setDatosEnvio] = useState({
     barrio: "",
     ciudad: "",
     pais: "",
-    codigopostal: "",
+    codigoPostal: "",
     direccion: "",
     telefono: "",
+    clienteEmail: localStorage.getItem("email"),
   });
 
-  const [infoPago, setInfoPago] = useState<InfoPago>({
+  const [pedido, setPedido] = useState({
+    valor: Number(localStorage.getItem("precioTotalIVA")),
+    estado: "Pendiente",
+    fechaPedido: "2023-04-01",
+    fechaEnvio: "2023-04-05",
+    clienteEmail: localStorage.getItem("email"),
+    informacionEnvioId: null,
+  });
+
+  interface CamisaState {
+    imagen: string;
+    precio: number | null;
+    talla: string;
+    cantidad: number | null;
+    idEstampado: number | null;
+    Material: string;
+    numeroPedido: number | null;
+  }
+  
+  const initialCamisaState: CamisaState = {
+    imagen: "",
+    precio: null,
+    talla: "",
+    cantidad: null,
+    idEstampado: null,
+    Material: "",
+    numeroPedido: null,
+  };
+  
+  const [camisa, setCamisa] = useState<CamisaState>(initialCamisaState);
+
+  const [infoPago, setInfoPago] = useState({
     numeroTarjeta: "",
     nombreTitular: "",
     fechaVencimiento: "",
@@ -48,31 +71,49 @@ const Pago: React.FC = () => {
     fachada.getEstadoDeAlerta()
   );
   // Implementacion del patron comando
-  const dataSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const dataSubmit = async (e) => {
     e.preventDefault();
-
-    // Se crea un invocador y se agregan los comandos necesarios con la respectiva informacion
-    const invocador = new Invocador();
-    invocador.agregarComando(new ComandoCrearInformacion(datosEnvio));
-    invocador.agregarComando(new ComandoPago({ fechaPago: obtenerFecha() }));
-    invocador.agregarComando(
-      new ComandoPedido({
-        valor: localStorage.getItem("precioTotalIVA") || "",
-        email: localStorage.getItem("email") || "",
-      })
+    let res = await fetch(
+      "http://localhost:3000/informacionEnvio/crearInformacionEnvio",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(datosEnvio),
+      }
     );
-    invocador.agregarComando(
-      new ComandoCrearCamisa(
-        agregarNumeroPorMaterial(
-          JSON.parse(localStorage.getItem("itemData") || "[]")
-        )
-      )
-    );
-
-    // Se ejecutan los comandos y se espera a que se resuelvan
-    await invocador.ejecutarComandos();
-
-    // Se muestra la alerta de pago exitoso y se redirige al inicio
+    let data = await res.json();
+    pedido.informacionEnvioId = data.response.id;
+    res = await fetch("http://localhost:3000/pedido/crearPedido", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(pedido),
+    });
+    data = await res.json();
+    camisa.numeroPedido = data.response.numeroPedido;
+    const itemData = localStorage.getItem("itemData");
+    const items = itemData ? JSON.parse(itemData) : null;
+    items.map(async (item, index) => {
+      if (item.estampa) {
+        const url = item.estampa;
+        const lastPart = url.substring(url.lastIndexOf("/") + 1);
+        res = await fetch(`http://localhost:3000/estampado/consultarDesign/${lastPart}`);
+        data = await res.json();
+        camisa.idEstampado = data.idEstampado;
+      }else{
+        console.log("No hay estampado");
+        camisa.idEstampado = null;
+      }
+      camisa.imagen = item.img;
+      camisa.precio = item.price;
+      camisa.talla = item.talla;
+      camisa.cantidad = parseInt(item.cantidad);
+      camisa.Material = item.material;
+      res = await fetch("http://localhost:3000/camisa/crearCamisa", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(camisa),
+      });
+    });
     descontarDinero();
     setAlertText("Pago exitoso");
     localStorage.removeItem("itemData");
@@ -88,14 +129,6 @@ const Pago: React.FC = () => {
       "dinero",
       (dineroDisponible - valorDeCompra).toString()
     );
-  };
-
-  const agregarNumeroPorMaterial = (itemData: ItemData[]): ItemData[] => {
-    const materials = ["Poliester", "Lino", "Lana", "Algodon"];
-    return itemData.map((item) => ({
-      ...item,
-      materialNumber: materials.indexOf(item.material) + 1,
-    }));
   };
 
   const obtenerFecha = (): string => {
@@ -186,10 +219,10 @@ const Pago: React.FC = () => {
                 <Form.Group className="mb-3">
                   <Form.Control
                     type="number"
-                    name="codigopostal"
+                    name="codigoPostal"
                     placeholder="Codigo Postal"
                     onChange={datosEnvioChange}
-                    value={datosEnvio.codigopostal}
+                    value={datosEnvio.codigoPostal}
                   />
                 </Form.Group>
               </Col>
@@ -273,7 +306,7 @@ const Pago: React.FC = () => {
                 !datosEnvio.barrio ||
                 !datosEnvio.ciudad ||
                 !datosEnvio.pais ||
-                !datosEnvio.codigopostal ||
+                !datosEnvio.codigoPostal ||
                 !datosEnvio.direccion ||
                 !infoPago.numeroTarjeta ||
                 !infoPago.nombreTitular ||

@@ -1,0 +1,1 @@
+This folder is where the APP resides every service, module, enviroment and tests are in here

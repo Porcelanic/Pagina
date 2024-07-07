@@ -1,0 +1,3 @@
+i am not sure what the loose files in this folder do, ill keep this txt updated when i find out
+
+config.ts file: it has all the relevant information of my postgreSQL build for the database to connect

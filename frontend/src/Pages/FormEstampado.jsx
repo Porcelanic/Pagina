@@ -24,7 +24,7 @@ export default function FormEstampado() {
     diseño: "",
     nombre: "",
     categoria: "",
-    artista_email: localStorage.getItem("email"),
+    artistaEmail: localStorage.getItem("email"),
   });
 
   const estampadoChange = (e) => {
@@ -39,8 +39,8 @@ export default function FormEstampado() {
     if (file) {
       const formData = new FormData();
       formData.append("file", file);
-
-      fetch("http://localhost:4000/image", {
+      console.log(formData);
+      fetch("http://localhost:3000/upload", {
         method: "POST",
         body: formData,
       })
@@ -69,7 +69,7 @@ export default function FormEstampado() {
   }, [estampado.diseño]);
 
   const toDB = () => {
-    fetch("http://localhost:4000/estampado", {
+    fetch("http://localhost:3000/estampado/crearEstampado", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(estampado),

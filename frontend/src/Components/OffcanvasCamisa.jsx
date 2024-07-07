@@ -41,7 +41,7 @@ function OffcanvasCamisa() {
 
     try {
       const res = await fetch(
-        `http://localhost:4000/materialQuantity/${material}`
+        `http://localhost:3000/material/consultarNombre/${material}`
       );
       if (res.ok) {
         const data = await res.json();
@@ -54,7 +54,7 @@ function OffcanvasCamisa() {
       console.error(error);
     }
     let estampa =
-      estampadoElegido >= 0 ? estampados[estampadoElegido].diseño : "";
+      estampadoElegido >= 0 ? `http://localhost:3000/uploads/${estampados[estampadoElegido].diseño}` : "";
     console.log(estampa);
     if (limite == 0) {
       setShowAlert(fachada.cambioMostrarAlerta());
@@ -108,14 +108,23 @@ function OffcanvasCamisa() {
   };
 
   const restarCantidad = async (material, cantidad) => {
-    fetch("http://localhost:4000/updateQuantity", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        material: material,
-        cantidad: cantidad,
-      }),
-    });
+    const cantidadNumber = parseInt(cantidad);
+    try {
+      const res = await fetch(`http://localhost:3000/material/actualizarMaterial/${material}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ Material: material, cantidad: cantidadNumber, }),
+      });
+      if (res.ok) {
+        console.log('Material updated successfully');
+      } else {
+        console.log('Failed to update material');
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -147,7 +156,7 @@ function OffcanvasCamisa() {
           {estampadoElegido >= 0 ? (
             <Image
               className="imagen-centrada"
-              src={estampados[estampadoElegido].diseño}
+              src={`http://localhost:3000/uploads/${estampados[estampadoElegido].diseño}`}
             />
           ) : (
             <></>

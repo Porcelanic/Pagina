@@ -1,0 +1,23 @@
+Guide on how to build new services
+
+To start creating the database (DB), first create the entities and name the file '[Entity].entity.ts'. The content inside the square brackets 
+should be the name of the entity.
+
+After creating the entities that represent each table of the DB, you should create the DTOs that will have all the information to handle 
+each request.
+
+After creating both the entity and the DTO of a table, you can start to create their service. The service will use the entity as a base 
+guideline for what is allowed and the DTOs as the data each operation can accept. Although operations can be defined with direct parameters 
+and not necessarily with DTOs, it is worth using the DTOs as a pattern for building more modular and readable code.
+
+After the service, it would be worthwhile to create a test to validate each time the backend is started that the service is working as intended.
+
+Whether or not the test for the service was made, the next step is to create a controller file in which each of the functions built in 
+the service is related to a specific URL inside the backend.
+
+After creating the controller another optional step would be to also create a test for the controller to check each time the backend is 
+started that the controller is working properly.
+
+And to finish the backend a module need to be created to encapsulate all the previous services
+
+then the only thing you need to do to implement your new service into the backend is go to 'app.module.ts' and import the new module and add it to the modules of the APP

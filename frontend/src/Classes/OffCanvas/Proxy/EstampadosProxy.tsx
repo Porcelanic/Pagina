@@ -16,6 +16,7 @@ class EstampadosProxy implements EstampadosService {
     if (this.estampadosCache.length === 0) {
       this.estampadosCache = await this.estampadosService.getEstampados();
     }
+    console.log("Estampados en caché:", this.estampadosCache);
     return this.estampadosCache;
   }
 }

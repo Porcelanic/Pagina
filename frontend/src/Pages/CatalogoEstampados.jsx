@@ -20,23 +20,34 @@ function CatalogoEstampados() {
   const [estampados, setEstampados] = useState([]);
 
   useEffect(() => {
-    // Llamar al endpoint para obtener los estampados
-    fetch("http://localhost:4000/getEstampados") // Asegúrate de que la ruta sea correcta según tu configuración de servidor
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.rowCount != 0) {
-          setEstampados(data); // Establecer los estampados en el estado local
-        } else {
-          console.log("no hay estampados");
-          console.log(estampados.length);
-        }
-      })
-      .catch((error) => {
-        console.error("Error al obtener los estampados:", error);
-      });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); // La dependencia vacía asegura que esta llamada solo se haga una vez al cargar el componente
+    const obtenerEstampadosConArtistas = async () => {
+      try {
+        // Paso 1: Obtener todos los estampados
+        const response = await fetch('http://localhost:3000/estampado/consultarEstampado');
+        if (!response.ok) throw new Error('Error al obtener estampados');
+        const estampados = await response.json();
 
+        // Paso 2: Verificar si la respuesta no está vacía
+        if (estampados.length > 0) {
+          // Paso 3: Iterar sobre cada estampado para obtener el artista
+          const estampadosConArtistas = await Promise.all(estampados.map(async (estampado) => {
+            const responseArtista = await fetch(`http://localhost:3000/artista/consultarArtista/${estampado.artistaEmail}`);
+            if (!responseArtista.ok) throw new Error('Error al obtener artista');
+            const artista = await responseArtista.json();
+            // Paso 4: Anexar el nombre del artista al estampado
+            return { ...estampado, nombreArtista: artista.nombre};
+          }));
+
+          // Actualizar el estado con los estampados y la información del artista
+          setEstampados(estampadosConArtistas);
+        }
+      } catch (error) {
+        console.error('Error al obtener estampados o artistas:', error);
+      }
+    };
+
+    obtenerEstampadosConArtistas();
+  }, []);
   const Cartas = (estampados.map((data, index) => 
     <Col
       key={index}
@@ -50,7 +61,7 @@ function CatalogoEstampados() {
       <CartaComponent
         img={data.diseño}
         text={data.nombre}
-        artista={data.nombre_artista}
+        artista={data.nombreArtista}
       />
     </Col>
   ));
