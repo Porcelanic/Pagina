@@ -24,15 +24,13 @@ function Login() {
     trial372: null,
   });
 
-  const [login, setLogin] = useState(
-    {
-      email: "",
-      password: "",
-    }
-  );
+  const [login, setLogin] = useState({
+    email: "",
+    password: "",
+  });
 
   const emailAdapter = new ConversionEmail();
-  const fachada= new FachadaDeEstados();
+  const fachada = new FachadaDeEstados();
 
   const [alertText, setAlertText] = useState("");
   const [showAlert, setShowAlert] = useState(fachada.getMostrarAlerta());
@@ -58,7 +56,7 @@ function Login() {
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify(cliente),
             });
-            if (res.ok) { 
+            if (res.ok) {
               const data = await res.json();
               console.log(data);
               if (data.message) {
@@ -87,7 +85,7 @@ function Login() {
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify(cliente),
             });
-            if (res.ok) { 
+            if (res.ok) {
               const data = await res.json();
               console.log(data);
               if (data.message) {
@@ -110,23 +108,24 @@ function Login() {
               // Mostrar la alerta en caso de error
             }
           } else if (tipoUsuario == "Administrador") {
-            const res = await fetch(`http://localhost:4000/admin/${email}`);
+            const res = await fetch("http://localhost:3000/administrador/Login", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(cliente),
+            });
             if (res.ok) {
               const data = await res.json();
-              cliente.nombre = data.nombre;
-              cliente.email = data.email;
-              cliente.storedPassword = data.password;
-
-              if (cliente.password !== cliente.storedPassword) {
-                setAlertText("Cotraseña incorrecta");
+              console.log(data);
+              if (data.message) {
+                setAlertText(data.message);
                 setAlertState(fachada.cambioEstadoDeAlerta(1));
                 setShowAlert(fachada.cambioMostrarAlerta());
               } else {
                 setAlertText("Correo y contraseña válidos :D");
                 setAlertState(fachada.cambioEstadoDeAlerta(0));
                 setShowAlert(fachada.cambioMostrarAlerta());
-                localStorage.setItem("email", cliente.email);
-                localStorage.setItem("username", cliente.nombre);
+                localStorage.setItem("email", data.user[0].email);
+                localStorage.setItem("username", data.user[0].nombre);
                 localStorage.setItem("tipoDeCliente", "Administrador");
                 setTimeout(() => navigate("/catalogoEstampado"), 200);
               }
@@ -166,15 +165,15 @@ function Login() {
   return (
     <>
       <Header />
-        <Alert
-          className="alert mt-5"
-          variant={alertState}
-          show={showAlert}
-          onClose={() => setShowAlert(fachada.cambioMostrarAlerta())}
-          dismissible
-        >
-          {alertText}
-        </Alert>
+      <Alert
+        className="alert mt-5"
+        variant={alertState}
+        show={showAlert}
+        onClose={() => setShowAlert(fachada.cambioMostrarAlerta())}
+        dismissible
+      >
+        {alertText}
+      </Alert>
       <div className="text-center content">
         <h1>Estampa Tu Idea</h1>
         <Form.Group className="mb-5 mt-5" controlId="formBasicTipo">
