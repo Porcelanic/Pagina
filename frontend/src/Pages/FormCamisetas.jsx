@@ -10,7 +10,7 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/esm/Container";
 
-export default function FormEstampado() {
+export default function FormCamisetas() {
   const navigate = useNavigate();
 
   const [file, setFile] = useState(null);
@@ -20,18 +20,19 @@ export default function FormEstampado() {
     setFile(selectedFile);
   };
 
-  const [estampado, setEstampado] = useState({
+  const [Camisetas, setCamisetas] = useState({
     diseño: "",
     nombre: "",
-    categoria: "",
-    artistaEmail: localStorage.getItem("email"),
+    tipo: "",
+    precio: 0,
+    adminEmail: localStorage.getItem("email"),
   });
 
-  const estampadoChange = (e) => {
-    setEstampado({ ...estampado, [e.target.name]: e.target.value });
+  const CamisetasChange = (e) => {
+    setCamisetas({ ...Camisetas, [e.target.name]: e.target.value });
   };
   const handleSelect = (e) => {
-    setEstampado({ ...estampado, categoria: e.target.value });
+    setCamisetas({ ...Camisetas, tipo: e.target.value });
   };
 
   const handleSubmit = (e) => {
@@ -53,7 +54,7 @@ export default function FormEstampado() {
         })
         .then((data) => {
           // Handle the file path returned from the server
-          setEstampado({ ...estampado, diseño: data.filePath });
+          setCamisetas({ ...Camisetas, diseño: data.filePath });
         })
         .catch((error) => {
           // Handle errors
@@ -63,18 +64,20 @@ export default function FormEstampado() {
   };
 
   useEffect(() => {
-    if (estampado.diseño !== "") {
+    if (Camisetas.diseño !== "") {
       toDB();
     }
-  }, [estampado.diseño]);
+  }, [Camisetas.diseño]);
 
   const toDB = () => {
-    fetch("http://localhost:3000/estampado/crearEstampado", {
+    Camisetas.precio = parseInt(Camisetas.precio);
+    console.log(Camisetas);
+    fetch("http://localhost:3000/camisetas/crearCamisetas", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(estampado),
+      body: JSON.stringify(Camisetas),
     });
-    setTimeout(() => navigate("/catalogoEstampado"), 200);
+    setTimeout(() => navigate("/"), 200);
   };
 
   return (
@@ -82,11 +85,11 @@ export default function FormEstampado() {
       <Header />
       <Container>
         <Form onSubmit={handleSubmit}>
-          <Row className="d-flex justify-content-around mt-5 pt-5">
-            <Col className="recuadro bordered" md={{ span: 6, offset: 4 }}>
-              <h2 className="text-center mb-5">Publica tu estampado</h2>
+          <Row className="d-flex justify-content-around mb-5">
+            <Col className="recuadro bordered" md={{ span: 6, offset: 3 }}>
+              <h2 className="text-center mb-3">Publica tu Camiseta</h2>
               <Form.Group controlId="formFile" className="mb-3">
-                <Form.Label>Publica tu estampado</Form.Label>
+                <Form.Label>Publica tu Camiseta</Form.Label>
                 <Form.Control type="file" onChange={handleFileChange} />
               </Form.Group>
               <Form.Group className="mb-3">
@@ -94,37 +97,48 @@ export default function FormEstampado() {
                   type="text"
                   name="nombre"
                   placeholder="nombre"
-                  onChange={estampadoChange}
-                  value={estampado.nombre}
-                  maxLength={20}
+                  onChange={CamisetasChange}
+                  value={Camisetas.nombre}
+                  maxLength={30}
                 />
-                <Form.Text>Ponle un nombre unico a tu estampado</Form.Text>
+                <Form.Text>Ponle un nombre unico a tu Camiseta</Form.Text>
               </Form.Group>
 
-              <Form.Group className="mb-3" controlId="Categoria">
+              <Form.Group className="mb-3" controlId="tipo">
                 <Form.Select
                   aria-label="Default select example"
                   onChange={handleSelect}
-                  data-testid="Categoria"
+                  data-testid="tipo"
                 >
-                  <option value="">Categoria</option>
-                  <option value="Abstracto">Abstracto</option>
-                  <option value="Naturales">Naturales</option>
-                  <option value="Retro">Retro</option>
-                  <option value="Tematicos">Temáticos</option>
-                  <option value="Otro">Otro</option>
+                  <option value="">Tipo</option>
+                  <option value="Abstracto">Deportivas</option>
+                  <option value="Naturales">Estampables</option>
+                  
                 </Form.Select>
                 <Form.Text>
-                  Con que categoria crees que se identifica tu estampado?
+                  Con que tipo crees que se identifica tu Camisetas?
                 </Form.Text>
               </Form.Group>
+
+              <Form.Group className="mb-3">
+                <Form.Control
+                  type="number"
+                  name="precio"
+                  placeholder="precio"
+                  onChange={CamisetasChange}
+                  value={Camisetas.precio}
+                  maxLength={6}
+                />
+                <Form.Text>Ponle un precio a tu Camiseta</Form.Text>
+              </Form.Group>
+
               <div className="d-grid ">
                 <Button
                   variant="outline-light"
                   type="submit"
                   className="ms-3 d-grid"
                   size="md"
-                  disabled={!file || !estampado.nombre || !estampado.categoria}
+                  disabled={!file || !Camisetas.nombre || !Camisetas.tipo ||!Camisetas.precio}
                 >
                   Publicar
                 </Button>

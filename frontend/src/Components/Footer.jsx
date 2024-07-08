@@ -13,13 +13,10 @@ const Footer = () => {
   return (
     <>
       <div className="bottom-fixed">
-        <br />
-        <br />
-        <br />
 
         <Container
           fluid
-          className="border-toper align-items-center  bg-body-tertiary m-0 px-0 py-2"
+          className="border-toper align-items-center  bg-body-tertiary  py-2 "
           data-testid="Footer"
         >
           <Row>

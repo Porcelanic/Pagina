@@ -69,6 +69,15 @@ class ArtistaHeaderStrategy implements HeaderStrategy {
                   <FontAwesomeIcon icon={faStar} /> Publicar estampados
                 </Nav.Link>
               </Nav.Item>
+              <Nav.Item>
+                <Nav.Link
+                  as={Link}
+                  to="/formCamisetas"
+                  active={location.pathname === "/formCamisetas"}
+                >
+                  <FontAwesomeIcon icon={faStar} /> Publicar Camisetas
+                </Nav.Link>
+              </Nav.Item>
 
               <Nav.Item onClick={() => this.reset()}>
                 <Nav.Link>

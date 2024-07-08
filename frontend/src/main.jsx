@@ -16,6 +16,7 @@ import Catalogo from "./Pages/Catalogo";
 import Pago from "./Pages/Pago.tsx";
 import Carrito from "./Pages/Carrito.jsx";
 import FormEstampado from "./Pages/FormEstampado.jsx";
+import FormCamisetas from "./Pages/FormCamisetas.jsx";  
 import CatalogoEstampados from "./Pages/CatalogoEstampados.jsx";
 
 const router = createBrowserRouter(
@@ -29,6 +30,7 @@ const router = createBrowserRouter(
       <Route path="interfazPago" element={<Pago />} />
       <Route path="carrito" element={<Carrito />} />
       <Route path="formEstampado" element={<FormEstampado />} />
+      <Route path="formCamisetas" element={<FormCamisetas />} />
     </>
   )
 );
