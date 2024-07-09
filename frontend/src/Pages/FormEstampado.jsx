@@ -40,7 +40,7 @@ export default function FormEstampado() {
       const formData = new FormData();
       formData.append("file", file);
       console.log(formData);
-      fetch("http://localhost:3000/upload", {
+      fetch("http://localhost:3000/upload/estampado", {
         method: "POST",
         body: formData,
       })

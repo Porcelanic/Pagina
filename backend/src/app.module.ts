@@ -26,7 +26,7 @@ import { CamisetasModule } from './Modelos/camisetas/camisetas.module';
       isGlobal: true,
     }),
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'Uploads','Estampados'), // path to the static files
+      rootPath: join(__dirname, '..', 'Uploads'), // path to the static files
       serveRoot: '/uploads', // route to serve the static files
     }),
     DatabaseModule,

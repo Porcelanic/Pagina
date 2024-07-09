@@ -7,8 +7,20 @@ import { v4 as uuidv4 } from 'uuid';
 export class UploadService {
   async saveFile(file: Express.Multer.File): Promise<string> {
     try {
-      const safeFilename = `${file.fieldname}-${Date.now()}${extname(file.originalname)}`;
-      const uploadPath = join(__dirname, '..', '..', '..', '..', 'Uploads','Estampados', safeFilename);
+      const safeFilename = `Estampados/${file.fieldname}-${Date.now()}${extname(file.originalname)}`;
+      const uploadPath = join(__dirname, '..', '..', '..', '..', 'Uploads', safeFilename);
+      await fsPromises.writeFile(uploadPath, file.buffer);
+      return safeFilename;
+    } catch (error) {
+      // Handle error (e.g., log it, throw custom error)
+      console.error('Error saving file:', error);
+      throw new Error('Error saving file');
+    }
+  }
+  async saveCamiseta(file: Express.Multer.File, tipo: string): Promise<string> {
+    try {
+      const safeFilename = `Camisetas/${tipo}/${file.fieldname}-${Date.now()}${extname(file.originalname)}`;
+      const uploadPath = join(__dirname, '..', '..', '..', '..', 'Uploads', safeFilename);
       await fsPromises.writeFile(uploadPath, file.buffer);
       return safeFilename;
     } catch (error) {

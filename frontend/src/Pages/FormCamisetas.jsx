@@ -41,7 +41,7 @@ export default function FormCamisetas() {
       const formData = new FormData();
       formData.append("file", file);
       console.log(formData);
-      fetch("http://localhost:3000/upload", {
+      fetch(`http://localhost:3000/upload/camiseta/${Camisetas.tipo}`, {
         method: "POST",
         body: formData,
       })
@@ -111,8 +111,8 @@ export default function FormCamisetas() {
                   data-testid="tipo"
                 >
                   <option value="">Tipo</option>
-                  <option value="Abstracto">Deportivas</option>
-                  <option value="Naturales">Estampables</option>
+                  <option value="Deportivas">Deportivas</option>
+                  <option value="Estampables">Estampables</option>
                   
                 </Form.Select>
                 <Form.Text>
