@@ -3,7 +3,7 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSignOut, faStar } from "@fortawesome/free-solid-svg-icons";
+import { faShop, faSignOut, faStar } from "@fortawesome/free-solid-svg-icons";
 import { Link, useNavigate } from "react-router-dom";
 import HeaderStrategy from "./HeaderStrategy";
 
@@ -49,6 +49,11 @@ class ArtistaHeaderStrategy implements HeaderStrategy {
               <Nav.Item>
                 <Nav.Link>{"Admin: " + localStorage.username}</Nav.Link>
               </Nav.Item>
+              <Nav.Item>
+                  <Nav.Link as={Link} to="/" active={location.pathname === "/"}>
+                    <FontAwesomeIcon icon={faShop} /> Catalogo
+                  </Nav.Link>
+                </Nav.Item>
 
               <Nav.Item>
                 <Nav.Link
