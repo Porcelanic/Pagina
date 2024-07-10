@@ -40,7 +40,6 @@ export default function FormCamisetas() {
     if (file) {
       const formData = new FormData();
       formData.append("file", file);
-      console.log(formData);
       fetch(`http://localhost:3000/upload/camiseta/${Camisetas.tipo}`, {
         method: "POST",
         body: formData,
@@ -71,7 +70,6 @@ export default function FormCamisetas() {
 
   const toDB = () => {
     Camisetas.precio = parseInt(Camisetas.precio);
-    console.log(Camisetas);
     fetch("http://localhost:3000/camisetas/crearCamisetas", {
       method: "POST",
       headers: { "Content-Type": "application/json" },

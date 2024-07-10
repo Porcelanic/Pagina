@@ -62,7 +62,7 @@ async consultarDiseño(diseño: string) {
 }
 
 async consultarTipo(tipo: string) {
-  return await this.camisetasRepo.findOne({ where: { tipo: tipo } });
+  return await this.camisetasRepo.find({ where: { tipo: tipo } });
 }
 
   async eliminarCamisetas(nombre: string, data: identificadorCamisetasDto) {

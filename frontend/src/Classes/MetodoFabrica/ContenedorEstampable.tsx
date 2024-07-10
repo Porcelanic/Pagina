@@ -1,34 +1,28 @@
 import React, { useEffect } from "react";
 import { Col, Row } from "react-bootstrap";
 import CartaComponent from "../../Components/ComponentCarta";
-import { useGeneral } from "../../Utils/generalContext";
+import { useState } from "react";
 import Contenedor from "./Contenedor";
 
 class ContenedorEstampable extends Contenedor {
   render(): JSX.Element {
-    const { setCamisetasEstampadas, camisetasEstampables = [] } = useGeneral(); // Initialize as empty array
+    const [camisetasEstampables, setCamisetasEstampables] = useState<any[]>([]);
     
     useEffect(() => {
-      const obtenerCamisetasEstampables = async () => {
-        try {
-          const response = await fetch('http://localhost:3000/camisetas/consultarTipo/Estampables');
-          console.log(response);
-          if (!response.ok) throw new Error('Error al obtener camisetas estampables');
-          const camisetasEstampables = await response.json();
-          console.log(camisetasEstampables);
-  
-          if (camisetasEstampables.length > 0) {
-            setCamisetasEstampadas(camisetasEstampables);
-            console.log(camisetasEstampables);
-          }
-  
-        } catch (error) {
-          console.error('Error al obtener camisetas estampables:', error);
-        }
-      };
-  
       obtenerCamisetasEstampables();
     }, []); // Empty dependency array to run once on mount
+
+    const obtenerCamisetasEstampables = async () => {
+      try {
+        const response = await fetch('http://localhost:3000/camisetas/consultarTipo/Estampables');
+        console.log(response);
+        if (!response.ok) throw new Error('Error al obtener camisetas estampables');
+        const json = await response.json();
+        setCamisetasEstampables(json)
+      } catch (error) {
+        console.error('Error al obtener camisetas estampables:', error);
+      }
+    };
 
     const Cartas = camisetasEstampables.map((data, index) => (
       <Col
