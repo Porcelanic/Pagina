@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Col, Row } from "react-bootstrap";
+import { Button, Col, Row } from "react-bootstrap";
 import CartaComponent from "../../Components/ComponentCarta";
 import { useState } from "react";
 import Contenedor from "./Contenedor";
@@ -8,6 +8,7 @@ import { useGeneral } from "../../Utils/GeneralContext";
 class ContenedorDeportivas extends Contenedor {
   render(): JSX.Element {
     const [camisetasDeportivas, setCamisetasDeportivas] = useState<any[]>([]);
+    const tipoDeCliente = localStorage.getItem("tipoDeCliente");
 
     useEffect(() => {
       obtenerCamisetasDeportivas();
@@ -29,6 +30,27 @@ class ContenedorDeportivas extends Contenedor {
 
     const { handleShow, setEstampable, setEstampadoElegido } = useGeneral();
 
+    const handleDelete = async (camiseta) => {
+      const confirmDelete = window.confirm(`¿Estás seguro de que quieres eliminar la camiseta "${camiseta.nombre}"?`);
+      if (!confirmDelete) return;
+  
+      try {
+        const response = await fetch(`http://localhost:3000/camisetas/eliminarCamisetas/${camiseta.nombre}`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ adminEmail: camiseta.adminEmail })
+        });
+        if (!response.ok) throw new Error('Error al eliminar la camiseta');
+  
+        // Actualizar el estado para reflejar el cambio
+        setCamisetasDeportivas(camisetasDeportivas.filter(e => e !== camiseta));
+      } catch (error) {
+        console.error('Error al eliminar la camiseta:', error);
+      }
+    };
+
     const Cartas = camisetasDeportivas.map((data, index) => (
       <Col
         key={index}
@@ -47,6 +69,11 @@ class ContenedorDeportivas extends Contenedor {
             style={undefined}
           />
         </div>
+        {tipoDeCliente === "Administrador" && (
+        <Button variant="danger" className="mt-2" onClick={() => handleDelete(data)}>
+          Eliminar
+        </Button>
+      )}
       </Col>
     ));
 
