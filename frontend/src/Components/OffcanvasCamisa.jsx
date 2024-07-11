@@ -1,5 +1,5 @@
 import { useSpecific } from "../Utils/SpecificContext";
-import { useGeneral } from "../Utils/generalContext";
+import { useGeneral } from "../Utils/GeneralContext";
 import Image from "react-bootstrap/Image";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import Form from "react-bootstrap/Form";
@@ -34,11 +34,11 @@ function OffcanvasCamisa() {
     let materialNumber = null;
     let selectedShirt = JSON.parse(localStorage.getItem("selectedShirt"));
     let id = selectedShirt.id;
-    let img = selectedShirt.img;
-    let text = selectedShirt.text;
-    let price = selectedShirt.price;
+    let img = selectedShirt.diseño;
+    let text = selectedShirt.nombre;
+    let price = selectedShirt.precio;
     let limite;
-
+    console.log(img);
     try {
       const res = await fetch(
         `http://localhost:3000/material/consultarNombre/${material}`
@@ -145,7 +145,7 @@ function OffcanvasCamisa() {
         <div className="contenedor">
           {selectedImage && (
             <Image
-              src={selectedImage}
+              src={`http://localhost:3000/uploads/${selectedImage}`}
               className=" img-to-size imagen-fondo"
               fluid
               thumbnail

@@ -88,7 +88,7 @@ function Items(prop) {
         <Carousel.Item key={index}>
           <div className="contenedor-img">
             <Image
-              src={data.img}
+              src={`http://localhost:3000/uploads/${data.img}`}
               className="camisa-fondo"
               alt="Selected Image"
             />

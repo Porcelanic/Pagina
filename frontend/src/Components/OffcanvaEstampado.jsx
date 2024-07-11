@@ -1,5 +1,5 @@
 import EstampadosProxy from "../Classes/OffCanvas/Proxy/EstampadosProxy";
-import { useGeneral } from "../Utils/generalContext";
+import { useGeneral } from "../Utils/GeneralContext";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import { useEffect, useState } from "react";
 import Col from "react-bootstrap/Col";
