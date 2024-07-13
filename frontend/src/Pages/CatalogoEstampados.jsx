@@ -1,44 +1,33 @@
-/* React-Bootstrap */
+import { useState, useEffect } from "react";
 import Row from "react-bootstrap/Row";
 import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
-
-/* My components */
-//import ComponentCarta from "../Components/ComponentCarta";
+import Button from "react-bootstrap/Button";
 import Footer from "../Components/Footer";
 import Header from "../Classes/Header/Header";
 import ThemeSwitcher from "../Components/ThemeSwitcher";
 import CartaComponent from "../Components/ComponentCarta";
-
-/* My css */
 import "../Styles/Offcanvas.css";
-
-/* Hooks */
-import { useState, useEffect } from "react";
 
 function CatalogoEstampados() {
   const [estampados, setEstampados] = useState([]);
+  const tipoDeCliente = localStorage.getItem("tipoDeCliente");
 
   useEffect(() => {
     const obtenerEstampadosConArtistas = async () => {
       try {
-        // Paso 1: Obtener todos los estampados
         const response = await fetch('http://localhost:3000/estampado/consultarEstampado');
         if (!response.ok) throw new Error('Error al obtener estampados');
         const estampados = await response.json();
 
-        // Paso 2: Verificar si la respuesta no está vacía
         if (estampados.length > 0) {
-          // Paso 3: Iterar sobre cada estampado para obtener el artista
           const estampadosConArtistas = await Promise.all(estampados.map(async (estampado) => {
             const responseArtista = await fetch(`http://localhost:3000/artista/consultarArtista/${estampado.artistaEmail}`);
             if (!responseArtista.ok) throw new Error('Error al obtener artista');
             const artista = await responseArtista.json();
-            // Paso 4: Anexar el nombre del artista al estampado
             return { ...estampado, nombreArtista: artista.nombre};
           }));
 
-          // Actualizar el estado con los estampados y la información del artista
           setEstampados(estampadosConArtistas);
         }
       } catch (error) {
@@ -48,7 +37,28 @@ function CatalogoEstampados() {
 
     obtenerEstampadosConArtistas();
   }, []);
-  const Cartas = (estampados.map((data, index) => 
+
+  const handleDelete = async (estampado) => {
+    const confirmDelete = window.confirm(`¿Estás seguro de que quieres eliminar el estampado "${estampado.nombre}" del artista "${estampado.nombreArtista}"?`);
+    if (!confirmDelete) return;
+
+    try {
+      const response = await fetch(`http://localhost:3000/estampado/eliminarEstampado/${estampado.nombre}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ artistaEmail: estampado.artistaEmail })
+      });
+      if (!response.ok) throw new Error('Error al eliminar el estampado');
+
+      setEstampados(estampados.filter(e => e !== estampado));
+    } catch (error) {
+      console.error('Error al eliminar el estampado:', error);
+    }
+  };
+
+  const Cartas = estampados.map((data, index) => (
     <Col
       key={index}
       xs="12"
@@ -56,62 +66,64 @@ function CatalogoEstampados() {
       md="4"
       lg="3"
       className="text-center mt-3"
-      // Agregar lógica de clic aquí si es necesario
     >
       <CartaComponent
         img={data.diseño}
         text={data.nombre}
         artista={data.nombreArtista}
       />
+      {tipoDeCliente === "Administrador" && (
+        <Button variant="danger" className="mt-2" onClick={() => handleDelete(data)}>
+          Eliminar
+        </Button>
+      )}
     </Col>
   ));
 
   return (
-    <>
-      <Container fluid className=" align-items-center  m-0 p-0">
-        <Row className="width-100vw">
-          <Header />
-        </Row>
+    <Container fluid className="align-items-center m-0 p-0">
+      <Row className="width-100vw">
+        <Header />
+      </Row>
 
-        <Row className="width-100vw">
-          <Col xs={{ span: 8, offset: 2 }}>
-            <Row width="100%" className=" p-5">
-              <Col className="centered" width="80%">
-                <img src="/logo.png" alt="" />
-              </Col>
-              <Col>
-                <br />
-                <br />
-                <h1>Estampa Tu Idea</h1>
-                <br />
-                <h3>Los mejores precios!</h3>
-                <br />
-                <h5>Tu página de confianza</h5>
-              </Col>
-            </Row>
-          </Col>
-        </Row>
+      <Row className="width-100vw">
+        <Col xs={{ span: 8, offset: 2 }}>
+          <Row width="100%" className="p-5">
+            <Col className="centered" width="80%">
+              <img src="/logo.png" alt="" />
+            </Col>
+            <Col>
+              <br />
+              <br />
+              <h1>Estampa Tu Idea</h1>
+              <br />
+              <h3>¡Los mejores precios!</h3>
+              <br />
+              <h5>Tu página de confianza</h5>
+            </Col>
+          </Row>
+        </Col>
+      </Row>
 
-        <div className="align-self-start ps-5 pt-5">
-          <h1>Estampados: </h1>
-        </div>
-        <Row className="align-items-center">
-          {estampados.length > 0 ? (
-            Cartas
-          ) : (
-            <p className="h2">No hay estampados disponibles</p>
-          )}{" "}
-        </Row>
+      <div className="align-self-start ps-5 pt-5">
+        <h1>Estampados: </h1>
+      </div>
+      <Row className="align-items-center">
+        {estampados.length > 0 ? (
+          Cartas
+        ) : (
+          <p className="h2">No hay estampados disponibles</p>
+        )}
+      </Row>
 
-        <ThemeSwitcher />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <Footer />
-      </Container>
-    </>
+      <ThemeSwitcher />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <Footer />
+    </Container>
   );
 }
 

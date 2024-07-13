@@ -42,10 +42,7 @@ export class BuilderConcreto extends Builder {
 
   createImg(): JSX.Element {
     let { img } = this.carta.getPropiedades();
-    const { artista } = this.carta.getPropiedades();
-    if(artista){
-      img = `http://localhost:3000/uploads/${img}`;
-    }
+    img = `http://localhost:3000/uploads/${img}`;
     const createImg = <Card.Img className="custom-img" variant="top" src={img} />;
     this.carta.setCreateImg(createImg);
     return createImg;

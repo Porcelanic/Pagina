@@ -13,7 +13,7 @@ export const GeneralProvider = ({ children }) => {
   const handleShow = (data) => {
     if (localStorage.getItem("username") != null) {
       localStorage.setItem("selectedShirt", JSON.stringify(data));
-      setSelectedImage(data.img);
+      setSelectedImage(data.diseño);
       setShow(true);
     }
   };

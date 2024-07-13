@@ -16,6 +16,7 @@ import { UploadModule } from './Modelos/upload/upload.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { AdministradorModule } from './Modelos/administrador/administrador.module';
+import { CamisetasModule } from './Modelos/camisetas/camisetas.module';
 
 @Module({
   imports: [
@@ -25,11 +26,12 @@ import { AdministradorModule } from './Modelos/administrador/administrador.modul
       isGlobal: true,
     }),
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'Uploads','Estampados'), // path to the static files
+      rootPath: join(__dirname, '..', 'Uploads'), // path to the static files
       serveRoot: '/uploads', // route to serve the static files
     }),
     DatabaseModule,
     ClienteModule,
+    CamisetasModule,
     EstampadoModule,
     ArtistaModule,
     MaterialModule,

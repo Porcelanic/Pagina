@@ -1,28 +1,86 @@
-import React from "react";
-import { Col, Row } from "react-bootstrap";
+import React, { useEffect } from "react";
+import { Button, Col, Row } from "react-bootstrap";
 import CartaComponent from "../../Components/ComponentCarta";
-import { useGeneral } from "../../Utils/generalContext";
+import { useState } from "react";
 import Contenedor from "./Contenedor";
+import { useGeneral } from "../../Utils/GeneralContext";
 
 class ContenedorDeportivas extends Contenedor {
   render(): JSX.Element {
-    const deportivas = [
-      { id: 1, img: "/Camisas/Deportivas/1.png", text: "Beja 2024", price: 100000 },
-      { id: 2, img: "/Camisas/Deportivas/2.png", text: "Andres pulido 1778", price: 100000 },
-      { id: 3, img: "/Camisas/Deportivas/3.png", text: "Millonarios 2023", price: 100000 },
-      { id: 4, img: "/Camisas/Deportivas/4.png", text: "No c 1999", price: 100000 },
-      { id: 5, img: "/Camisas/Deportivas/5.png", text: "Real Madrid 2023", price: 100000 },
-      { id: 6, img: "/Camisas/Deportivas/6.png", text: "Tottenham 2023", price: 100000 },
-      { id: 7, img: "/Camisas/Deportivas/7.png", text: "Bayer Much 2023", price: 100000 },
-      { id: 8, img: "/Camisas/Deportivas/8.png", text: "Cucuta 2023", price: 100000 },
-    ];
+    const [camisetasDeportivas, setCamisetasDeportivas] = useState<any[]>([]);
+    const tipoDeCliente = localStorage.getItem("tipoDeCliente");
+
+    useEffect(() => {
+      obtenerCamisetasDeportivas();
+    }, []); // Empty dependency array to run once on mount
+
+    const obtenerCamisetasDeportivas = async () => {
+      try {
+        const response = await fetch(
+          "http://localhost:3000/camisetas/consultarTipo/Deportivas"
+        );
+        if (!response.ok)
+          throw new Error("Error al obtener camisetas deportivas");
+        const json = await response.json();
+        setCamisetasDeportivas(json);
+      } catch (error) {
+        console.error("Error al obtener camisetas deportivas:", error);
+      }
+    };
 
     const { handleShow, setEstampable, setEstampadoElegido } = useGeneral();
+
+    const handleDelete = async (camiseta) => {
+      const confirmDelete = window.confirm(`¿Estás seguro de que quieres eliminar la camiseta "${camiseta.nombre}"?`);
+      if (!confirmDelete) return;
+  
+      try {
+        const response = await fetch(`http://localhost:3000/camisetas/eliminarCamisetas/${camiseta.nombre}`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ adminEmail: camiseta.adminEmail })
+        });
+        if (!response.ok) throw new Error('Error al eliminar la camiseta');
+  
+        // Actualizar el estado para reflejar el cambio
+        setCamisetasDeportivas(camisetasDeportivas.filter(e => e !== camiseta));
+      } catch (error) {
+        console.error('Error al eliminar la camiseta:', error);
+      }
+    };
+
+    const Cartas = camisetasDeportivas.map((data, index) => (
+      <Col
+        key={index}
+        xs="12"
+        sm="6"
+        md="4"
+        lg="3"
+        className="text-center mt-3"
+      >
+        <div onClick={() => handleShow(data)}>
+          <CartaComponent
+            img={data.diseño}
+            text={data.nombre}
+            artista={undefined}
+            price={data.precio}
+            style={undefined}
+          />
+        </div>
+        {tipoDeCliente === "Administrador" && (
+        <Button variant="danger" className="mt-2" onClick={() => handleDelete(data)}>
+          Eliminar
+        </Button>
+      )}
+      </Col>
+    ));
 
     return (
       <>
         <div className="align-self-start ps-5 pt-5 mb-5">
-          <h1 data-testid="Camisas deportivas">Camisas deportivas: </h1>
+          <h1 data-testid="Camisas para estampar">Camisas Deportivas: </h1>
         </div>
         <Row
           className="align-items-center"
@@ -31,13 +89,11 @@ class ContenedorDeportivas extends Contenedor {
             setEstampadoElegido(-1);
           }}
         >
-          {deportivas.map((data) => (
-            <Col key={data.id} xs="12" sm="6" md="4" lg="3" className="text-center mt-3">
-              <div onClick={() => handleShow(data)}>
-                <CartaComponent img={data.img} text={data.text} price={data.price} artista={undefined} style={undefined} />
-              </div>
-            </Col>
-          ))}
+          {camisetasDeportivas.length > 0 ? (
+            Cartas
+          ) : (
+            <p className="h2">No hay estampados disponibles</p>
+          )}
         </Row>
       </>
     );
