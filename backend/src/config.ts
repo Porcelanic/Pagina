@@ -9,9 +9,9 @@ export default registerAs('config', () => {
 
       name: process.env.DB_DATABASE,
 
-      user: process.env.DB_USUARIO || 'postgres',
+      user: process.env.DB_USUARIO,
 
-      password: process.env.DB_PASSWORD || '1234',
+      password: process.env.DB_PASSWORD,
 
       schema: 'public',
 
