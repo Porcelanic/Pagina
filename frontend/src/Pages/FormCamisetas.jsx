@@ -24,7 +24,7 @@ export default function FormCamisetas() {
     diseño: "",
     nombre: "",
     tipo: "",
-    precio: 0,
+    precio: null,
     adminEmail: localStorage.getItem("email"),
   });
 
@@ -111,7 +111,6 @@ export default function FormCamisetas() {
                   <option value="">Tipo</option>
                   <option value="Deportivas">Deportivas</option>
                   <option value="Estampables">Estampables</option>
-                  
                 </Form.Select>
                 <Form.Text>
                   Con que tipo crees que se identifica tu Camisetas?
@@ -136,7 +135,12 @@ export default function FormCamisetas() {
                   type="submit"
                   className="ms-3 d-grid"
                   size="md"
-                  disabled={!file || !Camisetas.nombre || !Camisetas.tipo ||!Camisetas.precio}
+                  disabled={
+                    !file ||
+                    !Camisetas.nombre ||
+                    !Camisetas.tipo ||
+                    !Camisetas.precio
+                  }
                 >
                   Publicar
                 </Button>

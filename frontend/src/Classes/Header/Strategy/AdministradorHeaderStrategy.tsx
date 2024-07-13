@@ -34,7 +34,7 @@ class ArtistaHeaderStrategy implements HeaderStrategy {
             height="35"
             className="d-inline-block align-top"
           />
-          WaySoft
+          Estampa tu idea
         </Navbar.Brand>
         <Navbar.Offcanvas
           id={`offcanvasNavbar-expand-md`}
@@ -50,10 +50,10 @@ class ArtistaHeaderStrategy implements HeaderStrategy {
                 <Nav.Link>{"Admin: " + localStorage.username}</Nav.Link>
               </Nav.Item>
               <Nav.Item>
-                  <Nav.Link as={Link} to="/" active={location.pathname === "/"}>
-                    <FontAwesomeIcon icon={faShop} /> Catalogo
-                  </Nav.Link>
-                </Nav.Item>
+                <Nav.Link as={Link} to="/" active={location.pathname === "/"}>
+                  <FontAwesomeIcon icon={faShop} /> Catalogo
+                </Nav.Link>
+              </Nav.Item>
 
               <Nav.Item>
                 <Nav.Link
