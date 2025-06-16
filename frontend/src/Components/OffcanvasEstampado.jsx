@@ -51,7 +51,7 @@ function OffcanvasEstampado() {
         if (estampados.length > 0) {
           // Paso 3: Iterar sobre cada estampado para obtener el artista
           const estampadosConArtistas = await Promise.all(estampados.map(async (estampado) => {
-            const responseArtista = await fetch(`http://localhost:3000/artista/consultarArtista/${estampado.artistaEmail}`);
+            const responseArtista = await fetch(import.meta.env.VITE_API_BASE_URL+`/artista/consultarArtista/${estampado.artistaEmail}`);
             if (!responseArtista.ok) throw new Error('Error al obtener artista');
             const artista = await responseArtista.json();
             // Paso 4: Anexar el nombre del artista al estampado

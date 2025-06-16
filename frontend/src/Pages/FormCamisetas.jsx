@@ -40,7 +40,7 @@ export default function FormCamisetas() {
     if (file) {
       const formData = new FormData();
       formData.append("file", file);
-      fetch(`http://localhost:3000/upload/camiseta/${Camisetas.tipo}`, {
+      fetch(import.meta.env.VITE_API_BASE_URL+`/upload/camiseta/${Camisetas.tipo}`, {
         method: "POST",
         body: formData,
       })
@@ -70,7 +70,7 @@ export default function FormCamisetas() {
 
   const toDB = () => {
     Camisetas.precio = parseInt(Camisetas.precio);
-    fetch("http://localhost:3000/camisetas/crearCamisetas", {
+    fetch(import.meta.env.VITE_API_BASE_URL+"/camisetas/crearCamisetas", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(Camisetas),

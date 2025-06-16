@@ -17,7 +17,7 @@ class ContenedorEstampable extends Contenedor {
     const obtenerCamisetasEstampables = async () => {
       try {
         const response = await fetch(
-          "http://localhost:3000/camisetas/consultarTipo/Estampables"
+          import.meta.env.VITE_API_BASE_URL+"/camisetas/consultarTipo/Estampables"
         );
         if (!response.ok)
           throw new Error("Error al obtener camisetas estampables");
@@ -35,7 +35,7 @@ class ContenedorEstampable extends Contenedor {
       if (!confirmDelete) return;
   
       try {
-        const response = await fetch(`http://localhost:3000/camisetas/eliminarCamisetas/${camiseta.nombre}`, {
+        const response = await fetch(import.meta.env.VITE_API_BASE_URL+`/camisetas/eliminarCamisetas/${camiseta.nombre}`, {
           method: 'DELETE',
           headers: {
             'Content-Type': 'application/json'

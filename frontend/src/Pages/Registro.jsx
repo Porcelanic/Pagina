@@ -52,7 +52,7 @@ function Registro() {
       } else {
         cliente.email = emailAdapter.convertirEmailAMinuscula(cliente.email);
         if (cliente.tipoCliente == "Artista") {
-          const res = await fetch("http://localhost:3000/artista/crearArtista", {
+          const res = await fetch(import.meta.env.VITE_API_BASE_URL+"/artista/crearArtista", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(cliente),
@@ -74,7 +74,7 @@ function Registro() {
             setTimeout(() => navigate("/login"), 500);
           }
         } else if (cliente.tipoCliente == "Cliente") {
-          const res = await fetch("http://localhost:3000/cliente/crearCliente", {
+          const res = await fetch(import.meta.env.VITE_API_BASE_URL+"/cliente/crearCliente", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(cliente),

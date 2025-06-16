@@ -8,7 +8,9 @@ async function bootstrap() {
   // Evitar el error de protocolo cruzado (htto/https)
   app.enableCors();
   app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
-  await app.listen(process.env.PORT || 3000);
+  const port = process.env.PORT || 3000;
+  const host = process.env.HOST || 'localhost';
+  await app.listen(port, host);
   console.log(`Ambiente de ejecución ${process.env.NODE_ENV}`);
   console.log(`Servidor corriendo en puerto: ${process.env.PORT}`);
   console.log(`Application is running on: ${await app.getUrl()}`);

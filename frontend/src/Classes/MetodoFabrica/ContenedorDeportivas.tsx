@@ -17,7 +17,7 @@ class ContenedorDeportivas extends Contenedor {
     const obtenerCamisetasDeportivas = async () => {
       try {
         const response = await fetch(
-          "http://localhost:3000/camisetas/consultarTipo/Deportivas"
+          import.meta.env.VITE_API_BASE_URL+"/camisetas/consultarTipo/Deportivas"
         );
         if (!response.ok)
           throw new Error("Error al obtener camisetas deportivas");
@@ -35,7 +35,7 @@ class ContenedorDeportivas extends Contenedor {
       if (!confirmDelete) return;
   
       try {
-        const response = await fetch(`http://localhost:3000/camisetas/eliminarCamisetas/${camiseta.nombre}`, {
+        const response = await fetch(import.meta.env.VITE_API_BASE_URL+`/camisetas/eliminarCamisetas/${camiseta.nombre}`, {
           method: 'DELETE',
           headers: {
             'Content-Type': 'application/json'

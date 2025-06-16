@@ -51,7 +51,7 @@ function Login() {
         } else {
           cliente.email = emailAdapter.convertirEmailAMinuscula(cliente.email);
           if (tipoUsuario == "Cliente") {
-            const res = await fetch("http://localhost:3000/cliente/Login", {
+            const res = await fetch(import.meta.env.VITE_API_BASE_URL+"/cliente/Login", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify(cliente),
@@ -80,7 +80,7 @@ function Login() {
               // Mostrar la alerta en caso de error
             }
           } else if (tipoUsuario == "Artista") {
-            const res = await fetch("http://localhost:3000/artista/Login", {
+            const res = await fetch(import.meta.env.VITE_API_BASE_URL+"/artista/Login", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify(cliente),
@@ -108,7 +108,7 @@ function Login() {
               // Mostrar la alerta en caso de error
             }
           } else if (tipoUsuario == "Administrador") {
-            const res = await fetch("http://localhost:3000/administrador/Login", {
+            const res = await fetch(import.meta.env.VITE_API_BASE_URL+"/administrador/Login", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify(cliente),

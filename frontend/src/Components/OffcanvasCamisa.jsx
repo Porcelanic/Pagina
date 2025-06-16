@@ -41,7 +41,7 @@ function OffcanvasCamisa() {
     console.log(img);
     try {
       const res = await fetch(
-        `http://localhost:3000/material/consultarNombre/${material}`
+        import.meta.env.VITE_API_BASE_URL+`/material/consultarNombre/${material}`
       );
       if (res.ok) {
         const data = await res.json();
@@ -54,7 +54,7 @@ function OffcanvasCamisa() {
       console.error(error);
     }
     let estampa =
-      estampadoElegido >= 0 ? `http://localhost:3000/uploads/${estampados[estampadoElegido].diseño}` : "";
+      estampadoElegido >= 0 ? import.meta.env.VITE_API_BASE_URL+`/uploads/${estampados[estampadoElegido].diseño}` : "";
     console.log(estampa);
     if (limite == 0) {
       setShowAlert(fachada.cambioMostrarAlerta());
@@ -110,7 +110,7 @@ function OffcanvasCamisa() {
   const restarCantidad = async (material, cantidad) => {
     const cantidadNumber = parseInt(cantidad);
     try {
-      const res = await fetch(`http://localhost:3000/material/actualizarMaterial/${material}`, {
+      const res = await fetch(import.meta.env.VITE_API_BASE_URL+`/material/actualizarMaterial/${material}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -145,7 +145,7 @@ function OffcanvasCamisa() {
         <div className="contenedor">
           {selectedImage && (
             <Image
-              src={`http://localhost:3000/uploads/${selectedImage}`}
+              src={import.meta.env.VITE_API_BASE_URL+`/uploads/${selectedImage}`}
               className=" img-to-size imagen-fondo"
               fluid
               thumbnail
@@ -156,7 +156,7 @@ function OffcanvasCamisa() {
           {estampadoElegido >= 0 ? (
             <Image
               className="imagen-centrada"
-              src={`http://localhost:3000/uploads/${estampados[estampadoElegido].diseño}`}
+              src={import.meta.env.VITE_API_BASE_URL+`/uploads/${estampados[estampadoElegido].diseño}`}
             />
           ) : (
             <></>

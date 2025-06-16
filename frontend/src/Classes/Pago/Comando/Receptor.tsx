@@ -8,7 +8,7 @@ namespace Receptor {
   export async function createInformations(
     datosEnvio: DatosEnvio
   ): Promise<void> {
-    await fetch(`http://localhost:4000/createInformations`, {
+    await fetch(import.meta.env.VITE_API_BASE_URL+`localhost:4000/createInformations`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(datosEnvio),

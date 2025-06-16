@@ -39,7 +39,7 @@ export default function FormEstampado() {
     if (file) {
       const formData = new FormData();
       formData.append("file", file);
-      fetch("http://localhost:3000/upload/estampado", {
+      fetch(import.meta.env.VITE_API_BASE_URL+"/upload/estampado", {
         method: "POST",
         body: formData,
       })
@@ -68,7 +68,7 @@ export default function FormEstampado() {
   }, [estampado.diseño]);
 
   const toDB = () => {
-    fetch("http://localhost:3000/estampado/crearEstampado", {
+    fetch(import.meta.env.VITE_API_BASE_URL+"/estampado/crearEstampado", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(estampado),

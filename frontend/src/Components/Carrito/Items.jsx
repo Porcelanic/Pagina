@@ -33,7 +33,7 @@ function Items(prop) {
     let limite;
     try {
       const res = await fetch(
-        `http://localhost:3000/material/consultarNombre/${material}`
+        import.meta.env.VITE_API_BASE_URL+`/material/consultarNombre/${material}`
       );
       if (res.ok) {
         const data = await res.json();
@@ -65,7 +65,7 @@ function Items(prop) {
   const restarCantidad = async (material, cantidad) => {
     const cantidadNumber = parseInt(cantidad);
     try {
-      const res = await fetch(`http://localhost:3000/material/actualizarMaterial/${material}`, {
+      const res = await fetch(import.meta.env.VITE_API_BASE_URL+`/material/actualizarMaterial/${material}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -88,7 +88,7 @@ function Items(prop) {
         <Carousel.Item key={index}>
           <div className="contenedor-img">
             <Image
-              src={`http://localhost:3000/uploads/${data.img}`}
+              src={import.meta.env.VITE_API_BASE_URL+`/uploads/${data.img}`}
               className="camisa-fondo"
               alt="Selected Image"
             />

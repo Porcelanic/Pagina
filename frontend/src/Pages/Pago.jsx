@@ -11,7 +11,7 @@ import Row from "react-bootstrap/Row";
 import Alert from "react-bootstrap/Alert";
 import { FachadaDeEstados } from "../Classes/Estados/Fachada/FachadaDeEstados";
 
-const Pago: React.FC = () => {
+const Pago = () => {
   const [datosEnvio, setDatosEnvio] = useState({
     barrio: "",
     ciudad: "",
@@ -31,17 +31,7 @@ const Pago: React.FC = () => {
     informacionEnvioId: null,
   });
 
-  interface CamisaState {
-    imagen: string;
-    precio: number | null;
-    talla: string;
-    cantidad: number | null;
-    idEstampado: number | null;
-    Material: string;
-    numeroPedido: number | null;
-  }
-  
-  const initialCamisaState: CamisaState = {
+  const [camisa, setCamisa] = useState({
     imagen: "",
     precio: null,
     talla: "",
@@ -49,9 +39,7 @@ const Pago: React.FC = () => {
     idEstampado: null,
     Material: "",
     numeroPedido: null,
-  };
-  
-  const [camisa, setCamisa] = useState<CamisaState>(initialCamisaState);
+  });
 
   const [infoPago, setInfoPago] = useState({
     numeroTarjeta: "",
@@ -63,14 +51,10 @@ const Pago: React.FC = () => {
   const navigate = useNavigate();
   const fachada = new FachadaDeEstados();
 
-  const [alertText, setAlertText] = useState<string>("");
-  const [showAlert, setShowAlert] = useState<boolean>(
-    fachada.getMostrarAlerta()
-  );
-  const [alertState, setAlertState] = useState<string>(
-    fachada.getEstadoDeAlerta()
-  );
-  // Implementacion del patron comando
+  const [alertText, setAlertText] = useState("");
+  const [showAlert, setShowAlert] = useState(fachada.getMostrarAlerta());
+  const [alertState, setAlertState] = useState(fachada.getEstadoDeAlerta());
+
   const dataSubmit = async (e) => {
     e.preventDefault();
     let res = await fetch(
@@ -99,7 +83,7 @@ const Pago: React.FC = () => {
         res = await fetch(`http://localhost:3000/estampado/consultarDesign/${lastPart}`);
         data = await res.json();
         camisa.idEstampado = data.idEstampado;
-      }else{
+      } else {
         console.log("No hay estampado");
         camisa.idEstampado = null;
       }
@@ -131,7 +115,7 @@ const Pago: React.FC = () => {
     );
   };
 
-  const obtenerFecha = (): string => {
+  const obtenerFecha = () => {
     const fechaActual = new Date();
     const anio = fechaActual.getFullYear();
     const mes = String(fechaActual.getMonth() + 1).padStart(2, "0");
@@ -139,11 +123,11 @@ const Pago: React.FC = () => {
     return `${anio}-${mes}-${dia}`;
   };
 
-  const datosEnvioChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const datosEnvioChange = (e) => {
     setDatosEnvio({ ...datosEnvio, [e.target.name]: e.target.value });
   };
 
-  const infoPagoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const infoPagoChange = (e) => {
     setInfoPago({ ...infoPago, [e.target.name]: e.target.value });
   };
 

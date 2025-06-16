@@ -22,7 +22,7 @@ function CatalogoEstampados() {
 
         if (estampados.length > 0) {
           const estampadosConArtistas = await Promise.all(estampados.map(async (estampado) => {
-            const responseArtista = await fetch(`http://localhost:3000/artista/consultarArtista/${estampado.artistaEmail}`);
+            const responseArtista = await fetch(import.meta.env.VITE_API_BASE_URL+`/artista/consultarArtista/${estampado.artistaEmail}`);
             if (!responseArtista.ok) throw new Error('Error al obtener artista');
             const artista = await responseArtista.json();
             return { ...estampado, nombreArtista: artista.nombre};
@@ -43,7 +43,7 @@ function CatalogoEstampados() {
     if (!confirmDelete) return;
 
     try {
-      const response = await fetch(`http://localhost:3000/estampado/eliminarEstampado/${estampado.nombre}`, {
+      const response = await fetch(import.meta.env.VITE_API_BASE_URL+`/estampado/eliminarEstampado/${estampado.nombre}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json'

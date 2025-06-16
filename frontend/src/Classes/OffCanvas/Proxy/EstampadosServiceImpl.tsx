@@ -4,7 +4,7 @@ import EstampadosService from "./EstampadosService";
 class EstampadosServiceImpl implements EstampadosService {
   // Método que devuelve una promesa que resuelve un array de objetos
   async getEstampados(): Promise<any> {
-    return fetch("http://localhost:3000/estampado/consultarEstampado")
+    return fetch(import.meta.env.VITE_API_BASE_URL+"/estampado/consultarEstampado")
       .then((response) => response.json())
       .catch((error) => {
         console.error("Error al obtener los estampados:", error);

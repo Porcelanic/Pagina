@@ -42,7 +42,8 @@ export class BuilderConcreto extends Builder {
 
   createImg(): JSX.Element {
     let { img } = this.carta.getPropiedades();
-    img = `http://localhost:3000/uploads/${img}`;
+    img = import.meta.env.VITE_API_BASE_URL+`/uploads/${img}`;
+    console.log("img", img);
     const createImg = <Card.Img className="custom-img" variant="top" src={img} />;
     this.carta.setCreateImg(createImg);
     return createImg;
